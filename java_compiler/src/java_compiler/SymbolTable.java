@@ -32,7 +32,8 @@ public class SymbolTable {
 		this.symbolTable.put("while", new SymbolInformation(21));
 		this.symbolTable.put("void", new SymbolInformation(22));
 		this.symbolTable.put("ID", new SymbolInformation(23));
-		this.symbolTable.put("CTE", new SymbolInformation(24));
+		this.symbolTable.put("usinteger", new SymbolInformation(25));
+		this.symbolTable.put("linteger", new SymbolInformation(26));
 		
 	}
 	
