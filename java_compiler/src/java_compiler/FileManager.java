@@ -1,5 +1,5 @@
 package java_compiler;
 
-public class FileReader {
+public class FileManager {
 
 }
