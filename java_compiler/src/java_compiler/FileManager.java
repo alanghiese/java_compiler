@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 public class FileManager {
 	
-	private Constants CONST = new Constants();
 	
 	
 	public ArrayList<String> loadAndGetSourceCode(String path) {
@@ -28,7 +27,7 @@ public class FileManager {
 			}
 		}
 		catch(IOException ex) {
-			System.err.println(this.CONST.ERR_UPS);
+			System.err.println(Constants.ERR_UPS);
 			ex.printStackTrace();
 		}
 		finally {
@@ -37,7 +36,7 @@ public class FileManager {
 				rd.close();
 			}
 			catch (IOException ex) {
-				System.err.println(this.CONST.ERR_UPS);
+				System.err.println(Constants.ERR_UPS);
 				ex.printStackTrace();
 			}
 		}			
@@ -53,10 +52,9 @@ public class FileManager {
 			}
 			FileWriter fw = new FileWriter(file);
 			for(String line: code) {
-				fw.write(line);
+				fw.write(line + '\n');
 			}
 			BufferedWriter bw = new BufferedWriter(fw);
-			bw.write(file.getAbsolutePath());
 			bw.close();
 		} 
 		catch (Exception e) {
