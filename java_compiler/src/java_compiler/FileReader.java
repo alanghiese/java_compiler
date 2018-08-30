@@ -1,5 +1,5 @@
 package java_compiler;
 
-public class OtraPrueba {
+public class FileReader {
 
 }
