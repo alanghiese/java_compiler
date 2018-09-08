@@ -7,59 +7,21 @@ public class SymbolTable {
 
 	HashMap<String,SymbolInformation> symbolTable;
 	
+	
 	public SymbolTable() {
 		this.symbolTable = new HashMap<>();
-		char c;
-		c='+';
-		this.symbolTable.put("+", new SymbolInformation((int)c));
-		c='-';
-		this.symbolTable.put("-", new SymbolInformation((int)c));
-		c='*';
-		this.symbolTable.put("*", new SymbolInformation((int)c));
-		c='/';
-		this.symbolTable.put("/", new SymbolInformation((int)c));
-		c='<';
-		this.symbolTable.put("<", new SymbolInformation((int)c));
-		c='>';
-		this.symbolTable.put(">", new SymbolInformation((int)c));
-		c='=';
-		this.symbolTable.put("=", new SymbolInformation((int)c));
-		c='{';
-		this.symbolTable.put("{", new SymbolInformation((int)c));
-		c='}';
-		this.symbolTable.put("}", new SymbolInformation((int)c));
-		c='(';
-		this.symbolTable.put("(", new SymbolInformation((int)c));
-		c=')';
-		this.symbolTable.put(")", new SymbolInformation((int)c));
-		c=',';
-		this.symbolTable.put(",", new SymbolInformation((int)c));
-		c=';';
-		this.symbolTable.put(";", new SymbolInformation((int)c));
-		
-		this.symbolTable.put("<=", new SymbolInformation(256));
-		this.symbolTable.put(">=", new SymbolInformation(257));
-		this.symbolTable.put("!=", new SymbolInformation(258));
-		this.symbolTable.put(":=", new SymbolInformation(259));
-		this.symbolTable.put("if", new SymbolInformation(260));
-		this.symbolTable.put("else", new SymbolInformation(261));
-		this.symbolTable.put("end_if", new SymbolInformation(262));
-		this.symbolTable.put("print", new SymbolInformation(263));
-		this.symbolTable.put("while", new SymbolInformation(264));
-		this.symbolTable.put("void", new SymbolInformation(265));
-		this.symbolTable.put("ID", new SymbolInformation(266));
-		this.symbolTable.put("usinteger", new SymbolInformation(267));
-		this.symbolTable.put("linteger", new SymbolInformation(268));
-		
 	}
 	
-	public void addSymbol(String symbol, int code){
-		SymbolInformation si = new SymbolInformation(code);
-		this.symbolTable.put(symbol, si);
+	public void addID(String name, IDInformation idi){
+		this.symbolTable.put(name, idi);
 	}
 	
-	public Integer getCode(String symbol) {
-		return this.symbolTable.get(symbol).getId();
+	public void addCTN(String name, CTNInformation ctni) {
+		this.symbolTable.put(name, ctni);
+	}
+	
+	public SymbolInformation getLexeme(String name) {
+		return this.symbolTable.get(name);
 	}
 	
 	public Set<String> getAll() {

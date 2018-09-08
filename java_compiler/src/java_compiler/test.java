@@ -19,9 +19,9 @@ public class test {
 	
 		SymbolTable st = new SymbolTable();
 		Set<String> symbols = st.getAll();
-		for (String s: symbols) {
-			System.out.println("simbolo: " + s + " , codigo: " + st.getCode(s));
-		}
+		/*for (String s: symbols) {
+			System.out.println("simbolo: " + s + " , codigo: " + st.getToken(s));
+		}*/
 	
 	}
 	
