@@ -23,6 +23,8 @@ public class test {
 			System.out.println("simbolo: " + s + " , codigo: " + st.getToken(s));
 		}*/
 	
+		
+		TransitionTable tt = new TransitionTable();
 	}
 	
 	
