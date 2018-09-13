@@ -1,4 +1,4 @@
-package java_compiler;
+package utilities;
 
 public class Constants {
 	public static String ERR_UPS = "Ups! Algo salio mal";

@@ -140,24 +140,12 @@ public class TransitionTable {
 		mte[14][18] = FINAL_ST; mte[14][19] = FINAL_ST; mte[14][20] = FINAL_ST; mte[14][21] = FINAL_ST; mte[14][22] = FINAL_ST; mte[14][23] = -1;
 		mte[14][24] = FINAL_ST; mte[14][25] = FINAL_ST;
 		
-		this.show();
 		
 	}
 	
 	//
 	
-	private void show(){
-		for (int i = 0; i < NUM_ROW; i++) {
-			for(int j = 0; j < NUM_COL; j++)
-				System.out.print(mte[i][j] + " ");
-			System.out.println("");
-		}
 		
-		
-		
-	}
-	
-	
 	
 	// Public Method: Returns the next state from the finite automata, it takes the actual state and the character*****
 	// 						read from the input file.******************************************************************

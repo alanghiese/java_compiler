@@ -3,6 +3,9 @@ package java_compiler;
 import java.util.ArrayList;
 import java.util.Set;
 
+import utilities.Constants;
+import utilities.FileManager;
+
 public class test {
 	
 	

@@ -3,6 +3,10 @@ package java_compiler;
 import java.util.HashMap;
 import java.util.Set;
 
+import utilities.CTNInformation;
+import utilities.IDInformation;
+import utilities.SymbolInformation;
+
 public class SymbolTable {
 
 	HashMap<String,SymbolInformation> symbolTable;

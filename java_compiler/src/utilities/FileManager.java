@@ -1,4 +1,4 @@
-package java_compiler;
+package utilities;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

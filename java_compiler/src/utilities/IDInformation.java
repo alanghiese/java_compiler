@@ -1,4 +1,4 @@
-package java_compiler;
+package utilities;
 
 public class IDInformation extends SymbolInformation{
 
