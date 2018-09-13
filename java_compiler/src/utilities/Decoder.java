@@ -39,4 +39,11 @@ public class Decoder {
 		
 	}
 	
+	public Integer get(String s) {
+		Integer res = this.codes.get(s);
+		if (res==null)
+			res = new Integer(-1);
+		return res;
+	}
+	
 }

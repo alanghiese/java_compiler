@@ -25,7 +25,10 @@ public class SymbolTable {
 	}
 	
 	public SymbolInformation getLexeme(String name) {
-		return this.symbolTable.get(name);
+		SymbolInformation si = this.symbolTable.get(name);
+		if (si==null)
+			si = new SymbolInformation(-1);
+		return si;
 	}
 	
 	public Set<String> getAll() {
