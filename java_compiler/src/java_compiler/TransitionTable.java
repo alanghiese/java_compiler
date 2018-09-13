@@ -14,7 +14,7 @@ public class TransitionTable {
 	
 	
 	private int [][] mte;
-	private int [][] mas;
+	private SemanticAction [][] mas;
 
 	public TransitionTable(){
 	
@@ -154,6 +154,10 @@ public class TransitionTable {
 		
 		return mte[state][getColumnVal(c)];
 	}
+	
+	public SemanticAction getAction(int state, char c){
+            return mas[state][getColumnVal(c)];
+        }
 	
 	
 	// Private method: Returns the column value associated to the character coming from the input**********************
