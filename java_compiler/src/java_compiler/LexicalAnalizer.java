@@ -19,7 +19,6 @@ public class LexicalAnalizer {
         }
     }
     
-    
     public int yylex(){
         int status=0;
         char nextChar;
@@ -30,18 +29,24 @@ public class LexicalAnalizer {
         try {
             nextChar=(char) fileBuffer.read();
             readed.append(nextChar);
+            
+            while (status != TransitionTable.FINAL_ST){
+            
+            try {
+                transitions.getAction(status, nextChar).execute(readed,fileBuffer,token);
+            }
+            catch (IOException ex) {
+                System.err.println(ex.getMessage());
+            }
+                
+            status= transitions.getNextState(status, nextChar);
+            nextChar=readed.charAt(readed.length()-1);
+            }
+        
         } catch (IOException ex) {
             System.err.println("No se pudo leer caracter");
         }
-        
-        
-        
-        while (status != TransitionTable.FINAL_ST){
-            transitions.getAction(status, nextChar).excecute(readed,fileBuffer,token);
-            status= transitions.getNextState(status, nextChar);
-            nextChar=readed.charAt(readed.length()-1);
-        }
-        
+            
         return token;
     }
     
