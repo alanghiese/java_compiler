@@ -1,5 +1,5 @@
 package java_compiler;
-
+import semantic_actions.*;
 
 public class TransitionTable {
 	
@@ -141,11 +141,7 @@ public class TransitionTable {
 		mte[14][24] = FINAL_ST; mte[14][25] = FINAL_ST;
 		
 		
-	}
-	
-	//
-	
-		
+	}	
 	
 	// Public Method: Returns the next state from the finite automata, it takes the actual state and the character*****
 	// 						read from the input file.******************************************************************
