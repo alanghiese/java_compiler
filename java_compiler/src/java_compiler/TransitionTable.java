@@ -5,8 +5,12 @@ public class TransitionTable {
 	
 	// Row => State - Column => Symbol from input 
 	// Symbol Index :
-	//					'_' -> 0	'::letter::' -> 1	'
-	//
+	//                  '_' -> 0    '::letter::' -> 1   'u' -> 2    'i' -> 3
+	//                  'l' -> 4    '::digit:: -> 5     '+' -> 6    '-' -> 7
+        //                  '*' -> 8    '/' -> 9            ':' -> 10   '=' -> 11
+        //                  '<' -> 12   '>' -> 13           '!' -> 14   '#' -> 15
+        //                  '\' -> 16   '(' -> 17           ')' -> 18   '{' -> 19
+        //                  '}' -> 20   ',' -> 21           ';' -> 22   '$' -> 23
 	
 	static final int NUM_COL = 26;
 	static final int NUM_ROW = 15;
@@ -143,18 +147,19 @@ public class TransitionTable {
 		
 	}	
 	
-	// Public Method: Returns the next state from the finite automata, it takes the actual state and the character*****
-	// 						read from the input file.******************************************************************
+	// Public Method: Returns the next state from the mte(State transition table), it takes the actual state and *
+	// 			the character read from the input file.***********************************************
 	
 	public int getNextState(int state, char c){
 		
-		return mte[state][getColumnVal(c)];
+            return mte[state][getColumnVal(c)];
 	}
 	
+        // Public method: Returns the action needed to aply given the actual state of the automata and the char readed from file
+        
 	public SemanticAction getAction(int state, char c){
             return mas[state][getColumnVal(c)];
         }
-	
 	
 	// Private method: Returns the column value associated to the character coming from the input**********************
 	
