@@ -1,25 +1,26 @@
 package java_compiler;
 
-
-
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import utilities.Decoder;
 
 
 public class LexicalAnalizer {
-    BufferedReader fileBuffer;
+    BufferedReader fileReader;
     TransitionTable transitions= new TransitionTable();
     SymbolTable symbolTable = new SymbolTable();
-
+    int currentLine=0;
+    StringBuilder codeLine=new StringBuilder(0);
     
     public LexicalAnalizer(String path) {
         try {
-            fileBuffer= new BufferedReader(new FileReader(new File(path)));
+            fileReader= new BufferedReader(new FileReader(path));
         } catch (FileNotFoundException ex) {
-            System.err.println("No se pudo leer el archivo");
+            Logger.getLogger(LexicalAnalizer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -27,28 +28,39 @@ public class LexicalAnalizer {
         int status=0;
         char nextChar;
         Integer token=null;
-        
         StringBuilder readed= new StringBuilder();
         
-        try {
-            nextChar=(char) fileBuffer.read();
-            readed.append(nextChar);
+        //Consumimos lineas vacías--------------------------
+        while(codeLine!=null && codeLine.length()==0){
+            currentLine++;
+            String lineReaded;
+            try {
+                lineReaded = fileReader.readLine();
+                codeLine=(lineReaded==null?null:new StringBuilder(lineReaded));
+            } catch (IOException ex) {
+                Logger.getLogger(LexicalAnalizer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        //----------------------------------------------------
+        
+        if(codeLine==null){
+            return Decoder.get("END");
+        }
+        
+        nextChar= codeLine.charAt(0);
+        readed.append(nextChar);
+        
+        while (status != TransitionTable.FINAL_ST){
             
-            while (status != TransitionTable.FINAL_ST){
-            
-            /*try {
-                transitions.getAction(status, nextChar).execute(readed,fileBuffer,token, symbolTable);
+            try {
+                transitions.getAction(status, nextChar).execute(readed,codeLine,token, symbolTable);
             }
             catch (IOException ex) {
                 System.err.println(ex.getMessage());
-            }*/
+            }
                 
             status= transitions.getNextState(status, nextChar);
             nextChar=readed.charAt(readed.length()-1);
-            }
-        
-        } catch (IOException ex) {
-            System.err.println("No se pudo leer caracter");
         }
             
         return token;
