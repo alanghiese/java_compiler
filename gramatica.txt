@@ -1,0 +1,83 @@
+prog    :   sent
+        ;
+
+sent    :   sent decl','
+        |   sent exec','
+        |   decl','
+        |   exec','
+        ;
+
+decl    :   var
+        |   func
+        ;
+
+var     :   type lst_var','
+        ;
+
+lst_var :   ID';' lst_var
+        |   ID';'
+        ;
+
+func    :   type ID '(' type ID ')' '{' sent RETURN '(' expr ')' '}'
+        ;
+
+exec    :   s_cond
+        |   block
+        |   ctrl
+        |   prt
+        |   inv_fun
+        |   expr
+        ;
+
+s_cond  :   IF '(' cond ')' block ELSE block END_IF     ????????
+        |   IF '(' cond ')' block END_IF
+        ;
+
+ctrl    :   WHILE '(' cond ')' block,
+        ;
+
+prt     :   PRINT'(' str ')'    ????????
+        ;
+
+cond    :   expr comp expr
+        ;
+
+block   :   sent                ????????
+        |   '{' sent '}'
+        ;
+
+inv_fun :   ID '(' ID ';' lst_perm ')' ','
+        ;
+
+expr    :   ID '=' expr
+        |   expr '+' expr
+        |   expr '-' expr
+        |   term
+        ;
+
+term    :   term '*' fact
+        |   term '/' fact
+        |   fact
+        ;
+
+lst_perm :  READONLY
+         |  WRITE
+         |  PASS
+         |  WRITE ';' PASS
+         ;
+
+type    :   USINTEGER
+        |   LINTEGER
+        ;
+
+fact    :   ID
+        |   CTE
+        ;  
+
+comp    :   '='
+        |   '<'
+        |   '>'
+        |   '<='
+        |   '>='
+        |   '!='
+        ;
