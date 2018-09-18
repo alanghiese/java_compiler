@@ -36,12 +36,12 @@ public class LexicalAnalizer {
             
             while (status != TransitionTable.FINAL_ST){
             
-            try {
+            /*try {
                 transitions.getAction(status, nextChar).execute(readed,fileBuffer,token, symbolTable);
             }
             catch (IOException ex) {
                 System.err.println(ex.getMessage());
-            }
+            }*/
                 
             status= transitions.getNextState(status, nextChar);
             nextChar=readed.charAt(readed.length()-1);
