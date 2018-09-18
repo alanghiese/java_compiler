@@ -1,16 +1,18 @@
 package semantic_actions;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 
 import java_compiler.SymbolTable;
+import utilities.Decoder;
 
-public class SemanticAction {
+public class SA3  extends SemanticAction{
 
 	
+	@Override
 	public void execute(StringBuilder buffer, StringBuilder line, Integer token, SymbolTable st) throws IOException {
-		buffer = buffer.append(line.charAt(0));
-		line.deleteCharAt(0);
+		//super.execute(buffer, br); this SA doesn't move
+		buffer = new StringBuilder();
+		token = Decoder.get(buffer.toString());
+		
 	}
-	
 }

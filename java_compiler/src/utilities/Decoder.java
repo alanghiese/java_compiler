@@ -1,49 +1,42 @@
 package utilities;
 
-import java.util.HashMap;
-
 public class Decoder {
-	HashMap<String,Integer> codes;
 	
-	public Decoder() {
-		this.codes = new HashMap<>();
-		this.codes.put("+", (int)'+');
-		this.codes.put("-", (int)'-');
-		this.codes.put("*", (int)'*');
-		this.codes.put("/", (int)'/');
-		this.codes.put("<", (int)'<');
-		this.codes.put(">", (int)'>');
-		this.codes.put("=", (int)'=');
-		this.codes.put("(", (int)'(');
-		this.codes.put(")", (int)')');
-		this.codes.put("{", (int)'{');
-		this.codes.put("}", (int)'}');
-		this.codes.put(",", (int)',');
-		this.codes.put(";", (int)';');
-		this.codes.put(">=", 257);
-		this.codes.put("<=", 258);
-		this.codes.put("!=", 259);
-		this.codes.put(":=", 260);
-		this.codes.put("if", 261);
-		this.codes.put("end_if", 262);
-		this.codes.put("else", 263);
-		this.codes.put("print", 264);
-		this.codes.put("while", 265);
-		this.codes.put("usinteger", 266);
-		this.codes.put("linteger", 267);
-		this.codes.put("readonly", 268);
-		this.codes.put("write", 269);
-		this.codes.put("pass", 270);
-		this.codes.put("ID", 270);
-		this.codes.put("CTE", 271);
-		
-	}
-	
-	public Integer get(String s) {
-		Integer res = this.codes.get(s);
-		if (res==null)
-			res = new Integer(-1);
-		return res;
+	public static Integer get(String s) {
+            
+            switch (s) {
+                case "+": return (int)'+';
+                case "-": return (int)'-';
+				case "*": return (int)'*';
+				case "/": return (int)'/';
+				case "<": return (int)'<';
+				case ">": return (int)'>';
+				case "=": return (int)'=';
+				case "(": return (int)'(';
+				case ")": return (int)')';
+				case "{": return (int)'{';
+				case "}": return (int)'}';
+				case ",": return (int)',';
+				case ";": return (int)';';
+				case ">=": return 257;
+				case "<=": return 258;
+				case "!=": return 259;
+				case ":=": return 260;
+				case "if": return 261;
+				case "end_if": return 262;
+				case "else": return 263;
+				case "print": return 264;
+				case "while": return 265;
+				case "usinteger": return 266;
+				case "linteger": return 267;
+				case "readonly": return 268;
+				case "write": return 269;
+				case "pass": return 270;
+				case "ID": return 270;
+				case "CTE": return 271;
+            }
+            
+            return -1;
 	}
 	
 }

@@ -10,40 +10,34 @@ import java.util.ArrayList;
 
 public class FileManager {
 	
+	private File sourceCode;
+	private BufferedReader rd;
 	
-	
-	public ArrayList<String> loadAndGetSourceCode(String path) {
-		ArrayList<String> code = new ArrayList<>();
-		File sourceCode = new File(path);
-		BufferedReader rd = null;
+	public FileManager(String path){
+		
+		sourceCode = new File(path);
+		rd = null;
 		try {
 			// Open the file for reading.
 			rd = new BufferedReader(new FileReader(sourceCode));		             	
-			// Read all contents of the file.
-			String inputLine = null;
+		}
+		catch  (Exception e) {
+			e.printStackTrace();
+		}
 		
-			while((inputLine = rd.readLine()) != null) {
-				code.add(inputLine);
-			}
+	}
+	
+	public StringBuilder loadAndGetSourceCode(String path) {
+		try {
+			return new StringBuilder (this.rd.readLine());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		catch(IOException ex) {
-			System.err.println(Constants.ERR_UPS);
-			ex.printStackTrace();
-		}
-		finally {
-			// Close the file.
-			try {
-				rd.close();
-			}
-			catch (IOException ex) {
-				System.err.println(Constants.ERR_UPS);
-				ex.printStackTrace();
-			}
-		}			
-		return code;
+		return new StringBuilder("");
 	}
 		
-	public void writeFile(String path, ArrayList<String> code) {
+	public static void writeFile(String path, ArrayList<String> code) {
 		try {
 			File file = new File(path);
 			// if the file not exists

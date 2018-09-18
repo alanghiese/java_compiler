@@ -1,14 +1,15 @@
 package semantic_actions;
 
-import java.io.BufferedReader;
 import utilities.Constants;
 import java.io.IOException;
+
+import java_compiler.SymbolTable;
 
 public class SA2 extends SemanticAction{
 	
 	//verify constants
 	@Override
-	public void execute(StringBuilder buffer, BufferedReader br, Integer token) throws IOException {
+	public void execute(StringBuilder buffer, StringBuilder line, Integer token, SymbolTable st) throws IOException {
 		//super.execute(buffer, br);
 		if (buffer.charAt(buffer.length()-1) == 'i') {
 			StringBuilder sAux = new StringBuilder();
