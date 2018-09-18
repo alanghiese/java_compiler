@@ -34,6 +34,7 @@ public class Decoder {
 				case "pass": return 270;
 				case "ID": return 270;
 				case "CTE": return 271;
+				case "END": return 272;
             }
             
             return -1;

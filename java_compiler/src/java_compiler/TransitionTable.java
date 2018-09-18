@@ -214,10 +214,8 @@ public class TransitionTable {
 			return 21;
 		else if(c == ';')
 			return 22; 
-		else if(c == '$')
-			return 23;
 		else 
-			return 24;
+			return 23;
 	
 	}
 	
