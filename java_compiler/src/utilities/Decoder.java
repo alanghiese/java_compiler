@@ -18,6 +18,7 @@ public class Decoder {
 				case "}": return (int)'}';
 				case ",": return (int)',';
 				case ";": return (int)';';
+			    	case "$": return (int)'$';
 				case ">=": return 257;
 				case "<=": return 258;
 				case "!=": return 259;
@@ -34,7 +35,6 @@ public class Decoder {
 				case "pass": return 270;
 				case "ID": return 270;
 				case "CTE": return 271;
-				case "END": return 272;
             }
             
             return -1;
