@@ -44,7 +44,7 @@ public class LexicalAnalizer {
         //----------------------------------------------------
         
         if(codeLine==null){
-            return Decoder.get("END");
+            return Decoder.get("$");
         }
         
         nextChar= codeLine.charAt(0);
