@@ -1,5 +1,6 @@
 package java_compiler;
 import semantic_actions.*;
+import utilities.Constants;
 
 public class TransitionTable {
 	
@@ -26,51 +27,51 @@ public class TransitionTable {
 		
 		// Fila 0 matriz transicion estados
 		
-		mte[0][0] = 1; 	mte[0][1] = 6; 	mte[0][2] = -1; 	mte[0][3] = -1; 	mte[0][4] = -1; 	mte[0][5] = 3;
+		mte[0][0] = 1; 	mte[0][1] = 6; 	mte[0][2] = Constants.ERR_TOKEN; 	mte[0][3] = Constants.ERR_TOKEN; 	mte[0][4] = Constants.ERR_TOKEN; 	mte[0][5] = 3;
 		mte[0][6] = FINAL_ST; 	mte[0][7] = FINAL_ST; 	mte[0][8] = FINAL_ST; 	mte[0][9] = FINAL_ST; 	mte[0][10] = 13; mte[0][11] = FINAL_ST;
 		mte[0][12] = 11; mte[0][13] = 9; mte[0][14] = 12; mte[0][15] = 8; mte[0][16] = 14; mte[0][17] = FINAL_ST;
 		mte[0][18] = FINAL_ST; mte[0][19] = FINAL_ST; mte[0][20] = FINAL_ST; mte[0][21] = FINAL_ST; mte[0][22] = FINAL_ST; mte[0][23] = 0;
-		mte[0][24] = 0; mte[0][25] = -1;
+		mte[0][24] = 0; mte[0][25] = Constants.ERR_TOKEN;
 		
 		// Fila 1 matriz transicion estados
 		
-		mte[1][0] = -1; mte[1][1] = 2; 	mte[1][2] = 2; 	mte[1][3] = 2; 	mte[1][4] = 2; 	mte[1][5] = 2;
-		mte[1][6] = -1;	mte[1][7] = -1; mte[1][8] = -1; mte[1][9] = -1; mte[1][10] = -1; mte[1][11] = -1;
-		mte[1][12] = -1; mte[1][13] = -1; mte[1][14] = -1; mte[1][15] = -1; mte[1][16] = -1; mte[1][17] = -1;
-		mte[1][18] = -1; mte[1][19] = -1; mte[1][20] = -1; mte[1][21] = -1; mte[1][22] = -1; mte[1][23] = -1;
-		mte[1][24] = -1; mte[1][25] = -1;
+		mte[1][0] = Constants.ERR_TOKEN; mte[1][1] = 2; 	mte[1][2] = 2; 	mte[1][3] = 2; 	mte[1][4] = 2; 	mte[1][5] = 2;
+		mte[1][6] = Constants.ERR_TOKEN;	mte[1][7] = Constants.ERR_TOKEN; mte[1][8] = Constants.ERR_TOKEN; mte[1][9] = Constants.ERR_TOKEN; mte[1][10] = Constants.ERR_TOKEN; mte[1][11] = Constants.ERR_TOKEN;
+		mte[1][12] = Constants.ERR_TOKEN; mte[1][13] = Constants.ERR_TOKEN; mte[1][14] = Constants.ERR_TOKEN; mte[1][15] = Constants.ERR_TOKEN; mte[1][16] = Constants.ERR_TOKEN; mte[1][17] = Constants.ERR_TOKEN;
+		mte[1][18] = Constants.ERR_TOKEN; mte[1][19] = Constants.ERR_TOKEN; mte[1][20] = Constants.ERR_TOKEN; mte[1][21] = Constants.ERR_TOKEN; mte[1][22] = Constants.ERR_TOKEN; mte[1][23] = Constants.ERR_TOKEN;
+		mte[1][24] = Constants.ERR_TOKEN; mte[1][25] = Constants.ERR_TOKEN;
 		
 		// Fila 2 matriz transicion estados
 		
-		mte[2][0] = -1; mte[2][1] = 2; mte[2][2] = 2; 	mte[2][3] = 2; 	mte[2][4] = 2; 	mte[2][5] = 2;
+		mte[2][0] = Constants.ERR_TOKEN; mte[2][1] = 2; mte[2][2] = 2; 	mte[2][3] = 2; 	mte[2][4] = 2; 	mte[2][5] = 2;
 		mte[2][6] = FINAL_ST; mte[2][7] = FINAL_ST; mte[2][8] = FINAL_ST; mte[2][9] = FINAL_ST; mte[2][10] = FINAL_ST; mte[2][11] = FINAL_ST;
 		mte[2][12] = FINAL_ST; mte[2][13] = FINAL_ST; mte[2][14] = FINAL_ST; mte[2][15] = FINAL_ST; mte[2][16] = FINAL_ST; mte[2][17] = FINAL_ST;
 		mte[2][18] = FINAL_ST; mte[2][19] = FINAL_ST; mte[2][20] = FINAL_ST; mte[2][21] = FINAL_ST; mte[2][22] = FINAL_ST; mte[2][23] = FINAL_ST;
-		mte[2][24] = FINAL_ST; mte[2][25] = -1;
+		mte[2][24] = FINAL_ST; mte[2][25] = Constants.ERR_TOKEN;
 		
 		// Fila 3 matriz transicion estados
 		
-		mte[3][0] = 4; mte[3][1] = -1; 	mte[3][2] = -1; mte[3][3] = -1; mte[3][4] = -1; mte[3][5] = 3;
-		mte[3][6] = -1;	mte[3][7] = -1; mte[3][8] = -1; mte[3][9] = -1; mte[3][10] = -1; mte[3][11] = -1;
-		mte[3][12] = -1; mte[3][13] = -1; mte[3][14] = -1; mte[3][15] = -1; mte[3][16] = -1; mte[3][17] = -1;
-		mte[3][18] = -1; mte[3][19] = -1; mte[3][20] = -1; mte[3][21] = -1; mte[3][22] = -1; mte[3][23] = -1;
-		mte[3][24] = -1; mte[3][25] = -1;
+		mte[3][0] = 4; mte[3][1] = Constants.ERR_TOKEN; 	mte[3][2] = Constants.ERR_TOKEN; mte[3][3] = Constants.ERR_TOKEN; mte[3][4] = Constants.ERR_TOKEN; mte[3][5] = 3;
+		mte[3][6] = Constants.ERR_TOKEN;	mte[3][7] = Constants.ERR_TOKEN; mte[3][8] = Constants.ERR_TOKEN; mte[3][9] = Constants.ERR_TOKEN; mte[3][10] = Constants.ERR_TOKEN; mte[3][11] = Constants.ERR_TOKEN;
+		mte[3][12] = Constants.ERR_TOKEN; mte[3][13] = Constants.ERR_TOKEN; mte[3][14] = Constants.ERR_TOKEN; mte[3][15] = Constants.ERR_TOKEN; mte[3][16] = Constants.ERR_TOKEN; mte[3][17] = Constants.ERR_TOKEN;
+		mte[3][18] = Constants.ERR_TOKEN; mte[3][19] = Constants.ERR_TOKEN; mte[3][20] = Constants.ERR_TOKEN; mte[3][21] = Constants.ERR_TOKEN; mte[3][22] = Constants.ERR_TOKEN; mte[3][23] = Constants.ERR_TOKEN;
+		mte[3][24] = Constants.ERR_TOKEN; mte[3][25] = Constants.ERR_TOKEN;
 
 		// Fila 4 matriz transicion estados
 		
-		mte[4][0] = -1; mte[4][1] = -1; mte[4][2] = 5; 	mte[4][3] = -1; mte[4][4] = 7; 	mte[4][5] = -1;
-		mte[4][6] = -1;	mte[4][7] = -1; mte[4][8] = -1; mte[4][9] = -1; mte[4][10] = -1; mte[4][11] = -1;
-		mte[4][12] = -1; mte[4][13] = -1; mte[4][14] = -1; mte[4][15] = -1; mte[4][16] = -1; mte[4][17] = -1;
-		mte[4][18] = -1; mte[4][19] = -1; mte[4][20] = -1; mte[4][21] = -1; mte[4][22] = -1; mte[4][23] = -1;
-		mte[4][24] = -1; mte[4][25] = -1;
+		mte[4][0] = Constants.ERR_TOKEN; mte[4][1] = Constants.ERR_TOKEN; mte[4][2] = 5; 	mte[4][3] = Constants.ERR_TOKEN; mte[4][4] = 7; 	mte[4][5] = Constants.ERR_TOKEN;
+		mte[4][6] = Constants.ERR_TOKEN;	mte[4][7] = Constants.ERR_TOKEN; mte[4][8] = Constants.ERR_TOKEN; mte[4][9] = Constants.ERR_TOKEN; mte[4][10] = Constants.ERR_TOKEN; mte[4][11] = Constants.ERR_TOKEN;
+		mte[4][12] = Constants.ERR_TOKEN; mte[4][13] = Constants.ERR_TOKEN; mte[4][14] = Constants.ERR_TOKEN; mte[4][15] = Constants.ERR_TOKEN; mte[4][16] = Constants.ERR_TOKEN; mte[4][17] = Constants.ERR_TOKEN;
+		mte[4][18] = Constants.ERR_TOKEN; mte[4][19] = Constants.ERR_TOKEN; mte[4][20] = Constants.ERR_TOKEN; mte[4][21] = Constants.ERR_TOKEN; mte[4][22] = Constants.ERR_TOKEN; mte[4][23] = Constants.ERR_TOKEN;
+		mte[4][24] = Constants.ERR_TOKEN; mte[4][25] = Constants.ERR_TOKEN;
 		
 		// Fila 5 matriz transicion estados
 		
-		mte[5][0] = -1; mte[5][1] = -1; mte[5][2] = -1; mte[5][3] = 7; 	mte[5][4] = -1; mte[5][5] = -1;
-		mte[5][6] = -1;	mte[5][7] = -1; mte[5][8] = -1; mte[5][9] = -1; mte[5][10] = -1; mte[5][11] = -1;
-		mte[5][12] = -1; mte[5][13] = -1; mte[5][14] = -1; mte[5][15] = -1; mte[5][16] = -1; mte[5][17] = -1;
-		mte[5][18] = -1; mte[5][19] = -1; mte[5][20] = -1; mte[5][21] = -1; mte[5][22] = -1; mte[5][23] = -1;
-		mte[5][24] = -1; mte[5][25] = -1;
+		mte[5][0] = Constants.ERR_TOKEN; mte[5][1] = Constants.ERR_TOKEN; mte[5][2] = Constants.ERR_TOKEN; mte[5][3] = 7; 	mte[5][4] = Constants.ERR_TOKEN; mte[5][5] = Constants.ERR_TOKEN;
+		mte[5][6] = Constants.ERR_TOKEN;	mte[5][7] = Constants.ERR_TOKEN; mte[5][8] = Constants.ERR_TOKEN; mte[5][9] = Constants.ERR_TOKEN; mte[5][10] = Constants.ERR_TOKEN; mte[5][11] = Constants.ERR_TOKEN;
+		mte[5][12] = Constants.ERR_TOKEN; mte[5][13] = Constants.ERR_TOKEN; mte[5][14] = Constants.ERR_TOKEN; mte[5][15] = Constants.ERR_TOKEN; mte[5][16] = Constants.ERR_TOKEN; mte[5][17] = Constants.ERR_TOKEN;
+		mte[5][18] = Constants.ERR_TOKEN; mte[5][19] = Constants.ERR_TOKEN; mte[5][20] = Constants.ERR_TOKEN; mte[5][21] = Constants.ERR_TOKEN; mte[5][22] = Constants.ERR_TOKEN; mte[5][23] = Constants.ERR_TOKEN;
+		mte[5][24] = Constants.ERR_TOKEN; mte[5][25] = Constants.ERR_TOKEN;
 		
 		// Fila 6 matriz transicion estados
 		
@@ -141,7 +142,7 @@ public class TransitionTable {
 		mte[14][0] = FINAL_ST; mte[14][1] = FINAL_ST; mte[14][2] = FINAL_ST; mte[14][3] = FINAL_ST; mte[14][4] = FINAL_ST; mte[14][5] = FINAL_ST;
 		mte[14][6] = FINAL_ST; mte[14][7] = FINAL_ST; mte[14][8] = FINAL_ST; mte[14][9] = FINAL_ST; mte[14][10] = FINAL_ST; mte[14][11] = FINAL_ST;
 		mte[14][12] = FINAL_ST; mte[14][13] = FINAL_ST; mte[14][14] = FINAL_ST; mte[14][15] = FINAL_ST; mte[14][16] = FINAL_ST; mte[14][17] = FINAL_ST;
-		mte[14][18] = FINAL_ST; mte[14][19] = FINAL_ST; mte[14][20] = FINAL_ST; mte[14][21] = FINAL_ST; mte[14][22] = FINAL_ST; mte[14][23] = -1;
+		mte[14][18] = FINAL_ST; mte[14][19] = FINAL_ST; mte[14][20] = FINAL_ST; mte[14][21] = FINAL_ST; mte[14][22] = FINAL_ST; mte[14][23] = Constants.ERR_TOKEN;
 		mte[14][24] = FINAL_ST; mte[14][25] = FINAL_ST;
 		
 		

@@ -19,7 +19,7 @@ public class FileManager {
 		rd = null;
 		try {
 			// Open the file for reading.
-			rd = new BufferedReader(new FileReader(sourceCode));		             	
+			rd = new BufferedReader(new FileReader(sourceCode));
 		}
 		catch  (Exception e) {
 			e.printStackTrace();
@@ -27,14 +27,20 @@ public class FileManager {
 		
 	}
 	
-	public StringBuilder loadAndGetSourceCode(String path) {
+	public StringBuilder getLine(){
+		String code = null;
 		try {
-			return new StringBuilder (this.rd.readLine());
+			code = rd.readLine();
+			
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
 		}
-		return new StringBuilder("");
+		if (code == null)
+			code = "$";
+		return new StringBuilder(code);
 	}
 		
 	public static void writeFile(String path, ArrayList<String> code) {

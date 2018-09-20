@@ -17,11 +17,13 @@ public class SymbolTable {
 	}
 	
 	public void addID(String name, IDInformation idi){
-		this.symbolTable.put(name, idi);
+		if (!this.symbolTable.containsKey(name))
+			this.symbolTable.put(name, idi);
 	}
 	
 	public void addCTN(String name, CTNInformation ctni) {
-		this.symbolTable.put(name, ctni);
+		if (!this.symbolTable.containsKey(name))
+			this.symbolTable.put(name, ctni);
 	}
 	
 	public SymbolInformation getLexeme(String name) {

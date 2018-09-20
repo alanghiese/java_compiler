@@ -1,11 +1,7 @@
 package java_compiler;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Set;
 
 import utilities.Constants;
@@ -16,13 +12,15 @@ public class test {
 	
 	
 	public static void main(String[] args) throws IOException {
-		/*FileManager fm = new FileManager();
-		ArrayList<String> code = fm.loadAndGetSourceCode(Constants.PATH + Constants.INPUT);
-		for(String line: code) {
-			System.out.println(line);
+		FileManager fm = new FileManager(Constants.PATH + Constants.INPUT);
+		StringBuilder code = fm.getLine();
+		while (!code.toString().equals("$")) {
+			System.out.println(code);
+			code = fm.getLine();
 		}
+		System.out.println(code);
 		
-		fm.writeFile(Constants.PATH + Constants.OUTPUT, code);
+		//FileManager.writeFile(Constants.PATH + Constants.OUTPUT, code);
 		
 	
 		SymbolTable st = new SymbolTable();
@@ -32,21 +30,12 @@ public class test {
 		}*/
 	
 		
-		TransitionTable tt = new TransitionTable();
+		StringBuilder s = new StringBuilder("Hola");
+		System.out.println(s);
+		s.setLength(0);
+		s.append("asd");
+		System.out.println(s);
 		
-		StringBuilder readed= new StringBuilder();
-	    BufferedReader fileBuffer = null;
-	    
-	    try {
-            fileBuffer= new BufferedReader(new FileReader(new File(Constants.PATH + Constants.INPUT)));
-        } catch (FileNotFoundException ex) {
-            System.err.println("No se pudo leer el archivo");
-        }
-		
-		char nextChar=(char) fileBuffer.read();
-        readed.append(nextChar);
-        
-        System.out.println(readed);
 	}
 	
 	
