@@ -211,8 +211,8 @@ public class TransitionTable {
 			return 23;
 		else if(c == ' ')
 			return 24;
-                else if(c == '\t')
-                        return 26;
+        else if(c == '\t')
+            return 26;
 		else
 			return 25;
 	
