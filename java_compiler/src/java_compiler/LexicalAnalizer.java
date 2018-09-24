@@ -30,21 +30,20 @@ public class LexicalAnalizer {
         Integer token=null;
         StringBuilder readed= new StringBuilder();
         
-        //Consumimos lineas vacías--------------------------
-        while(codeLine!=null && codeLine.length()==0){
+        String lineReaded;
+        
+        if (codeLine!=null && codeLine.length()==0){
             currentLine++;
-            String lineReaded;
-            try {
-                lineReaded = fileReader.readLine();
-                codeLine=(lineReaded==null?null:new StringBuilder(lineReaded));
-            } catch (IOException ex) {
-                Logger.getLogger(LexicalAnalizer.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            String lineReaded = fileReader.readLine();
+            codeLine=(lineReaded==null?null:new StringBuilder(lineReaded));
         }
-        //----------------------------------------------------
         
         if(codeLine==null){
             return Decoder.get("$");
+        }
+        
+        if (codeLine.length()==0){
+            codeLine.append('\n');
         }
         
         nextChar= codeLine.charAt(0);
