@@ -13,7 +13,7 @@ public class TransitionTable {
         //                  '\' -> 16   '(' -> 17           ')' -> 18   '{' -> 19
         //                  '}' -> 20   ',' -> 21           ';' -> 22   '$' -> 23
 	
-	static final int NUM_COL = 26;
+	static final int NUM_COL = 27;
 	static final int NUM_ROW = 15;
 	static final int FINAL_ST = NUM_ROW;
 	
@@ -215,8 +215,12 @@ public class TransitionTable {
 			return 21;
 		else if(c == ';')
 			return 22; 
-		else 
+		else  if(c == '\n')
 			return 23;
+		else if(c == ' ')
+			return 24;
+		else
+			return 25;
 	
 	}
 	
