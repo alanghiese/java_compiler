@@ -3,7 +3,6 @@ package semantic_actions;
 import java.io.IOException;
 
 import java_compiler.SymbolTable;
-import utilities.Decoder;
 
 public class SA4 extends SemanticAction{
 	

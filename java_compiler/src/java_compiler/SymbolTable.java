@@ -29,7 +29,7 @@ public class SymbolTable {
 	public SymbolInformation getLexeme(String name) {
 		SymbolInformation si = this.symbolTable.get(name);
 		if (si==null)
-			si = new SymbolInformation(-1);
+			si = new SymbolInformation();
 		return si;
 	}
 	

@@ -13,7 +13,7 @@ public class SA1 extends SA3{
 	public void execute(StringBuilder buffer, StringBuilder line, Integer token, SymbolTable st) throws IOException {
 		if (buffer.length()<=25) {
 			super.execute(new StringBuilder("ID"), line, token, st); 
-			st.addID(buffer.toString(), new IDInformation(token));
+			st.addID(buffer.toString(), new IDInformation());
 		}
 		else {
 			token = new Integer(Constants.ERR_TOKEN);

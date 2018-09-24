@@ -6,4 +6,5 @@ public class Constants {
 	public static String INPUT = "code.txt";
 	public static String OUTPUT = "finalCode.txt";
 	public static Integer ERR_TOKEN = -1;
+	public static Integer MAX_UN = 65536;
 }
