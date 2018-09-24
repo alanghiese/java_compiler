@@ -1,3 +1,7 @@
+%token MAY_IG MEN_IG DIST ASIG IF END_IF ELSE PRINT WHILE USINTEGER LINTEGER READONLY WRITE PASS ID CTE RETURN STRING
+
+%%
+
 prog    :   sent
         ;
 
@@ -29,27 +33,27 @@ exec    :   s_cond
         |   expr
         ;
 
-s_cond  :   IF '(' cond ')' block ELSE block END_IF     ????????
+s_cond  :   IF '(' cond ')' block ELSE block END_IF     /* ???????? */
         |   IF '(' cond ')' block END_IF
         ;
 
 ctrl    :   WHILE '(' cond ')' block,
         ;
 
-prt     :   PRINT'(' str ')'    ????????
+prt     :   PRINT'(' STRING ')'   
         ;
 
 cond    :   expr comp expr
         ;
 
-block   :   sent                ????????
+block   :   sent               /* ???????? */
         |   '{' sent '}'
         ;
 
 inv_fun :   ID '(' ID ';' lst_perm ')' ','
         ;
 
-expr    :   ID '=' expr
+expr    :   ID ' ASIG ' expr
         |   expr '+' expr
         |   expr '-' expr
         |   term
@@ -77,7 +81,9 @@ fact    :   ID
 comp    :   '='
         |   '<'
         |   '>'
-        |   '<='
-        |   '>='
-        |   '!='
+        |   'MEN_IG'
+        |   'MAY_IG'
+        |   'DIST'
         ;
+
+
