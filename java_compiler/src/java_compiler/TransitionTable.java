@@ -80,70 +80,62 @@ public class TransitionTable {
 		mte[6][12] = FINAL_ST; mte[6][13] = FINAL_ST; mte[6][14] = FINAL_ST; mte[6][15] = FINAL_ST; mte[6][16] = FINAL_ST; mte[6][17] = FINAL_ST;
 		mte[6][18] = FINAL_ST; mte[6][19] = FINAL_ST; mte[6][20] = FINAL_ST; mte[6][21] = FINAL_ST; mte[6][22] = FINAL_ST; mte[6][23] = FINAL_ST;
 		mte[6][24] = FINAL_ST; mte[6][25] = FINAL_ST; mte[6][26]= FINAL_ST;
-		
+						
 		// Fila 7 matriz transicion estados
-		
-		mte[7][0] = FINAL_ST; mte[7][1] = FINAL_ST; mte[7][2] = FINAL_ST; mte[7][3] = FINAL_ST; mte[7][4] = FINAL_ST; mte[7][5] = FINAL_ST;
-		mte[7][6] = FINAL_ST; mte[7][7] = FINAL_ST; mte[7][8] = FINAL_ST; mte[7][9] = FINAL_ST; mte[7][10] = FINAL_ST; mte[7][11] = FINAL_ST;
-		mte[7][12] = FINAL_ST; mte[7][13] = FINAL_ST; mte[7][14] = FINAL_ST; mte[7][15] = FINAL_ST; mte[7][16] = FINAL_ST; mte[7][17] = FINAL_ST;
-		mte[7][18] = FINAL_ST; mte[7][19] = FINAL_ST; mte[7][20] = FINAL_ST; mte[7][21] = FINAL_ST; mte[7][22] = FINAL_ST; mte[7][23] = FINAL_ST;
-		mte[7][24] = FINAL_ST; mte[7][25] = FINAL_ST; mte[7][26]= FINAL_ST;
+	
+		mte[7][0] = 8; mte[7][1] = 8; mte[7][2] = 8; mte[7][3] = 8; mte[7][4] = 8; mte[7][5] = 8;
+		mte[7][6] = 8;	mte[7][7] = 8; mte[7][8] = 8; mte[7][9] = 8; mte[7][10] = 8; mte[7][11] = 8;
+		mte[7][12] = 8; mte[7][13] = 8; mte[7][14] = 8; mte[7][15] = 0; mte[7][16] = 8; mte[7][17] = 8;
+		mte[7][18] = 8; mte[7][19] = 8; mte[7][20] = 8; mte[7][21] = 8; mte[7][22] = 8; mte[7][23] = 8;
+		mte[7][24] = 8; mte[7][25] = 8; mte[7][26]= 8;
 		
 		// Fila 8 matriz transicion estados
-	
-		mte[8][0] = 8; mte[8][1] = 8; mte[8][2] = 8; mte[8][3] = 8; mte[8][4] = 8; mte[8][5] = 8;
-		mte[8][6] = 8;	mte[8][7] = 8; mte[8][8] = 8; mte[8][9] = 8; mte[8][10] = 8; mte[8][11] = 8;
-		mte[8][12] = 8; mte[8][13] = 8; mte[8][14] = 8; mte[8][15] = 0; mte[8][16] = 8; mte[8][17] = 8;
-		mte[8][18] = 8; mte[8][19] = 8; mte[8][20] = 8; mte[8][21] = 8; mte[8][22] = 8; mte[8][23] = 8;
-		mte[8][24] = 8; mte[8][25] = 8; mte[8][26]= 8;
 		
+		mte[8][0] = FINAL_ST; mte[8][1] = FINAL_ST; mte[8][2] = FINAL_ST; mte[8][3] = FINAL_ST; mte[8][4] = FINAL_ST; mte[8][5] = FINAL_ST;
+		mte[8][6] = FINAL_ST; mte[8][7] = FINAL_ST; mte[8][8] = FINAL_ST; mte[8][9] = FINAL_ST; mte[8][10] = FINAL_ST; mte[8][11] = 10;
+		mte[8][12] = FINAL_ST; mte[8][13] = FINAL_ST; mte[8][14] = FINAL_ST; mte[8][15] = FINAL_ST; mte[8][16] = FINAL_ST; mte[8][17] = FINAL_ST;
+		mte[8][18] = FINAL_ST; mte[8][19] = FINAL_ST; mte[8][20] = FINAL_ST; mte[8][21] = FINAL_ST; mte[8][22] = FINAL_ST; mte[8][23] = FINAL_ST;
+		mte[8][24] = FINAL_ST; mte[8][25] = FINAL_ST; mte[8][26]= FINAL_ST;
+
 		// Fila 9 matriz transicion estados
 		
 		mte[9][0] = FINAL_ST; mte[9][1] = FINAL_ST; mte[9][2] = FINAL_ST; mte[9][3] = FINAL_ST; mte[9][4] = FINAL_ST; mte[9][5] = FINAL_ST;
-		mte[9][6] = FINAL_ST; mte[9][7] = FINAL_ST; mte[9][8] = FINAL_ST; mte[9][9] = FINAL_ST; mte[9][10] = FINAL_ST; mte[9][11] = 10;
+		mte[9][6] = FINAL_ST; mte[9][7] = FINAL_ST; mte[9][8] = FINAL_ST; mte[9][9] = FINAL_ST; mte[9][10] = FINAL_ST; mte[9][11] = FINAL_ST;
 		mte[9][12] = FINAL_ST; mte[9][13] = FINAL_ST; mte[9][14] = FINAL_ST; mte[9][15] = FINAL_ST; mte[9][16] = FINAL_ST; mte[9][17] = FINAL_ST;
 		mte[9][18] = FINAL_ST; mte[9][19] = FINAL_ST; mte[9][20] = FINAL_ST; mte[9][21] = FINAL_ST; mte[9][22] = FINAL_ST; mte[9][23] = FINAL_ST;
 		mte[9][24] = FINAL_ST; mte[9][25] = FINAL_ST; mte[9][26]= FINAL_ST;
-
+	
 		// Fila 10 matriz transicion estados
 		
 		mte[10][0] = FINAL_ST; mte[10][1] = FINAL_ST; mte[10][2] = FINAL_ST; mte[10][3] = FINAL_ST; mte[10][4] = FINAL_ST; mte[10][5] = FINAL_ST;
-		mte[10][6] = FINAL_ST; mte[10][7] = FINAL_ST; mte[10][8] = FINAL_ST; mte[10][9] = FINAL_ST; mte[10][10] = FINAL_ST; mte[10][11] = FINAL_ST;
+		mte[10][6] = FINAL_ST; mte[10][7] = FINAL_ST; mte[10][8] = FINAL_ST; mte[10][9] = FINAL_ST; mte[10][10] = FINAL_ST; mte[10][11] = 10;
 		mte[10][12] = FINAL_ST; mte[10][13] = FINAL_ST; mte[10][14] = FINAL_ST; mte[10][15] = FINAL_ST; mte[10][16] = FINAL_ST; mte[10][17] = FINAL_ST;
 		mte[10][18] = FINAL_ST; mte[10][19] = FINAL_ST; mte[10][20] = FINAL_ST; mte[10][21] = FINAL_ST; mte[10][22] = FINAL_ST; mte[10][23] = FINAL_ST;
 		mte[10][24] = FINAL_ST; mte[10][25] = FINAL_ST; mte[10][26]= FINAL_ST;
-	
+		
 		// Fila 11 matriz transicion estados
 		
-		mte[11][0] = FINAL_ST; mte[11][1] = FINAL_ST; mte[11][2] = FINAL_ST; mte[11][3] = FINAL_ST; mte[11][4] = FINAL_ST; mte[11][5] = FINAL_ST;
-		mte[11][6] = FINAL_ST; mte[11][7] = FINAL_ST; mte[11][8] = FINAL_ST; mte[11][9] = FINAL_ST; mte[11][10] = FINAL_ST; mte[11][11] = 10;
-		mte[11][12] = FINAL_ST; mte[11][13] = FINAL_ST; mte[11][14] = FINAL_ST; mte[11][15] = FINAL_ST; mte[11][16] = FINAL_ST; mte[11][17] = FINAL_ST;
-		mte[11][18] = FINAL_ST; mte[11][19] = FINAL_ST; mte[11][20] = FINAL_ST; mte[11][21] = FINAL_ST; mte[11][22] = FINAL_ST; mte[11][23] = FINAL_ST;
-		mte[11][24] = FINAL_ST; mte[11][25] = FINAL_ST; mte[11][26]= FINAL_ST;
+		mte[11][0] = Constants.ERR_TOKEN; mte[11][1] = Constants.ERR_TOKEN; mte[11][2] = Constants.ERR_TOKEN; mte[11][3] = Constants.ERR_TOKEN; mte[11][4] = Constants.ERR_TOKEN; mte[11][5] = Constants.ERR_TOKEN;
+		mte[11][6] = Constants.ERR_TOKEN; mte[11][7] = Constants.ERR_TOKEN; mte[11][8] = Constants.ERR_TOKEN; mte[11][9] = Constants.ERR_TOKEN; mte[11][10] = Constants.ERR_TOKEN; mte[11][11] = 10;
+		mte[11][12] = Constants.ERR_TOKEN; mte[11][13] = Constants.ERR_TOKEN; mte[11][14] = Constants.ERR_TOKEN; mte[11][15] = Constants.ERR_TOKEN; mte[11][16] = Constants.ERR_TOKEN; mte[11][17] = Constants.ERR_TOKEN;
+		mte[11][18] = Constants.ERR_TOKEN; mte[11][19] = Constants.ERR_TOKEN; mte[11][20] = Constants.ERR_TOKEN; mte[11][21] = Constants.ERR_TOKEN; mte[11][22] = Constants.ERR_TOKEN; mte[11][23] = Constants.ERR_TOKEN;
+		mte[11][24] = Constants.ERR_TOKEN; mte[11][25] = Constants.ERR_TOKEN; mte[11][26]= Constants.ERR_TOKEN;
 		
 		// Fila 12 matriz transicion estados
 		
 		mte[12][0] = Constants.ERR_TOKEN; mte[12][1] = Constants.ERR_TOKEN; mte[12][2] = Constants.ERR_TOKEN; mte[12][3] = Constants.ERR_TOKEN; mte[12][4] = Constants.ERR_TOKEN; mte[12][5] = Constants.ERR_TOKEN;
 		mte[12][6] = Constants.ERR_TOKEN; mte[12][7] = Constants.ERR_TOKEN; mte[12][8] = Constants.ERR_TOKEN; mte[12][9] = Constants.ERR_TOKEN; mte[12][10] = Constants.ERR_TOKEN; mte[12][11] = 10;
 		mte[12][12] = Constants.ERR_TOKEN; mte[12][13] = Constants.ERR_TOKEN; mte[12][14] = Constants.ERR_TOKEN; mte[12][15] = Constants.ERR_TOKEN; mte[12][16] = Constants.ERR_TOKEN; mte[12][17] = Constants.ERR_TOKEN;
-		mte[12][18] = Constants.ERR_TOKEN; mte[12][19] = Constants.ERR_TOKEN; mte[12][20] = Constants.ERR_TOKEN; mte[12][21] = Constants.ERR_TOKEN; mte[12][22] = Constants.ERR_TOKEN; mte[12][23] = Constants.ERR_TOKEN;
-		mte[12][24] = Constants.ERR_TOKEN; mte[12][25] = Constants.ERR_TOKEN; mte[12][26]= Constants.ERR_TOKEN;
+		mte[12][18] = Constants.ERR_TOKEN; mte[12][19] = Constants.ERR_TOKEN; mte[12][20] = Constants.ERR_TOKEN; mte[12][21] = Constants.ERR_TOKEN; mte[12][22] = Constants.ERR_TOKEN;
+                mte[12][23] = Constants.ERR_TOKEN; mte[12][24] = Constants.ERR_TOKEN; mte[12][25] = Constants.ERR_TOKEN; mte[12][26]= Constants.ERR_TOKEN;
 		
 		// Fila 13 matriz transicion estados
 		
-		mte[13][0] = Constants.ERR_TOKEN; mte[13][1] = Constants.ERR_TOKEN; mte[13][2] = Constants.ERR_TOKEN; mte[13][3] = Constants.ERR_TOKEN; mte[13][4] = Constants.ERR_TOKEN; mte[13][5] = Constants.ERR_TOKEN;
-		mte[13][6] = Constants.ERR_TOKEN; mte[13][7] = Constants.ERR_TOKEN; mte[13][8] = Constants.ERR_TOKEN; mte[13][9] = Constants.ERR_TOKEN; mte[13][10] = Constants.ERR_TOKEN; mte[13][11] = 10;
-		mte[13][12] = Constants.ERR_TOKEN; mte[13][13] = Constants.ERR_TOKEN; mte[13][14] = Constants.ERR_TOKEN; mte[13][15] = Constants.ERR_TOKEN; mte[13][16] = Constants.ERR_TOKEN; mte[13][17] = Constants.ERR_TOKEN;
-		mte[13][18] = Constants.ERR_TOKEN; mte[13][19] = Constants.ERR_TOKEN; mte[13][20] = Constants.ERR_TOKEN; mte[13][21] = Constants.ERR_TOKEN; mte[13][22] = Constants.ERR_TOKEN;
-                mte[13][23] = Constants.ERR_TOKEN; mte[13][24] = Constants.ERR_TOKEN; mte[13][25] = Constants.ERR_TOKEN; mte[13][26]= Constants.ERR_TOKEN;
-		
-		// Fila 14 matriz transicion estados
-		
-		mte[14][0] = FINAL_ST; mte[14][1] = FINAL_ST; mte[14][2] = FINAL_ST; mte[14][3] = FINAL_ST; mte[14][4] = FINAL_ST; mte[14][5] = FINAL_ST;
-		mte[14][6] = FINAL_ST; mte[14][7] = FINAL_ST; mte[14][8] = FINAL_ST; mte[14][9] = FINAL_ST; mte[14][10] = FINAL_ST; mte[14][11] = FINAL_ST;
-		mte[14][12] = FINAL_ST; mte[14][13] = FINAL_ST; mte[14][14] = FINAL_ST; mte[14][15] = FINAL_ST; mte[14][16] = FINAL_ST; mte[14][17] = FINAL_ST;
-		mte[14][18] = FINAL_ST; mte[14][19] = FINAL_ST; mte[14][20] = FINAL_ST; mte[14][21] = FINAL_ST; mte[14][22] = FINAL_ST; mte[14][23] = Constants.ERR_TOKEN;
-		mte[14][24] = FINAL_ST; mte[14][25] = FINAL_ST; mte[14][26]= FINAL_ST;
+		mte[13][0] = FINAL_ST; mte[13][1] = FINAL_ST; mte[13][2] = FINAL_ST; mte[13][3] = FINAL_ST; mte[13][4] = FINAL_ST; mte[13][5] = FINAL_ST;
+		mte[13][6] = FINAL_ST; mte[13][7] = FINAL_ST; mte[13][8] = FINAL_ST; mte[13][9] = FINAL_ST; mte[13][10] = FINAL_ST; mte[13][11] = FINAL_ST;
+		mte[13][12] = FINAL_ST; mte[13][13] = FINAL_ST; mte[13][14] = FINAL_ST; mte[13][15] = FINAL_ST; mte[13][16] = FINAL_ST; mte[13][17] = FINAL_ST;
+		mte[13][18] = FINAL_ST; mte[13][19] = FINAL_ST; mte[13][20] = FINAL_ST; mte[13][21] = FINAL_ST; mte[13][22] = FINAL_ST; mte[13][23] = Constants.ERR_TOKEN;
+		mte[13][24] = FINAL_ST; mte[13][25] = FINAL_ST; mte[13][26]= FINAL_ST;
 		
 		
 	}	
