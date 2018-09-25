@@ -6,6 +6,7 @@ import utilities.Decoder;
 import utilities.Token;
 
 import java.io.IOException;
+import java.math.BigInteger;
 
 import java_compiler.SymbolTable;
 
@@ -24,8 +25,10 @@ public class SA2 extends SemanticAction{
 			for (int i = 0; i < buffer.length()-3; i++)
 				sAux.append(buffer.charAt(i));
 			Integer number = Integer.parseInt(sAux.toString());
-			if (number < 0 && number > Constants.MAX_UN)
+			if (number < 0 || number > Constants.MAX_UN) {
+				token.setInfo("WARNING: variable fuera de rango en la linea: ");
 				sAux = new StringBuilder(Constants.MAX_UN);
+			}
 				
 				
 		}
@@ -33,10 +36,12 @@ public class SA2 extends SemanticAction{
 			type = new StringBuilder(Constants.L_INT);
 			for (int i = 0; i < buffer.length()-2; i++)
 				sAux.append(buffer.charAt(i));
-			Double number = (double) Integer.parseInt(sAux.toString());
-			
-			if (number < 0 && number > Integer.MAX_VALUE+1)
-				sAux = new StringBuilder(Integer.MAX_VALUE+1);;
+			Long number = Long.parseLong(sAux.toString());
+			if (number < 0 || number > Integer.MAX_VALUE ) {
+				token.setInfo("WARNING: variable fuera de rango en la linea: ");
+				sAux.length();
+				sAux.append(Integer.MAX_VALUE);
+			}
 		}
 		
 		Decoder.get(Constants.CTE);

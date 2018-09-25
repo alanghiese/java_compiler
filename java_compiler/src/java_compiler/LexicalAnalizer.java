@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import utilities.Constants;
 import utilities.Decoder;
 import utilities.Token;
 
@@ -78,7 +80,7 @@ public class LexicalAnalizer {
 	            	nextChar = '\n';
 	            	count++;
 	            }
-
+	            
 	           
 	            /*System.out.println("-------");
 	            System.out.println(nextChar);
@@ -89,7 +91,8 @@ public class LexicalAnalizer {
 	        }
     	}
     	
-        
+        if (token.getToken() == Constants.ERR_TOKEN || token.getInfo() != "")
+        	System.out.println(token.getInfo() + this.currentLine);
         
         return token.getToken();
     }
