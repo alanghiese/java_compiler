@@ -17,8 +17,10 @@ public class LexicalAnalizer {
     SymbolTable symbolTable = new SymbolTable();
     int currentLine=0;
     StringBuilder codeLine=new StringBuilder(0);
+    ParserVal yylval;
     
-    public LexicalAnalizer(String path) {
+    public LexicalAnalizer(String path, ParserVal yylval) {
+    	this.yylval = yylval;
         try {
             fileReader= new BufferedReader(new FileReader(path));
         } catch (FileNotFoundException ex) {
@@ -53,7 +55,7 @@ public class LexicalAnalizer {
 	        while (status != TransitionTable.FINAL_ST && !codeLine.equals(Constants.EMPTY_SB)){
 	        	
 	        	nextChar = codeLine.charAt(0);
-	            transitions.getAction(status, nextChar).execute(buffer,codeLine,token, symbolTable);  
+	            transitions.getAction(status, nextChar).execute(buffer,codeLine,token, symbolTable, yylval);  
 	            status = transitions.getNextState(status, nextChar);
 	            
 	            

@@ -597,7 +597,7 @@ public void yyerror(String s) {
 }
 public Parser(String path)
 {
-  this.la = new LexicalAnalizer(path);
+  this.la = new LexicalAnalizer(path,yylval);
 }
 
 

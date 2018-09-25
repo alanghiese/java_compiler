@@ -18,10 +18,10 @@ public class CTNInformation extends SymbolInformation{
 		return this.type;
 	}
 
-        @Override
-        public String toString() {
-            return "Constant - Type: " + type;
-        }
+    @Override
+    public String toString() {
+        return "Constant - Type: " + type;
+    }
         
         
 
