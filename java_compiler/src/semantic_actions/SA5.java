@@ -18,6 +18,10 @@ public class SA5 implements SemanticAction {
 		CTNInformation ctni = new CTNInformation();
 		ctni.setType(Constants.STRING);
 		st.addCTN(buffer.toString(), ctni);
+
+		yylval = new ParserVal();
+		yylval.obj = token;
+		yylval.sval = new String(buffer.toString());
 	}
 
 }

@@ -42,5 +42,5 @@ public class Decoder {
             
             return -1;
 	}
-	
+
 }

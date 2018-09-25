@@ -12,9 +12,14 @@ public class SA6 implements SemanticAction {
 	public void execute(StringBuilder buffer, StringBuilder line, Token token, SymbolTable st, ParserVal yylval) {
 		buffer.append(line.charAt(0));
 		line.deleteCharAt(0);
-		token.setToken(Decoder.get(buffer.toString()));	
+		token.setToken(Decoder.get(buffer.toString()));
 		token.setLex(buffer.toString());
 		token.setMsg(Constants.SYMBOL);
+
+		yylval = new ParserVal();
+		yylval.obj = token;
+		yylval.sval = new String(buffer.toString());
+
 		buffer.setLength(0);
 	}
 

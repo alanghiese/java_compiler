@@ -11,20 +11,20 @@ public class SA1 implements SemanticAction {
 
 	@Override
 	public void execute(StringBuilder buffer, StringBuilder line, Token token, SymbolTable st, ParserVal yylval) {
-		
-		if (buffer.length()>Constants.SIZE_MAX_ID) {
+
+		if (buffer.length() > Constants.SIZE_MAX_ID) {
 			token.setToken(Constants.ERR_TOKEN);
 			token.setMsg("ERROR: ID mal definido en la linea: ");
-		}
-		else {
+		} else {
 			token.setToken(Decoder.get(Constants.ID));
 			token.setMsg(Constants.ID);
 			token.setLex(buffer.toString());
 			IDInformation idi = new IDInformation();
 			st.addID(buffer.toString(), idi);
+			yylval = new ParserVal();
+			yylval.obj = token;
+			yylval.sval = new String(buffer.toString());
 		}
-		
-		
 
 	}
 

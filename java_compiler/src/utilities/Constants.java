@@ -20,5 +20,5 @@ public class Constants {
 	public static Integer SIZE_MAX_ID = 25;
 	public static String RES_WORD = "Reserved word";
 	public static String SYMBOL = "Symbol";
-	
+
 }
