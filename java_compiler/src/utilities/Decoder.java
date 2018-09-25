@@ -33,10 +33,10 @@ public class Decoder {
 				case "readonly": return 268;
 				case "write": return 269;
 				case "pass": return 270;
-				case "ID": return 270;
-				case "CTE": return 271;
-				case "RETURN": return 272;
-				case "STRING": return 273;
+				case "ID": return 271;
+				case "CTE": return 272;
+				case "return": return 273;
+				case "STRING": return 274;
 				
             }
             

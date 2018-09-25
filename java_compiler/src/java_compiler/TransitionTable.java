@@ -14,7 +14,7 @@ public class TransitionTable {
         //                  '}' -> 20   ',' -> 21           ';' -> 22   '$' -> 23
 	
 	static final int NUM_COL = 27;
-	static final int NUM_ROW = 15;
+	static final int NUM_ROW = 14;
 	static final int FINAL_ST = NUM_ROW;
 	
 	
@@ -28,9 +28,9 @@ public class TransitionTable {
 		
 		// Fila 0 matriz transicion estados
 		
-		mte[0][0] = 1; mte[0][1] = 6; mte[0][2] = Constants.ERR_TOKEN; mte[0][3] = Constants.ERR_TOKEN; mte[0][4] = Constants.ERR_TOKEN; mte[0][5] = 3;
-		mte[0][6] = FINAL_ST; mte[0][7] = FINAL_ST; mte[0][8] = FINAL_ST; mte[0][9] = FINAL_ST; mte[0][10] = 13; mte[0][11] = FINAL_ST;
-		mte[0][12] = 11; mte[0][13] = 9; mte[0][14] = 12; mte[0][15] = 8; mte[0][16] = 14; mte[0][17] = FINAL_ST;
+		mte[0][0] = 1; mte[0][1] = 6; mte[0][2] = 6; mte[0][3] = 6; mte[0][4] = 6; mte[0][5] = 3;
+		mte[0][6] = FINAL_ST; mte[0][7] = FINAL_ST; mte[0][8] = FINAL_ST; mte[0][9] = FINAL_ST; mte[0][10] = 12; mte[0][11] = FINAL_ST;
+		mte[0][12] = 10; mte[0][13] = 8; mte[0][14] = 11; mte[0][15] = 7; mte[0][16] = 13; mte[0][17] = FINAL_ST;
 		mte[0][18] = FINAL_ST; mte[0][19] = FINAL_ST; mte[0][20] = FINAL_ST; mte[0][21] = FINAL_ST; mte[0][22] = FINAL_ST; mte[0][23] = 0;
 		mte[0][24] = 0; mte[0][25] = Constants.ERR_TOKEN; mte[0][26]= 0;
 		
@@ -60,7 +60,7 @@ public class TransitionTable {
 
 		// Fila 4 matriz transicion estados
 		
-		mte[4][0] = Constants.ERR_TOKEN; mte[4][1] = Constants.ERR_TOKEN; mte[4][2] = 5; mte[4][3] = Constants.ERR_TOKEN; mte[4][4] = 7; mte[4][5] = Constants.ERR_TOKEN;
+		mte[4][0] = Constants.ERR_TOKEN; mte[4][1] = Constants.ERR_TOKEN; mte[4][2] = 5; mte[4][3] = Constants.ERR_TOKEN; mte[4][4] = FINAL_ST; mte[4][5] = Constants.ERR_TOKEN;
 		mte[4][6] = Constants.ERR_TOKEN; mte[4][7] = Constants.ERR_TOKEN; mte[4][8] = Constants.ERR_TOKEN; mte[4][9] = Constants.ERR_TOKEN; mte[4][10] = Constants.ERR_TOKEN; mte[4][11] = Constants.ERR_TOKEN;
 		mte[4][12] = Constants.ERR_TOKEN; mte[4][13] = Constants.ERR_TOKEN; mte[4][14] = Constants.ERR_TOKEN; mte[4][15] = Constants.ERR_TOKEN; mte[4][16] = Constants.ERR_TOKEN; mte[4][17] = Constants.ERR_TOKEN;
 		mte[4][18] = Constants.ERR_TOKEN; mte[4][19] = Constants.ERR_TOKEN; mte[4][20] = Constants.ERR_TOKEN; mte[4][21] = Constants.ERR_TOKEN; mte[4][22] = Constants.ERR_TOKEN; mte[4][23] = Constants.ERR_TOKEN;
@@ -68,7 +68,7 @@ public class TransitionTable {
 		
 		// Fila 5 matriz transicion estados
 		
-		mte[5][0] = Constants.ERR_TOKEN; mte[5][1] = Constants.ERR_TOKEN; mte[5][2] = Constants.ERR_TOKEN; mte[5][3] = 7; 	mte[5][4] = Constants.ERR_TOKEN; mte[5][5] = Constants.ERR_TOKEN;
+		mte[5][0] = Constants.ERR_TOKEN; mte[5][1] = Constants.ERR_TOKEN; mte[5][2] = Constants.ERR_TOKEN; mte[5][3] = FINAL_ST; 	mte[5][4] = Constants.ERR_TOKEN; mte[5][5] = Constants.ERR_TOKEN;
 		mte[5][6] = Constants.ERR_TOKEN; mte[5][7] = Constants.ERR_TOKEN; mte[5][8] = Constants.ERR_TOKEN; mte[5][9] = Constants.ERR_TOKEN; mte[5][10] = Constants.ERR_TOKEN; mte[5][11] = Constants.ERR_TOKEN;
 		mte[5][12] = Constants.ERR_TOKEN; mte[5][13] = Constants.ERR_TOKEN; mte[5][14] = Constants.ERR_TOKEN; mte[5][15] = Constants.ERR_TOKEN; mte[5][16] = Constants.ERR_TOKEN; mte[5][17] = Constants.ERR_TOKEN;
 		mte[5][18] = Constants.ERR_TOKEN; mte[5][19] = Constants.ERR_TOKEN; mte[5][20] = Constants.ERR_TOKEN; mte[5][21] = Constants.ERR_TOKEN; mte[5][22] = Constants.ERR_TOKEN; mte[5][23] = Constants.ERR_TOKEN;
@@ -84,16 +84,16 @@ public class TransitionTable {
 						
 		// Fila 7 matriz transicion estados
 	
-		mte[7][0] = 8; mte[7][1] = 8; mte[7][2] = 8; mte[7][3] = 8; mte[7][4] = 8; mte[7][5] = 8;
-		mte[7][6] = 8;	mte[7][7] = 8; mte[7][8] = 8; mte[7][9] = 8; mte[7][10] = 8; mte[7][11] = 8;
-		mte[7][12] = 8; mte[7][13] = 8; mte[7][14] = 8; mte[7][15] = 0; mte[7][16] = 8; mte[7][17] = 8;
-		mte[7][18] = 8; mte[7][19] = 8; mte[7][20] = 8; mte[7][21] = 8; mte[7][22] = 8; mte[7][23] = 8;
-		mte[7][24] = 8; mte[7][25] = 8; mte[7][26]= 8;
+		mte[7][0] = 7; mte[7][1] = 7; mte[7][2] = 7; mte[7][3] = 7; mte[7][4] = 7; mte[7][5] = 7;
+		mte[7][6] = 7;	mte[7][7] = 7; mte[7][8] = 7; mte[7][9] = 7; mte[7][10] = 7; mte[7][11] = 7;
+		mte[7][12] = 7; mte[7][13] = 7; mte[7][14] = 7; mte[7][15] = 0; mte[7][16] = 7; mte[7][17] = 7;
+		mte[7][18] = 7; mte[7][19] = 7; mte[7][20] = 7; mte[7][21] = 7; mte[7][22] = 7; mte[7][23] = 7;
+		mte[7][24] = 7; mte[7][25] = 7; mte[7][26]= 7;
 		
 		// Fila 8 matriz transicion estados
 		
 		mte[8][0] = FINAL_ST; mte[8][1] = FINAL_ST; mte[8][2] = FINAL_ST; mte[8][3] = FINAL_ST; mte[8][4] = FINAL_ST; mte[8][5] = FINAL_ST;
-		mte[8][6] = FINAL_ST; mte[8][7] = FINAL_ST; mte[8][8] = FINAL_ST; mte[8][9] = FINAL_ST; mte[8][10] = FINAL_ST; mte[8][11] = 10;
+		mte[8][6] = FINAL_ST; mte[8][7] = FINAL_ST; mte[8][8] = FINAL_ST; mte[8][9] = FINAL_ST; mte[8][10] = FINAL_ST; mte[8][11] = 9;
 		mte[8][12] = FINAL_ST; mte[8][13] = FINAL_ST; mte[8][14] = FINAL_ST; mte[8][15] = FINAL_ST; mte[8][16] = FINAL_ST; mte[8][17] = FINAL_ST;
 		mte[8][18] = FINAL_ST; mte[8][19] = FINAL_ST; mte[8][20] = FINAL_ST; mte[8][21] = FINAL_ST; mte[8][22] = FINAL_ST; mte[8][23] = FINAL_ST;
 		mte[8][24] = FINAL_ST; mte[8][25] = FINAL_ST; mte[8][26]= FINAL_ST;
@@ -109,7 +109,7 @@ public class TransitionTable {
 		// Fila 10 matriz transicion estados
 		
 		mte[10][0] = FINAL_ST; mte[10][1] = FINAL_ST; mte[10][2] = FINAL_ST; mte[10][3] = FINAL_ST; mte[10][4] = FINAL_ST; mte[10][5] = FINAL_ST;
-		mte[10][6] = FINAL_ST; mte[10][7] = FINAL_ST; mte[10][8] = FINAL_ST; mte[10][9] = FINAL_ST; mte[10][10] = FINAL_ST; mte[10][11] = 10;
+		mte[10][6] = FINAL_ST; mte[10][7] = FINAL_ST; mte[10][8] = FINAL_ST; mte[10][9] = FINAL_ST; mte[10][10] = FINAL_ST; mte[10][11] = 9;
 		mte[10][12] = FINAL_ST; mte[10][13] = FINAL_ST; mte[10][14] = FINAL_ST; mte[10][15] = FINAL_ST; mte[10][16] = FINAL_ST; mte[10][17] = FINAL_ST;
 		mte[10][18] = FINAL_ST; mte[10][19] = FINAL_ST; mte[10][20] = FINAL_ST; mte[10][21] = FINAL_ST; mte[10][22] = FINAL_ST; mte[10][23] = FINAL_ST;
 		mte[10][24] = FINAL_ST; mte[10][25] = FINAL_ST; mte[10][26]= FINAL_ST;
@@ -117,7 +117,7 @@ public class TransitionTable {
 		// Fila 11 matriz transicion estados
 		
 		mte[11][0] = Constants.ERR_TOKEN; mte[11][1] = Constants.ERR_TOKEN; mte[11][2] = Constants.ERR_TOKEN; mte[11][3] = Constants.ERR_TOKEN; mte[11][4] = Constants.ERR_TOKEN; mte[11][5] = Constants.ERR_TOKEN;
-		mte[11][6] = Constants.ERR_TOKEN; mte[11][7] = Constants.ERR_TOKEN; mte[11][8] = Constants.ERR_TOKEN; mte[11][9] = Constants.ERR_TOKEN; mte[11][10] = Constants.ERR_TOKEN; mte[11][11] = 10;
+		mte[11][6] = Constants.ERR_TOKEN; mte[11][7] = Constants.ERR_TOKEN; mte[11][8] = Constants.ERR_TOKEN; mte[11][9] = Constants.ERR_TOKEN; mte[11][10] = Constants.ERR_TOKEN; mte[11][11] = 9;
 		mte[11][12] = Constants.ERR_TOKEN; mte[11][13] = Constants.ERR_TOKEN; mte[11][14] = Constants.ERR_TOKEN; mte[11][15] = Constants.ERR_TOKEN; mte[11][16] = Constants.ERR_TOKEN; mte[11][17] = Constants.ERR_TOKEN;
 		mte[11][18] = Constants.ERR_TOKEN; mte[11][19] = Constants.ERR_TOKEN; mte[11][20] = Constants.ERR_TOKEN; mte[11][21] = Constants.ERR_TOKEN; mte[11][22] = Constants.ERR_TOKEN; mte[11][23] = Constants.ERR_TOKEN;
 		mte[11][24] = Constants.ERR_TOKEN; mte[11][25] = Constants.ERR_TOKEN; mte[11][26]= Constants.ERR_TOKEN;
@@ -125,18 +125,18 @@ public class TransitionTable {
 		// Fila 12 matriz transicion estados
 		
 		mte[12][0] = Constants.ERR_TOKEN; mte[12][1] = Constants.ERR_TOKEN; mte[12][2] = Constants.ERR_TOKEN; mte[12][3] = Constants.ERR_TOKEN; mte[12][4] = Constants.ERR_TOKEN; mte[12][5] = Constants.ERR_TOKEN;
-		mte[12][6] = Constants.ERR_TOKEN; mte[12][7] = Constants.ERR_TOKEN; mte[12][8] = Constants.ERR_TOKEN; mte[12][9] = Constants.ERR_TOKEN; mte[12][10] = Constants.ERR_TOKEN; mte[12][11] = 10;
+		mte[12][6] = Constants.ERR_TOKEN; mte[12][7] = Constants.ERR_TOKEN; mte[12][8] = Constants.ERR_TOKEN; mte[12][9] = Constants.ERR_TOKEN; mte[12][10] = Constants.ERR_TOKEN; mte[12][11] = 9;
 		mte[12][12] = Constants.ERR_TOKEN; mte[12][13] = Constants.ERR_TOKEN; mte[12][14] = Constants.ERR_TOKEN; mte[12][15] = Constants.ERR_TOKEN; mte[12][16] = Constants.ERR_TOKEN; mte[12][17] = Constants.ERR_TOKEN;
 		mte[12][18] = Constants.ERR_TOKEN; mte[12][19] = Constants.ERR_TOKEN; mte[12][20] = Constants.ERR_TOKEN; mte[12][21] = Constants.ERR_TOKEN; mte[12][22] = Constants.ERR_TOKEN;
                 mte[12][23] = Constants.ERR_TOKEN; mte[12][24] = Constants.ERR_TOKEN; mte[12][25] = Constants.ERR_TOKEN; mte[12][26]= Constants.ERR_TOKEN;
 		
 		// Fila 13 matriz transicion estados
 		
-		mte[13][0] = FINAL_ST; mte[13][1] = FINAL_ST; mte[13][2] = FINAL_ST; mte[13][3] = FINAL_ST; mte[13][4] = FINAL_ST; mte[13][5] = FINAL_ST;
-		mte[13][6] = FINAL_ST; mte[13][7] = FINAL_ST; mte[13][8] = FINAL_ST; mte[13][9] = FINAL_ST; mte[13][10] = FINAL_ST; mte[13][11] = FINAL_ST;
-		mte[13][12] = FINAL_ST; mte[13][13] = FINAL_ST; mte[13][14] = FINAL_ST; mte[13][15] = FINAL_ST; mte[13][16] = FINAL_ST; mte[13][17] = FINAL_ST;
-		mte[13][18] = FINAL_ST; mte[13][19] = FINAL_ST; mte[13][20] = FINAL_ST; mte[13][21] = FINAL_ST; mte[13][22] = FINAL_ST; mte[13][23] = Constants.ERR_TOKEN;
-		mte[13][24] = FINAL_ST; mte[13][25] = FINAL_ST; mte[13][26]= FINAL_ST;
+		mte[13][0] = 13; mte[13][1] = 13; mte[13][2] = 13; mte[13][3] = 13; mte[13][4] = 13; mte[13][5] = 13;
+		mte[13][6] = 13; mte[13][7] = 13; mte[13][8] = 13; mte[13][9] = 13; mte[13][10] = 13; mte[13][11] = 13;
+		mte[13][12] = 13; mte[13][13] = 13; mte[13][14] = 13; mte[13][15] = 13; mte[13][16] = FINAL_ST; mte[13][17] = 13;
+		mte[13][18] = 13; mte[13][19] = 13; mte[13][20] = 13; mte[13][21] = 13; mte[13][22] = 13; mte[13][23] = Constants.ERR_TOKEN;
+		mte[13][24] = 13; mte[13][25] = 13; mte[13][26]= 13;
 		
 		//Semantic Action Matrix
                 
@@ -147,14 +147,15 @@ public class TransitionTable {
                 SA3 as3 = new SA3();
                 SA4 as4 = new SA4();
                 SA5 as5 = new SA5();
+                SA6 as6 = new SA6();
                 SA_ERR asErr = new SA_ERR();
                 
                
-		mas[0][0]=as;   mas[0][1]=as;    mas[0][2]=as;    mas[0][3]=as;    mas[0][4]=as; 
-                mas[0][5]=as;   mas[0][6]=as3;   mas[0][7]=as3;   mas[0][8]=as3;   mas[0][9]=as3;
-                mas[0][10]=as;  mas[0][11]=as3;  mas[0][12]=as3;  mas[0][13]=as3;  mas[0][14]=as;
-                mas[0][15]=as4; mas[0][16]=as;   mas[0][17]=as3;  mas[0][18]=as3;  mas[0][19]=as3;
-                mas[0][20]=as3; mas[0][21]=as3;  mas[0][22]=as3;  mas[0][23]=as4;  mas[0][24]=as4;
+                mas[0][0]=as;   mas[0][1]=as;    mas[0][2]=as;    mas[0][3]=as;    mas[0][4]=as; 
+                mas[0][5]=as;   mas[0][6]=as6;   mas[0][7]=as6;   mas[0][8]=as6;   mas[0][9]=as6;
+                mas[0][10]=as;  mas[0][11]=as6;  mas[0][12]=as;  mas[0][13]=as;  mas[0][14]=as;
+                mas[0][15]=as; mas[0][16]=as;   mas[0][17]=as6;  mas[0][18]=as6;  mas[0][19]=as6;
+                mas[0][20]=as6; mas[0][21]=as6;  mas[0][22]=as6;  mas[0][23]=as4;  mas[0][24]=as4;
                 mas[0][25]=asErr; mas[0][26]=as4;
                 
                 mas[1][0]=asErr; mas[1][1]=as;  mas[1][2]=as;    mas[1][3]=as;    mas[1][4]=as;
@@ -199,12 +200,12 @@ public class TransitionTable {
                 mas[6][20]=as3;  mas[6][21]=as3;  mas[6][22]=as3;  mas[6][23]=as3;
                 mas[6][24]=as3;  mas[6][25]=asErr; mas[6][26]=as3;	
                 
-                mas[7][0]=as4;   mas[7][1]=as4;   mas[7][2]=as4;   mas[7][3]=as4;   mas[7][4]=as4;
-                mas[7][5]=as4;   mas[7][6]=as4;	mas[7][7]=as4;   mas[7][8]=as4;	mas[7][9]=as4;
-                mas[7][10]=as4;  mas[7][11]=as4;	mas[7][12]=as4;  mas[7][13]=as4;	mas[7][14]=as4;
-                mas[7][15]=as;   mas[7][16]=as4;	mas[7][17]=as4;  mas[7][18]=as4;	mas[7][19]=as4;
-                mas[7][20]=as4;  mas[7][21]=as4;	mas[7][22]=as4;  mas[7][23]=as4;	mas[7][24]=as4;
-                mas[7][25]=as4;  mas[7][26]=as4;	
+                mas[7][0]=as;   mas[7][1]=as;     mas[7][2]=as;   mas[7][3]=as;     mas[7][4]=as;
+                mas[7][5]=as;   mas[7][6]=as;	    mas[7][7]=as;   mas[7][8]=as;	    mas[7][9]=as;
+                mas[7][10]=as;  mas[7][11]=as;	mas[7][12]=as;  mas[7][13]=as;	mas[7][14]=as;
+                mas[7][15]=as4;   mas[7][16]=as;	mas[7][17]=as;  mas[7][18]=as;	mas[7][19]=as;
+                mas[7][20]=as;  mas[7][21]=as;	mas[7][22]=as;  mas[7][23]=as;	mas[7][24]=as;
+                mas[7][25]=as;  mas[7][26]=as;	
                 
                 mas[8][0]=as3;   mas[8][1]=as3;	mas[8][2]=as3;   mas[8][3]=as3;	mas[8][4]=as3;
                 mas[8][5]=as3;   mas[8][6]=as3;	mas[8][7]=as3;   mas[8][8]=as3;	mas[8][9]=as3;
@@ -260,6 +261,7 @@ public class TransitionTable {
         // Public method: Returns the action needed to aply given the actual state of the automata and the char readed from file
         
 	public SemanticAction getAction(int state, char c){
+			//System.out.println(state + "," +getColumnVal(c));
             return mas[state][getColumnVal(c)];
         }
 	

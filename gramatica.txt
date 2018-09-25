@@ -1,14 +1,18 @@
 %token MAY_IG MEN_IG DIST ASIG IF END_IF ELSE PRINT WHILE USINTEGER LINTEGER READONLY WRITE PASS ID CTE RETURN STRING
+%start prog
+%left '+' '-'
+%left '*' '/'
 
 %%
-
 prog    :   sent
         ;
 
 sent    :   sent decl','
         |   sent exec','
+        |   sent asig','
         |   decl','
         |   exec','
+        |   asig','
         ;
 
 decl    :   var
@@ -26,7 +30,6 @@ func    :   type ID '(' type ID ')' '{' sent RETURN '(' expr ')' '}'
         ;
 
 exec    :   s_cond
-        |   block
         |   ctrl
         |   prt
         |   inv_fun
@@ -46,15 +49,20 @@ prt     :   PRINT'(' STRING ')'
 cond    :   expr comp expr
         ;
 
-block   :   sent               /* ???????? */
+
+block   :   decl              
+        |   exec
+        |   asig             
         |   '{' sent '}'
         ;
 
 inv_fun :   ID '(' ID ';' lst_perm ')' ','
         ;
 
-expr    :   ID ' ASIG ' expr
-        |   expr '+' expr
+asig    :   ID ' ASIG ' expr
+        ;
+
+expr    :   expr '+' expr
         |   expr '-' expr
         |   term
         ;
@@ -85,5 +93,7 @@ comp    :   '='
         |   'MAY_IG'
         |   'DIST'
         ;
+
+
 
 

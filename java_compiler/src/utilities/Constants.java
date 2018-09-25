@@ -7,4 +7,9 @@ public class Constants {
 	public static String OUTPUT = "finalCode.txt";
 	public static Integer ERR_TOKEN = -1;
 	public static Integer MAX_UN = 65536;
+	public static String STRING = "STRING";
+	public static String ID = "ID";
+	public static String US_INT = "usinteger";
+	public static String L_INT = "linteger";
+	public static String CTE = "CTE";
 }

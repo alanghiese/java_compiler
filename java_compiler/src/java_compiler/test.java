@@ -12,30 +12,14 @@ public class test {
 	
 	
 	public static void main(String[] args) throws IOException {
-		FileManager fm = new FileManager(Constants.PATH + Constants.INPUT);
-		StringBuilder code = fm.getLine();
-		while (!code.toString().equals("$")) {
-			System.out.println(code);
-			code = fm.getLine();
+		LexicalAnalizer la = new LexicalAnalizer(Constants.PATH + Constants.INPUT);
+		System.out.println("comienzo");
+		Integer i = new Integer(-1);
+		do {
+			i = la.yylex();
+			System.out.println(i);
 		}
-		System.out.println(code);
-		
-		//FileManager.writeFile(Constants.PATH + Constants.OUTPUT, code);
-		
-	
-		SymbolTable st = new SymbolTable();
-		Set<String> symbols = st.getAll();
-		/*for (String s: symbols) {
-			System.out.println("simbolo: " + s + " , codigo: " + st.getToken(s));
-		}*/
-	
-		
-		StringBuilder s = new StringBuilder("Hola");
-		System.out.println(s);
-		s.setLength(0);
-		s.append("asd");
-		System.out.println(s);
-		
+		while (i != 36);
 	}
 	
 	
