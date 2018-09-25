@@ -1,9 +1,12 @@
 package java_compiler;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Set;
 
 import utilities.CTNInformation;
+import utilities.FileManager;
 import utilities.IDInformation;
 import utilities.SymbolInformation;
 
@@ -37,4 +40,24 @@ public class SymbolTable {
 		return this.symbolTable.keySet();
 	}
 	
+        public void genOutput(String path) {
+            
+            StringBuilder sb = new StringBuilder();
+            ArrayList<String> outLine = new ArrayList<>();
+            Set<String> keys = getAll();
+            Iterator it = keys.iterator();
+            
+            while(it.hasNext()) {
+                
+                String key = it.next().toString();
+                sb.append(key);
+                sb.append(" ");
+                sb.append(getLexeme(key).toString());
+                outLine.add(sb.toString());
+                sb.setLength(0);
+            }
+            
+            FileManager.writeFile(path, outLine);
+        }
+        
 }
