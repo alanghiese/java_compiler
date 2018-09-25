@@ -1,0 +1,5 @@
+#Debería dar errores de rango de constantes para las constantes negativas#
+_unsignedInt := -1_ui
+_unsignedInt := 65536_ui
+_longInt := -2147483647_l
+_longInt := 2147483646_l

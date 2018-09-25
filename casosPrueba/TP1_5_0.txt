@@ -1,0 +1,3 @@
+#Debería leer dos identificadores#
+_var1
+_func12a

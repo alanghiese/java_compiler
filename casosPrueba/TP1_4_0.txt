@@ -1,0 +1,3 @@
+#Debería mostrar un error de identificador demasiado largo en linea 3#
+_idok
+_identificadordemasiadolargo

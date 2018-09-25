@@ -1,0 +1,6 @@
+#Debería reconocer 3 palabras mal escritas y 2 bien escritas#
+IF
+print
+else
+PRINT
+END_IF

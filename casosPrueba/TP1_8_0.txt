@@ -1,0 +1,4 @@
+#Este es un comentario bien definido
+Debería dar un error en el siguiente comentario.#
+
+#Esto es un coment4rio mal definido porque le falta cerrarse

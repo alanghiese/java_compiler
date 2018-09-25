@@ -1,0 +1,5 @@
+#Debería leer bien las constantes#
+_unsignedInt := 0_ui
+_unsignedInt := 65535_ui
+_longInt := -2147483646_l
+_longInt := 2147483645_l
