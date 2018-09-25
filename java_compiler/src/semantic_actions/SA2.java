@@ -51,6 +51,9 @@ public class SA2 extends SemanticAction{
 		
 		buffer.setLength(0);
 		token.setToken(Decoder.get(Constants.CTE));
+                token.setInfo("Constant");
+                token.setLex(sAux.toString());
+                
 		//System.out.println("as2");
 		//super.execute(buffer, line, token, st);
 	}

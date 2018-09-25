@@ -20,6 +20,8 @@ public class SA1 extends SemanticAction{
 		buffer.deleteCharAt(buffer.length()-1);
 		if (buffer.length() <= maxChars) {
 			token.setToken(Decoder.get(Constants.ID));
+                        token.setInfo("ID");
+                        token.setLex(buffer.toString());
 			st.addID(buffer.toString(), new IDInformation());
 		}
 		else {

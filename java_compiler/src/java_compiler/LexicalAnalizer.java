@@ -92,8 +92,10 @@ public class LexicalAnalizer {
     	}
     	
         if (token.getToken() == Constants.ERR_TOKEN || token.getInfo() != "")
-        	System.out.println(token.getInfo() + this.currentLine);
-        
+        	System.out.println(token.getErr() + this.currentLine);
+        else
+            System.out.println(token.getInfo() + ": " + token.getLex());
+            
         return token.getToken();
     }
     
