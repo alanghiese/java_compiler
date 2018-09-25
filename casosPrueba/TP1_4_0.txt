@@ -1,3 +1,3 @@
-#Debería mostrar un error de identificador demasiado largo en linea 3#
+#Identificadores de menos y más de 25 caracteres.#
 _idok
 _identificadordemasiadolargo

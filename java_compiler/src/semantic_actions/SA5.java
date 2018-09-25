@@ -16,6 +16,8 @@ public class SA5 extends SemanticAction{
 		public void execute(StringBuilder buffer, StringBuilder line, Token token, SymbolTable st) throws IOException {
 			//super.execute(buffer, br); this SA doesn't move
 			token.setToken(Decoder.get(Constants.STRING));
+			token.setInfo("String");
+            token.setLex(buffer.toString());
 			buffer.deleteCharAt(0);
 			buffer.deleteCharAt(buffer.length()-1);
 			CTNInformation ctni = new CTNInformation();

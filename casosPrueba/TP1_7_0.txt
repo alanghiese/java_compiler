@@ -1,4 +1,4 @@
-#Debería reconocer 3 palabras mal escritas y 2 bien escritas#
+#Debería reconocer 3 palabras mal escritas y 2 bien escritas (por las mayusculas)#
 IF
 print
 else

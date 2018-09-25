@@ -31,9 +31,11 @@ public class LexicalAnalizer {
 
         int count=0;
         Token token = new Token();
+        int status = 0;
     	while (token.getToken() == -2) {
     		//System.out.println("entre");
-	        int status = 0;
+	       	if (status != 7)
+	       		status = 0;
 	        char nextChar;
 	        StringBuilder readed= new StringBuilder();
 	        
@@ -59,7 +61,7 @@ public class LexicalAnalizer {
 	        if (codeLine.length()==0){
 	            codeLine.append('\n');
 	        }
-	
+	        System.out.println(codeLine);
 	        nextChar= codeLine.charAt(0);
 	        readed.append(nextChar);
 	        codeLine.deleteCharAt(0);
@@ -81,7 +83,11 @@ public class LexicalAnalizer {
 	            	count++;
 	            }
 	            
-	           
+	            if (codeLine.length()==0 && status==7 && nextChar=='#') {
+	            	readed.setLength(0);
+	            	count++;
+	            }
+	            
 	            /*System.out.println("-------");
 	            System.out.println(nextChar);
 	            System.out.println(status);
@@ -91,7 +97,7 @@ public class LexicalAnalizer {
 	        }
     	}
     	
-        if (token.getToken() == Constants.ERR_TOKEN || token.getInfo() != "")
+        if (token.getToken() == Constants.ERR_TOKEN || token.getErr() != "")
         	System.out.println(token.getErr() + this.currentLine);
         else
             System.out.println(token.getInfo() + ": " + token.getLex());

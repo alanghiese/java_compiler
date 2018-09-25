@@ -19,15 +19,15 @@ public class SA3  extends SemanticAction{
 		c.append(charcin);
 		buffer.deleteCharAt(buffer.length()-1);
 		token.setToken(Decoder.get(buffer.toString()));
-                if(token.getToken() <= 260)
-                    token.setInfo("Symbol");
-                else
-                    token.setInfo("Reserved word");
+        if(token.getToken() <= 260)
+            token.setInfo("Symbol");
+        else
+            token.setInfo("Reserved word");
+        
+        token.setLex(buffer.toString());
                 
-                token.setLex(buffer.toString());
-                
-		if (token.getToken()==-1)
-			token.setInfo("ERROR: Token no reconocido (Error Lexico) en la linea: " );
+		if (token.getToken()==Constants.ERR_TOKEN)
+			token.setErr("ERROR: Token no reconocido (Error Lexico) en la linea: " );
 		/*System.out.println("en SA3");
 		System.out.println(buffer);
 		System.out.println(token);*/

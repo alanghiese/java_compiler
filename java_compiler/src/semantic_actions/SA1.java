@@ -25,7 +25,7 @@ public class SA1 extends SemanticAction{
 			st.addID(buffer.toString(), new IDInformation());
 		}
 		else {
-			token.setInfo("ERROR: Nombre de variable demasiado largo. Linea: ");
+			token.setErr("ERROR: Nombre de variable demasiado largo. Linea: ");
 			token.setToken(Constants.ERR_TOKEN);
 		}
 		buffer.setLength(0);

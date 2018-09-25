@@ -1,2 +1,3 @@
 #Debería dar error#
+#El error se produce porque no puede haber comillas en la definicion de una variable#
 _iden'ificador

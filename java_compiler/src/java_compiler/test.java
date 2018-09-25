@@ -13,11 +13,10 @@ public class test {
 	
 	public static void main(String[] args) throws IOException {
 		LexicalAnalizer la = new LexicalAnalizer(Constants.PATH + Constants.INPUT);
-		System.out.println("comienzo");
+		System.out.println("MATEEEEEEEE");
 		Integer i = new Integer(-1);
 		do {
 			i = la.yylex();
-			System.out.println(i);
 		}
 		while (i != 36);
 	}

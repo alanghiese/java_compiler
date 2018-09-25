@@ -1,5 +1,7 @@
-#Debería dar errores de rango de constantes para las constantes negativas#
+#Constantes con el primer y último valor fuera del rango#
+#el -1 es reconocido como un menos y un 1 por lo que no lo toma como fuera de rango en esta etapa del compilador#
 _unsignedInt := -1_ui
 _unsignedInt := 65536_ui
-_longInt := -2147483647_l
-_longInt := 2147483646_l
+#se van de rango las de abajo pero como no reconoce los negativos a ambos le pone el maximo positivo#
+_longInt := -2147483649_l
+_longInt := 2147483648_l

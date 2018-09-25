@@ -24,7 +24,7 @@ public class Decoder {
 				case "!=": return 259;
 				case ":=": return 260;
 				case "if": return 261;
-				case "end_if": return 262;
+				case "endif": return 262;
 				case "else": return 263;
 				case "print": return 264;
 				case "while": return 265;

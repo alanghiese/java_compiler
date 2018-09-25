@@ -14,7 +14,7 @@ public class SA_ERR extends SA4{
 	public void execute(StringBuilder buffer, StringBuilder line, Token token, SymbolTable st) throws IOException {
 		super.execute(buffer, line, token, st);
 		token.setToken(Constants.ERR_TOKEN);
-		token.setInfo("ERROR: Token no reconocido (Error Lexico) en la linea: " );
+		token.setErr("ERROR: Token no reconocido (Error Lexico) en la linea: " );
 		//System.out.println("err");
 	}
 

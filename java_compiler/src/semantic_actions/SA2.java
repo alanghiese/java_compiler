@@ -26,7 +26,7 @@ public class SA2 extends SemanticAction{
 				sAux.append(buffer.charAt(i));
 			Integer number = Integer.parseInt(sAux.toString());
 			if (number < 0 || number > Constants.MAX_UN) {
-				token.setInfo("WARNING: variable fuera de rango en la linea: ");
+				token.setErr("WARNING: variable fuera de rango en la linea: ");
 				sAux = new StringBuilder(Constants.MAX_UN);
 			}
 				
@@ -38,7 +38,7 @@ public class SA2 extends SemanticAction{
 				sAux.append(buffer.charAt(i));
 			Long number = Long.parseLong(sAux.toString());
 			if (number < 0 || number > Integer.MAX_VALUE ) {
-				token.setInfo("WARNING: variable fuera de rango en la linea: ");
+				token.setErr("WARNING: variable fuera de rango en la linea: ");
 				sAux.length();
 				sAux.append(Integer.MAX_VALUE);
 			}
