@@ -12,4 +12,6 @@ public class Constants {
 	public static String US_INT = "usinteger";
 	public static String L_INT = "linteger";
 	public static String CTE = "CTE";
+	public static Integer DEFAULT_TOKEN = -2;
+	public static StringBuilder EMPTY_SB = new StringBuilder("");
 }

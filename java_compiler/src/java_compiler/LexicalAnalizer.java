@@ -8,7 +8,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import utilities.Constants;
-import utilities.Decoder;
 import utilities.Token;
 
 
@@ -29,79 +28,41 @@ public class LexicalAnalizer {
     
     public int yylex(){
 
-        int count=0;
+        int status = 0;        
         Token token = new Token();
-        int status = 0;
-    	while (token.getToken() == -2) {
-    		//System.out.println("entre");
-	       	if (status != 7)
-	       		status = 0;
-	        char nextChar;
-	        StringBuilder readed= new StringBuilder();
-	        
+    	while (token.getToken() == Constants.DEFAULT_TOKEN) {
+    		char nextChar;
+	        StringBuilder buffer= new StringBuilder();
 	        String lineReaded;
-	        
 	        if (codeLine!=null && codeLine.length()==0){
-	            currentLine++;
-	            try {
-					lineReaded = fileReader.readLine();
-					codeLine=(lineReaded==null?null:new StringBuilder(lineReaded));
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
+	        	this.currentLine++;
+		        try {
+		        	lineReaded = fileReader.readLine();
+		        	codeLine=(lineReaded==null?null:new StringBuilder(lineReaded));
+		        	if (codeLine != null)
+		        		codeLine.append('\n');
+		        	else
+		        		codeLine = new StringBuilder("$");
+		        	
+		        }
+		        catch (IOException e) {
 					e.printStackTrace();
 				}
-	            
 	        }
-	        
-	        if(codeLine==null){
-	            return Decoder.get("$");
-	        }
-	        //System.out.println(codeLine);
-	        
-	        if (codeLine.length()==0){
-	            codeLine.append('\n');
-	        }
-	        System.out.println(codeLine);
-	        nextChar= codeLine.charAt(0);
-	        readed.append(nextChar);
-	        codeLine.deleteCharAt(0);
-	        count=0;
-	        while (status != TransitionTable.FINAL_ST && status != -1 && count==0){
+	       
+	        while (status != TransitionTable.FINAL_ST && !codeLine.equals(Constants.EMPTY_SB)){
 	        	
-	            try {
-	                transitions.getAction(status, nextChar).execute(readed,codeLine,token, symbolTable);
-	            }
-	            catch (IOException ex) {
-	                System.err.println(ex.getMessage());
-	            }
-	                
+	        	nextChar = codeLine.charAt(0);
+	            transitions.getAction(status, nextChar).execute(buffer,codeLine,token, symbolTable);  
 	            status = transitions.getNextState(status, nextChar);
-	            if (readed.length()>0)
-	            	nextChar=readed.charAt(readed.length()-1);
-	            else if (count==0 && status != 7){
-	            	nextChar = '\n';
-	            	count++;
-	            }
 	            
-	            if (codeLine.length()==0 && status==7) {
-	            	readed.setLength(0);
-	            	count++;
-	            }
 	            
-	            /*System.out.println("-------");
-	            System.out.println(nextChar);
-	            System.out.println(status);
-	            System.out.println(readed);
-	            System.out.println(codeLine);
-	            System.out.println("------");*/
 	        }
     	}
     	
-        if (token.getToken() == Constants.ERR_TOKEN || token.getErr() != "")
-        	System.out.println(token.getErr() + this.currentLine);
-        else
-            System.out.println(token.getInfo() + ": " + token.getLex());
-            
+        if (token.getToken() != Constants.DEFAULT_TOKEN)
+        	System.out.println(token.getMsg() + this.currentLine);
+        
         return token.getToken();
     }
     
