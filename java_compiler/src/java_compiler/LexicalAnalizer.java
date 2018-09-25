@@ -83,7 +83,7 @@ public class LexicalAnalizer {
 	            	count++;
 	            }
 	            
-	            if (codeLine.length()==0 && status==7 && nextChar=='#') {
+	            if (codeLine.length()==0 && status==7) {
 	            	readed.setLength(0);
 	            	count++;
 	            }
