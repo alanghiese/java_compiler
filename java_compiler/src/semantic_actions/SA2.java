@@ -23,7 +23,7 @@ public class SA2 implements SemanticAction {
 				withoutSuffix.append(buffer.charAt(i));
 			Integer number = Integer.parseInt(withoutSuffix.toString());
 			if (number < 0 || number > Constants.MAX_UN) {
-				System.out.println("WARNING: variable fuera de rango en la linea: ");
+				System.out.println("WARNING: variable fuera de rango");
 				withoutSuffix = new StringBuilder(Constants.MAX_UN);
 			}
 
@@ -33,7 +33,7 @@ public class SA2 implements SemanticAction {
 				withoutSuffix.append(buffer.charAt(i));
 			Long number = Long.parseLong(withoutSuffix.toString());
 			if (number < 0 || number > Integer.MAX_VALUE) {
-				System.out.println("WARNING: variable fuera de rango en la linea: ");
+				System.out.println("WARNING: variable fuera de rango");
 				number = (long) Integer.MAX_VALUE;
 				withoutSuffix = new StringBuilder(number.toString());
 			}

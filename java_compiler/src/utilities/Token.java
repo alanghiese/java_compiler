@@ -6,6 +6,7 @@ public class Token {
 
 	String msg = "";
 	String lexeme = "";
+	Integer myline = 0;
 
 	public Integer getToken() {
 		return this.token;
@@ -20,7 +21,7 @@ public class Token {
 	}
 
 	public String getMsg() {
-		return this.msg;
+		return this.msg + " (" + this.lexeme + ")" + " en la linea: " + this.myline;
 	}
 
 	public void setLex(String s) {
@@ -31,4 +32,11 @@ public class Token {
 		return this.lexeme;
 	}
 
+	public void setLine(Integer l) {
+		this.myline = l;
+	}
+
+	public Integer getLine() {
+		return this.myline;
+	}
 }

@@ -13,6 +13,7 @@ public class test {
 		do {
 			i = la.yylex();
 		} while (i != 36);
+
 	}
 
 }

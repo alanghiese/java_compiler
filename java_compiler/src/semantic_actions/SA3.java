@@ -14,7 +14,7 @@ public class SA3 implements SemanticAction {
 		token.setToken(Decoder.get(buffer.toString()));
 
 		if (token.getToken() == Constants.ERR_TOKEN)
-			token.setMsg("Lexema no reconocido en la linea: ");
+			token.setMsg("Lexema no reconocido");
 		else if (token.getToken() <= 260)
 			token.setMsg(Constants.SYMBOL);
 		else

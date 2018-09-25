@@ -9,7 +9,7 @@ public class ERR_COM implements SemanticAction {
 
 	@Override
 	public void execute(StringBuilder buffer, StringBuilder line, Token token, SymbolTable st, ParserVal yylval) {
-		token.setMsg("ERROR: Comentario sin cerrar en la linea: ");
+		token.setMsg("ERROR: Comentario sin cerrar ");
 		token.setToken(Constants.ERR_TOKEN);
 		buffer.setLength(0);
 

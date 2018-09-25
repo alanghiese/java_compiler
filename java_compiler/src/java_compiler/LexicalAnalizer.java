@@ -60,9 +60,12 @@ public class LexicalAnalizer {
 			}
 
 		}
-
-		if (token.getToken() != Constants.DEFAULT_TOKEN)
-			System.out.println(token.getMsg() + " " + token.getLex() + " " + this.currentLine);
+		
+		
+		if (token.getToken() != Constants.DEFAULT_TOKEN) {
+			token.setLine(this.currentLine);
+			System.out.println(token.getMsg());
+		}
 
 		return token.getToken();
 	}

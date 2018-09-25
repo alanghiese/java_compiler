@@ -954,5 +954,9 @@ public class TransitionTable {
 			return 25;
 
 	}
+	
+	public int[][] getMTE(){
+		return this.mte;
+	}
 
 }
