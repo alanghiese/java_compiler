@@ -17,8 +17,8 @@ public class SA1 implements SemanticAction {
 			token.setMsg("ERROR: ID mal definido en la linea: ");
 		}
 		else {
-			token.setToken(Decoder.get(buffer.toString()));
-			token.setMsg("ID");
+			token.setToken(Decoder.get(Constants.ID));
+			token.setMsg(Constants.ID);
 			token.setLex(buffer.toString());
 			IDInformation idi = new IDInformation();
 			st.addID(buffer.toString(), idi);

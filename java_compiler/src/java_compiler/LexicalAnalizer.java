@@ -37,12 +37,14 @@ public class LexicalAnalizer {
 	        StringBuilder buffer= new StringBuilder();
 	        String lineReaded;
 	        if (codeLine!=null && codeLine.length()==0){
-	        	this.currentLine++;
+	        	
 		        try {
 		        	lineReaded = fileReader.readLine();
 		        	codeLine=(lineReaded==null?null:new StringBuilder(lineReaded));
-		        	if (codeLine != null)
+		        	if (codeLine != null) {
 		        		codeLine.append('\n');
+		        		this.currentLine++;
+		        	}
 		        	else
 		        		codeLine = new StringBuilder("$");
 		        	
@@ -52,18 +54,20 @@ public class LexicalAnalizer {
 				}
 	        }
 	       
-	        while (status != TransitionTable.FINAL_ST && !codeLine.equals(Constants.EMPTY_SB)){
-	        	
-	        	nextChar = codeLine.charAt(0);
-	            transitions.getAction(status, nextChar).execute(buffer,codeLine,token, symbolTable, yylval);  
-	            status = transitions.getNextState(status, nextChar);
+	       while (status != TransitionTable.FINAL_ST && codeLine.length()!=0){
+				
+				nextChar = codeLine.charAt(0);
+				transitions.getAction(status, nextChar).execute(buffer,codeLine,token, symbolTable, yylval);  
+				status = transitions.getNextState(status, nextChar);
 	            
 	            
-	        }
+	       }
+	       
+	       
     	}
     	
         if (token.getToken() != Constants.DEFAULT_TOKEN)
-        	System.out.println(token.getMsg() + this.currentLine);
+        	System.out.println(token.getMsg() + " " + token.getLex()  + " " + this.currentLine);
         
         return token.getToken();
     }

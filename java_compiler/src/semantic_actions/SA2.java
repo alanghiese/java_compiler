@@ -37,7 +37,8 @@ public class SA2 implements SemanticAction {
 			Long number = Long.parseLong(withoutSuffix.toString());
 			if (number < 0 || number > Integer.MAX_VALUE ) {
 				System.out.println("WARNING: variable fuera de rango en la linea: ");
-				withoutSuffix = new StringBuilder(Integer.MAX_VALUE);
+				number = (long) Integer.MAX_VALUE;
+				withoutSuffix = new StringBuilder(number.toString());
 			}
 		}
 		
@@ -45,7 +46,7 @@ public class SA2 implements SemanticAction {
 		CTNInformation ctni = new CTNInformation();
 		ctni.setType(type.toString());
 		st.addCTN(withoutSuffix.toString(), ctni);
-		token.setMsg("Constant");
+		token.setMsg(Constants.CTE);
 		token.setToken(Decoder.get(Constants.CTE));
         token.setLex(withoutSuffix.toString());
 		
