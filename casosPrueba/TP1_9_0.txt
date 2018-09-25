@@ -1,4 +1,4 @@
 _a:='Esto es una cadena bien definida'
-_b:='Esta c4adena esta mal definida xq tiene un numero'
+_b:='Esta c4adena esta bien definida'
 _c:='Esta cadena esta mal definida
 porque es de mas de una linea'

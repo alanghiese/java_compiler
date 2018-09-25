@@ -3,4 +3,4 @@ IF
 print
 else
 PRINT
-END_IF
+endif
