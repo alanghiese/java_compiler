@@ -13,7 +13,7 @@ import utilities.Token;
 public class LexicalAnalizer {
 	BufferedReader fileReader;
 	TransitionTable transitions = new TransitionTable();
-	SymbolTable symbolTable = new SymbolTable();
+	public SymbolTable symbolTable = new SymbolTable();
 	int currentLine = 0;
 	StringBuilder codeLine = new StringBuilder(0);
 	ParserVal yylval;

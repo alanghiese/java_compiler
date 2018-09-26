@@ -26,6 +26,7 @@ public class SymbolTable {
 	public void addCTN(String name, CTNInformation ctni) {
 		if (!this.symbolTable.containsKey(name))
 			this.symbolTable.put(name, ctni);
+		((CTNInformation)this.symbolTable.get(name)).increaseCounter();
 	}
 
 	public SymbolInformation getLexeme(String name) {
@@ -34,7 +35,12 @@ public class SymbolTable {
 			si = new SymbolInformation();
 		return si;
 	}
-
+	
+	public void removeCTN(String key) {
+		this.symbolTable.remove(key);
+	}
+	
+	
 	public Set<String> getAll() {
 		return this.symbolTable.keySet();
 	}
