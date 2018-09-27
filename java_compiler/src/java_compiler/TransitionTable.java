@@ -948,7 +948,7 @@ public class TransitionTable {
 			return 24;
 		else if (c == '\t')
 			return 26;
-		else if (c == Constants.EOF)
+		else if (c == '陰')
 			return 27;
 		else
 			return 25;
