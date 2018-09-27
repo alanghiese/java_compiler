@@ -32,10 +32,14 @@ public class LexicalAnalizer {
 		//((Token)yylval.obj).setLine(2);
 		int status = 0;
 		Token token = new Token();
+		
+		
 		while (token.getToken() == Constants.DEFAULT_TOKEN) {
 			char nextChar;
 			StringBuilder buffer = new StringBuilder();
 			String lineReaded;
+					
+			
 			if (codeLine != null && codeLine.length() == 0) {
 
 				try {
@@ -45,7 +49,7 @@ public class LexicalAnalizer {
 						codeLine.append('\n');
 						this.currentLine++;
 					} else
-						codeLine = new StringBuilder("$");
+						codeLine = new StringBuilder('陰');
 
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -53,7 +57,7 @@ public class LexicalAnalizer {
 			}
 
 			while (status != TransitionTable.FINAL_ST && codeLine.length() != 0) {
-
+				
 				nextChar = codeLine.charAt(0);
 				transitions.getAction(status, nextChar).execute(buffer, codeLine, token, symbolTable, yylval);
 				
@@ -67,7 +71,7 @@ public class LexicalAnalizer {
 		if (token.getToken() != Constants.DEFAULT_TOKEN) {
 			token.setLine(this.currentLine);
 			//System.out.println(yylval.sval);
-			//System.out.println(token.getMsg());
+			System.out.println(token.getMsg());
 		}
 		
 		return token.getToken();

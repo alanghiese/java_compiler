@@ -2,6 +2,7 @@ package utilities;
 
 public class Decoder {
 	
+	
 	public static Integer get(String s) {
             
             switch (s) {
@@ -18,7 +19,7 @@ public class Decoder {
 				case "}": return (int)'}';
 				case ",": return (int)',';
 				case ";": return (int)';';
-			    case "$": return -58;//(int)'$';
+			    case "陰": return -58;//(int)'$';
 				case ">=": return 257;
 				case "<=": return 258;
 				case "!=": return 259;

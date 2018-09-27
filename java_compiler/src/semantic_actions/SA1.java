@@ -14,7 +14,7 @@ public class SA1 implements SemanticAction {
 
 		if (buffer.length() > Constants.SIZE_MAX_ID) {
 			token.setToken(Constants.ERR_TOKEN);
-			token.setMsg("ERROR: ID mal definido");
+			token.setMsg("ERROR LEXICO: ID mal definido");
 		} else {
 			token.setToken(Decoder.get(Constants.ID));
 			token.setMsg(Constants.ID);

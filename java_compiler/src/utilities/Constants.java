@@ -20,5 +20,9 @@ public class Constants {
 	public static Integer SIZE_MAX_ID = 25;
 	public static String RES_WORD = "Reserved word";
 	public static String SYMBOL = "Symbol";
+	public static char EOF = '陰'; //陰
+	/**
+	 * Si se cambia aca acordarse de cambiar en el decoder ya que ahi no se puede usar la contrante
+	 */
 
 }

@@ -21,7 +21,7 @@ public class Token {
 	}
 
 	public String getMsg() {
-		return this.msg + " (" + this.lexeme + ")" + " en la linea: " + this.myline;
+		return this.msg + " (" + this.lexeme + ")" + " en la linea: " + this.myline + " (Token: [ "+ token +" ])";
 	}
 
 	public void setLex(String s) {

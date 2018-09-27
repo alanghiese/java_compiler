@@ -64,5 +64,7 @@ public class SymbolTable {
 
 		FileManager.writeFile(path, outLine);
 	}
+	
+	
 
 }
