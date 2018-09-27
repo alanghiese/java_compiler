@@ -46,7 +46,9 @@ public class SA2 implements SemanticAction {
 		token.setToken(Decoder.get(Constants.CTE));
 		token.setLex(withoutSuffix.toString());
 
-		yylval = new ParserVal();
+		//yylval = new ParserVal();
+
+		//yylval = new ParserVal(new String(buffer.toString()),token);
 		yylval.obj = token;
 		yylval.sval = new String(buffer.toString());
 

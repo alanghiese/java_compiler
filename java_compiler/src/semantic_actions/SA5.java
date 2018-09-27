@@ -19,7 +19,8 @@ public class SA5 implements SemanticAction {
 		ctni.setType(Constants.STRING);
 		st.addCTN(buffer.toString(), ctni);
 
-		yylval = new ParserVal();
+		//yylval = new ParserVal();
+		//yylval = new ParserVal(new String(buffer.toString()),token);
 		yylval.obj = token;
 		yylval.sval = new String(buffer.toString());
 	}

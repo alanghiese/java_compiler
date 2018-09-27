@@ -20,7 +20,8 @@ public class SA3 implements SemanticAction {
 		else
 			token.setMsg(Constants.RES_WORD);
 
-		yylval = new ParserVal();
+		//yylval = new ParserVal(new String(buffer.toString()),token);
+		//yylval = new ParserVal();
 		yylval.obj = token;
 
 		token.setLex(buffer.toString());

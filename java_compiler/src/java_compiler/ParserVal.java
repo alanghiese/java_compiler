@@ -65,6 +65,14 @@ public class ParserVal {
 	public ParserVal(Object val) {
 		obj = val;
 	}
+
+	/**
+	 * Initialize me as an Object and string
+	 */
+	public ParserVal(String val, Object obj2) {
+		obj = obj2;
+		sval = val;
+	}
 }// end class
 
 //#############################################

@@ -16,10 +16,10 @@ public class LexicalAnalizer {
 	public SymbolTable symbolTable = new SymbolTable();
 	int currentLine = 0;
 	StringBuilder codeLine = new StringBuilder(0);
-	ParserVal yylval;
+	//ParserVal yylval;
 
-	public LexicalAnalizer(String path, ParserVal yylval) {
-		this.yylval = yylval;
+	public LexicalAnalizer(String path) {
+		//this.yylval = yylval;
 		try {
 			fileReader = new BufferedReader(new FileReader(path));
 		} catch (FileNotFoundException ex) {
@@ -27,8 +27,9 @@ public class LexicalAnalizer {
 		}
 	}
 
-	public int yylex() {
-
+	public int yylex(ParserVal yylval) {
+		//yylval.obj = new Token();
+		//((Token)yylval.obj).setLine(2);
 		int status = 0;
 		Token token = new Token();
 		while (token.getToken() == Constants.DEFAULT_TOKEN) {
@@ -55,6 +56,7 @@ public class LexicalAnalizer {
 
 				nextChar = codeLine.charAt(0);
 				transitions.getAction(status, nextChar).execute(buffer, codeLine, token, symbolTable, yylval);
+				
 				status = transitions.getNextState(status, nextChar);
 
 			}
@@ -64,9 +66,10 @@ public class LexicalAnalizer {
 		
 		if (token.getToken() != Constants.DEFAULT_TOKEN) {
 			token.setLine(this.currentLine);
+			//System.out.println(yylval.sval);
 			//System.out.println(token.getMsg());
 		}
-
+		
 		return token.getToken();
 	}
 

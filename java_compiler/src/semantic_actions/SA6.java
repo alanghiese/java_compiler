@@ -16,7 +16,8 @@ public class SA6 implements SemanticAction {
 		token.setLex(buffer.toString());
 		token.setMsg(Constants.SYMBOL);
 
-		yylval = new ParserVal();
+		//yylval = new ParserVal();
+		//yylval = new ParserVal(new String(buffer.toString()),token);
 		yylval.obj = token;
 		yylval.sval = new String(buffer.toString());
 

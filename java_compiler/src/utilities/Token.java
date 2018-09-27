@@ -33,7 +33,7 @@ public class Token {
 	}
 
 	public void setLine(Integer l) {
-		this.myline = l;
+		this.myline = new Integer(l);
 	}
 
 	public Integer getLine() {

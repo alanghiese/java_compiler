@@ -4,8 +4,8 @@ import java_compiler.TransitionTable;
 
 public class Constants {
 	public static String ERR_UPS = "Ups! Algo salio mal";
-	public static String PATH = "/home/alan/Desktop/FACULTAD/tp_scripting/para hacer pruebas/";
-	public static String INPUT = "code.txt";
+	public static String PATH = "/home/alan/Documents/";
+	public static String INPUT = "code";
 	public static String OUTPUT = "finalCode.txt";
 	public static Integer ERR_TOKEN = -1;
 	public static Integer ERR_STATE = TransitionTable.FINAL_ST;

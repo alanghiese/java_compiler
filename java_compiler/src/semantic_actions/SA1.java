@@ -21,7 +21,7 @@ public class SA1 implements SemanticAction {
 			token.setLex(buffer.toString());
 			IDInformation idi = new IDInformation();
 			st.addID(buffer.toString(), idi);
-			yylval = new ParserVal();
+			//yylval = new ParserVal(new String(buffer.toString()),token);
 			yylval.obj = token;
 			yylval.sval = new String(buffer.toString());
 		}
