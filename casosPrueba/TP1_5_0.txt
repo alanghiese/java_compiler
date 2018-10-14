@@ -1,3 +1,2 @@
 #Identificadores con “_”, letras, y dígitos#
-_var1
-_func12a
+usinteger _var1;_func12a,

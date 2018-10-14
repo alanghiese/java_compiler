@@ -6,9 +6,11 @@ import java.util.Iterator;
 import java.util.Set;
 
 import utilities.CTNInformation;
+import utilities.Constants;
 import utilities.FileManager;
 import utilities.IDInformation;
 import utilities.SymbolInformation;
+import utilities.Token;
 
 public class SymbolTable {
 
@@ -61,8 +63,20 @@ public class SymbolTable {
 			outLine.add(sb.toString());
 			sb.setLength(0);
 		}
-
+		
 		FileManager.writeFile(path, outLine);
+	}
+	
+	
+	public void fixCTE(Token t) {
+		Long iAux = Long.parseLong(t.getLex()) +1;//+1
+		if (((CTNInformation)this.symbolTable.get(iAux.toString())).getCounter()>1) {
+			((CTNInformation)this.symbolTable.get(iAux.toString())).decreaseCounter();
+			CTNInformation ctni = new CTNInformation();
+			ctni.setType(Constants.L_INT);
+			iAux = iAux - 1; 
+			this.symbolTable.put(iAux.toString(), ctni);
+		}
 	}
 	
 	

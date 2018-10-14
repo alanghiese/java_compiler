@@ -1,0 +1,271 @@
+%{
+package java_compiler;
+import utilities.Token;
+import utilities.Constants;
+import utilities.CTNInformation;
+%}
+
+%token  ASIG IF ENDIF ELSE PRINT WHILE USINTEGER LINTEGER READONLY WRITE PASS ID CTE RETURN STRING MAY_IG MEN_IG DIST
+%start prog
+%left '+' '-'
+%left '*' '/'
+
+%%
+prog    :   sent {print("Sintaxis: Codigo reconocido");}
+        ;
+
+sent    :   sent decl
+        |   sent exec
+        |   sent asig
+        |   decl
+        |   exec
+        |   asig
+        |   error','    {yyerror(((Token) $2.obj).getLine(), "");}
+        ;
+
+decl    :   var
+        |   func
+        ;
+
+var     :   type lst_var',' {print("Sintaxis: Declaracion de variable");}
+	    |   lst_var','      {yyerror(((Token) $2.obj).getLine(), "Falta especificar el tipo de la variable");}
+	    |   type error','         {yyerror(((Token) $1.obj).getLine(), "Error en la declaracion de variable/s");} 
+
+lst_var :   ID';' lst_var
+        |   ';' lst_var     {yyerror(((Token) $1.obj).getLine(), "Falta identificador antes del ';'");}
+	    |   ID error lst_var      {yyerror(((Token) $1.obj).getLine(), "Falta ';'");}  
+	    |   ID
+	    ;
+	
+func	:   type ID param func_body     {print("Sintaxis: Declaracion de funcion");}
+        |   ID param func_body          {yyerror(((Token) $1.obj).getLine(), "Falta el tipo de retorno de la funcion");} 
+	    |   type param func_body        {yyerror(((Token) $1.obj).getLine(), "No se permiten funciones anonimas");}
+	    |   ID type func_body           {yyerror(((Token) $2.obj).getLine(), "Falta el argumento de la funcion");}
+	    |   ID type param               {yyerror(((Token) $3.obj).getLine(), "Falta cuerpo de la funcion");}
+        ;
+
+param	:   '(' type ID ')'
+        |   type ID ')'             {yyerror(((Token) $1.obj).getLine(), "Falta '('");}
+        |   '(' ID ')'              {yyerror(((Token) $1.obj).getLine(), "Falta especificar el tipo del parametro de la funcion");}
+        |   '(' type ')'            {yyerror(((Token) $2.obj).getLine(), "Falta ID como parametro de la funcion");}
+        |   '(' type ID             {yyerror(((Token) $3.obj).getLine(), "Falta ')'");}
+        ;
+
+func_body   :   '{' sent ret '}'
+            |   '{' ret '}'
+	        |   sent ret '}'                {yyerror(((Token) $3.obj).getLine(), "Falta '{'");}
+	        |  '{' sent ret error','        {yyerror(((Token) $1.obj).getLine(), "Falta '}'");}
+	        |  '{' sent '}'                 {yyerror(((Token) $3.obj).getLine(), "Falta sentencia de retorno");}
+	        ;
+
+ret	    :   RETURN '(' expr ')'','
+        |   '(' expr ')'','         {yyerror(((Token) $1.obj).getLine(), "Retorno de funcion sin 'RETURN'");}
+        |   RETURN expr ')'','      {yyerror(((Token) $1.obj).getLine(), "Falta '('");}
+        |   RETURN '(' ')'','       {yyerror(((Token) $2.obj).getLine(), "Falta valor de retorno de la funcion");}
+        |   RETURN '(' expr','      {yyerror(((Token) $2.obj).getLine(), "Falta ')'");}
+        |   RETURN '(' expr ')'     {yyerror(((Token) $4.obj).getLine(), "Falta ','");}
+	    ;
+
+exec    :   s_cond
+        |   ctrl
+        |   prt
+        |   inv_fun','
+        ;
+
+s_cond  :   IF '(' cond ')' ctrl_blck ELSE ctrl_blck ENDIF','   {print("Sintaxis: Sentencia IF-ELSE");} 
+        |   IF '(' cond ')' ctrl_blck ENDIF','                  {print("Sintaxis: Sentencia IF");}
+        |   '(' cond ')' ctrl_blck ELSE ctrl_blck ENDIF','      {yyerror(((Token) $1.obj).getLine(), "'ELSE' sin 'IF'");}
+        |   '(' cond ')' ctrl_blck ENDIF','                     {yyerror(((Token) $1.obj).getLine(), "'ENDIF' sin 'IF'");}
+        |   IF cond ')' ctrl_blck ELSE ctrl_blck ENDIF','       {yyerror(((Token) $1.obj).getLine(), "Falta '(' en condicion de sentencia condicional");}
+        |   IF '(' ')' ctrl_blck ELSE ctrl_blck ENDIF','        {yyerror(((Token) $2.obj).getLine(), "condicion faltante en sentencia condicional");}
+        |   IF '(' cond error ctrl_blck ELSE ctrl_blck ENDIF','       {yyerror(((Token) $2.obj).getLine(), "Falta ')' en la sentencia condicional");}
+        |   IF '(' cond ')' ELSE ctrl_blck ENDIF','             {yyerror(((Token) $4.obj).getLine(), "Sentencia/s faltante/s luego de 'IF'");}
+        |   IF '(' cond ')' ctrl_blck ctrl_blck ENDIF','        {yyerror(((Token) $4.obj).getLine(), "Falta 'ELSE' o sobran llaves en la declaracion de bloque");}
+        |   IF '(' cond ')' ctrl_blck ELSE ENDIF','             {yyerror(((Token) $6.obj).getLine(), "Bloque faltante luego de 'ELSE'");}
+        |   IF '(' cond ')' ctrl_blck ELSE ctrl_blck error','         {yyerror(((Token) $6.obj).getLine(), "Falta 'ENDIF'");}
+        |   IF '(' cond ')' ctrl_blck ELSE ctrl_blck ENDIF      {yyerror(((Token) $6.obj).getLine(), "Falta ','");}
+        |   IF '(' cond ')' ctrl_blck ENDIF                     {yyerror(((Token) $6.obj).getLine(), "Falta ','");}
+        |   IF cond ')' ctrl_blck ENDIF                         {yyerror(((Token) $2.obj).getLine(), "Falta '('");}
+        |   IF '(' ')' ctrl_blck ENDIF                          {yyerror(((Token) $2.obj).getLine(), "Falta condicion en la sentencia condicional");}
+        |   IF '(' cond error ctrl_blck ENDIF                         {yyerror(((Token) $2.obj).getLine(), "Falta ')'");}
+        |   IF '(' cond ')' ctrl_blck error','                          {yyerror(((Token) $6.obj).getLine(), "Falta 'ENDIF' en sentencia condicional");}
+        |   IF '(' cond ')' ENDIF                               {yyerror(((Token) $4.obj).getLine(), "Falta bloque de sentencias en sentencia condicional");}
+        ;
+
+ctrl    :   WHILE '(' cond ')' ctrl_blck             {print("Sintaxis: Sentencia While");}
+        |   error '(' cond ')' ctrl_blck             {yyerror(((Token) $2.obj).getLine(), "'SENTENCIA DE CONTROL' desconocida");}
+        |   WHILE cond ')' ctrl_blck                     {yyerror(((Token) $1.obj).getLine(), "Falta'('");}
+        |   WHILE '(' cond error ctrl_blck           {yyerror(((Token) $2.obj).getLine(), "Falta ')'");}
+        |   WHILE '(' cond ')' error','              {yyerror(((Token) $4.obj).getLine(), "Sentencia de control sin bloque de sentencias");}
+        ;
+        
+prt     :   PRINT'(' STRING ')'','  {print("Sintaxis: Sentencia print");}
+        |   '(' STRING ')'','       {yyerror(((Token) $1.obj).getLine(), "'PRINT' faltante en la sentencia de impresion");}
+        |   PRINT STRING ')'','     {yyerror(((Token) $2.obj).getLine(), "Falta '('");}
+        |   PRINT '('STRING','      {yyerror(((Token) $3.obj).getLine(), "Falta ')'");}
+        |   PRINT'(' ')'','         {print("Sintaxis: Sentencia print");}
+        |   PRINT'(' STRING')'      {yyerror(((Token) $4.obj).getLine(), "Falta ','");}
+        ;
+
+cond    :   expr comp expr	
+        |   comp expr       {yyerror(((Token) $1.obj).getLine(), "Falta expresion del lado izquierdo del comparador");}
+        |   expr comp       {yyerror(((Token) $2.obj).getLine(), "Falta expresion del lado derecho del comparador");}
+        ;
+  
+ctrl_blck   :   exec
+            |   asig             
+            |   '{' ctrl_sent '}'   
+            ;
+        
+ctrl_sent   :   exec sent
+            |   asig sent
+            |   exec
+            |   asig
+            ;
+
+inv_fun :   ID '(' func_var ')'	{print("Sintaxis: Invocacion a funcion");}
+        |   ID '(' func_var ','    {yyerror(((Token) $2.obj).getLine(), "Falta ')'");}
+        ;
+        
+
+func_var    :   ID ';' lst_perm
+            |   error','   {yyerror(((Token) $2.obj).getLine(), "Argumentos mal definidos");}
+            |   error';' lst_perm        {yyerror(((Token) $2.obj).getLine(), "Llamado a funcion sin argumento");}
+            |   ID lst_perm         {yyerror(((Token) $1.obj).getLine(), "Falta ';'");}
+            |   ID ';'              {yyerror(((Token) $2.obj).getLine(), "Especificacion de permisos faltante");}
+            ;
+
+asig    :   ID ASIG expr','		{print("Sintaxis: Asignacion");}
+        |   ASIG expr','        {yyerror(((Token) $3.obj).getLine(), "Asignacion sin id del lado izq");}
+        |   ID expr','          {yyerror(((Token) $1.obj).getLine(), "Asignacion sin :=");}
+        |   ID ASIG','          {yyerror(((Token) $3.obj).getLine(), "Falta expresion del lado derecho del :=");}
+        |   ID ASIG expr        {yyerror(((Token) $1.obj).getLine(), "Falta ','");}
+        ;
+
+
+expr    :   expr '+' expr
+        |   expr '-' expr
+        |   term
+        ;
+
+term    :   term '*' fact
+        |   term '/' fact
+        |   fact
+        ;
+
+lst_perm :  READONLY
+         |  WRITE
+         |  PASS
+         |  WRITE ';' PASS
+         |  WRITE ';' error','
+         ;
+
+type    :   USINTEGER
+        |   LINTEGER
+        ;
+
+fact    :   ID
+        |   CTE {//numero es positivo
+				Object obj = val_peek(0).obj;
+				if (!ifUS(((Token) obj)))
+					testPos((Token) obj);}
+        |   '-'CTE  {
+                      Object obj = val_peek(0).obj;
+				if (ifUS(((Token) obj))){
+					yyerror("Constante Unsigned negativa");
+                    if (((CTNInformation)LexicalAnalizer.symbolTable.getLexeme(((Token)obj).getLex())).getCounter()>1) 
+						((CTNInformation)LexicalAnalizer.symbolTable.getLexeme(((Token)obj).getLex())).decreaseCounter();
+					else
+						LexicalAnalizer.symbolTable.removeCTN(((Token)obj).getLex());
+                    }
+				else
+					testNeg(((Token) obj));
+                        }
+        |   inv_fun
+        ;  
+
+
+        
+comp    :   '='
+        |   '<'
+        |   '>'
+        |   'MEN_IG'
+        |   'MAY_IG'
+        |   'DIST'
+        ;
+        
+%%
+
+LexicalAnalizer la;
+
+public Parser(String path) {
+		la = new LexicalAnalizer(path);
+}
+
+public void yyerror(int l, String s){
+
+    System.out.println("Sintax Error: Line " + l + " - " + s);
+
+}
+
+
+public boolean ifUS(Token t) {
+		//System.out.println(t.getLex());
+		if (((CTNInformation) LexicalAnalizer.symbolTable.getLexeme(t.getLex())).getType().equals(Constants.US_INT))
+			return true;
+		return false;
+	}
+
+public void yyerror(String s){
+
+    System.out.println(s);
+
+}
+
+public void print(String s){
+    System.out.println(s);
+}
+
+public void testPos(Token t) {
+		Long l = Long.parseLong(t.getLex());
+		if (l.compareTo((long)Integer.MAX_VALUE)>0) {
+			l = (long)Integer.MAX_VALUE;
+			if (((CTNInformation)LexicalAnalizer.symbolTable.getLexeme(t.getLex())).getCounter()>1) {
+				((CTNInformation)LexicalAnalizer.symbolTable.getLexeme(t.getLex())).decreaseCounter();
+				CTNInformation ctni = new CTNInformation();
+				ctni.setType(Constants.L_INT);
+				LexicalAnalizer.symbolTable.addCTN(l.toString(), ctni);
+			}
+			else {
+				LexicalAnalizer.symbolTable.removeCTN(t.getLex());
+				CTNInformation ctni = new CTNInformation();
+				ctni.setType(Constants.L_INT);
+				LexicalAnalizer.symbolTable.addCTN(l.toString(), ctni);
+			}
+		}
+			
+	}
+	
+	public void testNeg(Token t) {
+		Long l = Long.parseLong(t.getLex())*-1;
+		CTNInformation ctni = new CTNInformation();
+		ctni.setType(Constants.L_INT);
+		if (((CTNInformation)LexicalAnalizer.symbolTable.getLexeme(t.getLex())).getCounter()>1)
+			((CTNInformation)LexicalAnalizer.symbolTable.getLexeme(t.getLex())).decreaseCounter();
+		else
+			LexicalAnalizer.symbolTable.removeCTN(t.getLex());
+		LexicalAnalizer.symbolTable.addCTN(l.toString(), ctni);
+		
+	}
+
+
+
+
+
+
+
+public void gt() {
+		String path = "/home/alan/Documents";
+		LexicalAnalizer.symbolTable.genOutput(path);
+	}
+

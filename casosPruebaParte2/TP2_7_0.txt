@@ -1,0 +1,25 @@
+#Sentencia de control con ELSE#
+if (_A=_B+_C)
+    print('Funciona!'),
+else
+    print('Funciona!'),
+endif,
+
+#falta un ID#
+if (_A=_B+)
+    print('Funciona!'),
+    print('Ups!'),
+endif,
+
+if (_A=+_B)
+    print('Funciona!'),
+    print('Ups!'),
+endif,
+
+#La condicion tiene un simbolo no reconocido#
+if (_A=_B%_C){
+    print('Funciona!'),}
+else
+    print('Funciona!'),
+endif,
+

@@ -1,0 +1,10 @@
+#estas dos primeras estan bien#
+usinteger _A;_B,
+linteger _A;_B,
+
+#a esta le falta el ; en lugar de la coma#
+usinteger _A,_B,
+
+#a estas 2 les falta el divisor ;#
+linteger _A_B,
+usinteger _A _B,

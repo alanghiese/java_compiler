@@ -1,0 +1,7 @@
+#estas dos primeras estan mal al primero le falta la coma y el segundo esta invertido el orden#
+usinteger _A
+_B linteger, 
+
+#estas estan bien#
+linteger _A,
+usinteger _B,

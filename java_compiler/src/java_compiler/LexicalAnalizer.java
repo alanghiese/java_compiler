@@ -7,13 +7,16 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
+
 import utilities.Constants;
 import utilities.Token;
 
 public class LexicalAnalizer {
 	BufferedReader fileReader;
 	TransitionTable transitions = new TransitionTable();
-	public SymbolTable symbolTable = new SymbolTable();
+	static public SymbolTable symbolTable = new SymbolTable();
+	static public boolean FINISH = false;
 	int currentLine = 0;
 	StringBuilder codeLine = new StringBuilder(0);
 	//ParserVal yylval;
@@ -34,12 +37,12 @@ public class LexicalAnalizer {
 		Token token = new Token();
 		
 		
-		while (token.getToken() == Constants.DEFAULT_TOKEN) {
-			char nextChar;
+		while ((token.getToken() == Constants.DEFAULT_TOKEN || token.getToken() == Constants.ERR_TOKEN) && !FINISH) {
+
+			char nextChar = ' ';
 			StringBuilder buffer = new StringBuilder();
 			String lineReaded;
 					
-			
 			if (codeLine != null && codeLine.length() == 0) {
 
 				try {
@@ -48,8 +51,10 @@ public class LexicalAnalizer {
 					if (codeLine != null) {
 						codeLine.append('\n');
 						this.currentLine++;
-					} else
-						codeLine = new StringBuilder('陰');
+					} else {
+						codeLine = new StringBuilder(Constants.EOF);
+						FINISH = true;
+					}
 
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -57,22 +62,29 @@ public class LexicalAnalizer {
 			}
 
 			while (status != TransitionTable.FINAL_ST && codeLine.length() != 0) {
-				
+
 				nextChar = codeLine.charAt(0);
 				transitions.getAction(status, nextChar).execute(buffer, codeLine, token, symbolTable, yylval);
 				
 				status = transitions.getNextState(status, nextChar);
 
 			}
+			//System.out.println(codeLine);
+			if (token.getToken() != Constants.DEFAULT_TOKEN) {
+				token.setLine(this.currentLine);
+				//System.out.println(yylval.sval);
+				System.out.println("-----------------" + token.getMsg());
+			};
+			if (token.getToken()==Constants.ERR_TOKEN) {
+				token = new Token();
+				status = 0;
+			}
+			
 
 		}
 		
 		
-		if (token.getToken() != Constants.DEFAULT_TOKEN) {
-			token.setLine(this.currentLine);
-			//System.out.println(yylval.sval);
-			System.out.println(token.getMsg());
-		}
+		
 		
 		return token.getToken();
 	}

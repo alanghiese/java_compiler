@@ -50,7 +50,7 @@ public class FileManager {
 			}
 			FileWriter fw = new FileWriter(file);
 			for (String line : code) {
-				fw.write(line + '\n');
+				fw.write(line + System.getProperty("line.separator"));
 			}
 			BufferedWriter bw = new BufferedWriter(fw);
 			bw.close();

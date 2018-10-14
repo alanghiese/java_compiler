@@ -17,8 +17,9 @@ public class SA3 implements SemanticAction {
 			token.setMsg("ERROR LEXICO: Lexema no reconocido");
 		else if (token.getToken() <= 260)
 			token.setMsg(Constants.SYMBOL);
-		else
+		else 
 			token.setMsg(Constants.RES_WORD);
+		
 
 		//yylval = new ParserVal(new String(buffer.toString()),token);
 		//yylval = new ParserVal();

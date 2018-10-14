@@ -15,6 +15,7 @@ public class ERR_CHAR implements SemanticAction {
 		token.setLex(lex);
 		token.setToken(Constants.ERR_TOKEN);
 		buffer.setLength(0);
+		line.deleteCharAt(0);
 
 	}
 

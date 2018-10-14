@@ -1,0 +1,16 @@
+#funciona bien#
+_A:=_A(_B;write;pass),
+if(_A(_B;write;pass)=12_ui)
+    print('s'),
+endif,
+
+
+#Mal el parametro en la primera y mal la comparacion en la segunda#
+
+_A:=_A(B;write;pass),
+if(_A(_B;write;pass)=1)
+    print('s'),
+endif,
+
+
+

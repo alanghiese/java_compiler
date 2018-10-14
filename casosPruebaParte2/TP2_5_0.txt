@@ -1,0 +1,30 @@
+#Sentencia de control con bloque de sentencias bien definida#
+if (_A=_B)
+{
+    print('Funciona!'),
+    print('Funciona!'),
+    print('Funciona!'),
+    print('Funciona!'),
+    print('Funciona!'),
+    print('Funciona!'),
+    print('Funciona!'),
+    print('Funciona!'),
+    print('Funciona!'),
+}
+endif,
+
+
+#a estos les falta ) , = y endif respectivamente#
+if (_A=_B{
+    print('Funciona!'),}
+endif,
+
+
+if (_A_B){
+    print('Funciona!'),}
+
+endif,
+
+if (_A=_B){
+    print('Funciona!'),}
+

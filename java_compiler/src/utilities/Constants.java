@@ -1,14 +1,14 @@
 package utilities;
 
-import java_compiler.TransitionTable;
 
 public class Constants {
 	public static String ERR_UPS = "Ups! Algo salio mal";
-	public static String PATH = "/home/alan/Documents/";
-	public static String INPUT = "code";
+	//public static String PATH = "/home/alan/Documents/";
+	public static String ERROR_ARG = "Faltan argumentos";
+	//public static String INPUT = "code";
 	public static String OUTPUT = "finalCode.txt";
 	public static Integer ERR_TOKEN = -1;
-	public static Integer ERR_STATE = TransitionTable.FINAL_ST;
+	public static Integer ERR_STATE = 0;
 	public static Integer MAX_UN = 65535;
 	public static String STRING = "STRING";
 	public static String ID = "ID";
@@ -21,8 +21,6 @@ public class Constants {
 	public static String RES_WORD = "Reserved word";
 	public static String SYMBOL = "Symbol";
 	public static char EOF = '陰'; //陰
-	/**
-	 * Si se cambia aca acordarse de cambiar en el decoder ya que ahi no se puede usar la contrante
-	 */
+	public static Integer FINAL_TOKEN = -58;
 
 }

@@ -1,0 +1,24 @@
+#Funciona bien#
+linteger _A(linteger _A){
+    if(_A=_B)
+        print('s'),
+    else{
+        print('d'),
+        print('s'),
+    }
+    endif,
+    return (_A),
+}
+
+#retorna algo no valido#
+
+linteger _A(linteger _A){
+    if(_A=_B)
+        print('s'),
+    else{
+        print('d'),
+        print('s'),
+    }
+    endif,
+    return (error),
+}

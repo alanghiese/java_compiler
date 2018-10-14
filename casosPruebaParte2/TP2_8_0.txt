@@ -1,0 +1,19 @@
+#Sentencia de control WHILE#
+
+while(_A>=_B)
+    _A:=_A+_C,
+
+while(_A<_B){
+    _A:=_A+1_ui,
+    _func(_B;readonly),
+}
+
+#Condicion  y llave faltantes#
+#Detecta error sintactico pero no detecta especificamente la falta de la condicion#
+while
+    _A:=_A+1_ui,
+
+while(_A!=_B){
+    _A:=_A+1_ui,
+    _func(_B;readonly)
+

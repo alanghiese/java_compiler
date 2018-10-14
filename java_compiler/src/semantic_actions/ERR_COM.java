@@ -13,7 +13,7 @@ public class ERR_COM implements SemanticAction {
 		token.setLex("##");
 		token.setToken(Constants.ERR_TOKEN);
 		buffer.setLength(0);
-
+		line.deleteCharAt(0);
 	}
 
 }

@@ -1,0 +1,47 @@
+#Sentencia de control con ELSE#
+if (_A=_B)
+    print('Funciona!'),
+else
+    print('Funciona!'),
+endif,
+
+if (_A>=_B){
+    print('Funciona!'),
+    _A:=_B,
+}
+else
+    print('Funciona!'),
+endif,
+
+if (_A=_B){
+    print('Funciona!'),
+}
+else{
+    _A:=_A*_B,
+    print('Funciona!'),
+}
+endif,
+
+#a estos les falta else, una sentencia al menos y endif respectivamente#
+if (_A=_B)
+    print('Funciona!'),
+    print('Ups!'),
+endif,
+
+if
+    print('Funciona!'),
+else
+    print('Ups!'),
+endif,
+
+
+if (_A=_B){
+    print('Funciona!'),}
+else
+endif,
+
+if (_A=_B){
+    print('Funciona!'),}
+else
+    print('Funciona!'),
+,

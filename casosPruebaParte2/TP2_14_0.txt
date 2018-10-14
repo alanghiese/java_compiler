@@ -1,0 +1,8 @@
+#Supusimos que era una invocacion y no declaracion de una funcion con lista de permisos porque esto ultimo no estaba en la consigna#
+#funciona bien#
+_A(_B;write;pass),
+
+
+#mal utilizados los permisos#
+_A(_B;readonly;pass),
+

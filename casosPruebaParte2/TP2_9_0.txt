@@ -1,0 +1,17 @@
+#Anda bien#
+while(_A<_B){
+   if (_A>=_A(_A;readonly))
+        _A:=_A+1_ui,
+    endif, 
+}
+
+
+
+#If sin endif#
+while(_A<_B){
+   if (_A>=_A(_A;readonly)){
+        _A:=_A+1_ui,
+    },
+    #aca falta endif#
+}
+

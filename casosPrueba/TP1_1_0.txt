@@ -1,6 +1,6 @@
 #Constantes con el primer y último valor dentro del rango#
-_unsignedInt := 0_ui
-_unsignedInt := 65535_ui
+_unsignedInt := 0_ui,
+_unsignedInt := 65535_ui,
 #No deberia de reconocer el siguiente numero como negativo y ponerlo como el maximo positivo(va a suponer que esta fuera de rango)#
-_longInt := -2147483648_l
-_longInt := 2147483647_l
+_longInt := -2147483648_l,
+_longInt := 2147483647_l,

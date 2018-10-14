@@ -1,0 +1,6 @@
+#asignacion de una cte a una variable#
+_A:=-12_l,
+
+#numero fuera de rango#
+_A:=-99999999999_l,
+

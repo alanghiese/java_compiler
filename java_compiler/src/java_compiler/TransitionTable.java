@@ -91,7 +91,7 @@ public class TransitionTable {
 
 		// Fila 2 matriz transicion estados
 
-		mte[2][0] = Constants.ERR_STATE;
+		mte[2][0] = FINAL_ST;
 		mte[2][1] = 2;
 		mte[2][2] = 2;
 		mte[2][3] = 2;

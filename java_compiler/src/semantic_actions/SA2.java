@@ -21,18 +21,20 @@ public class SA2 implements SemanticAction {
 			type = new StringBuilder(Constants.US_INT);
 			for (int i = 0; i < buffer.length() - 3; i++)
 				withoutSuffix.append(buffer.charAt(i));
-			Integer number = Integer.parseInt(withoutSuffix.toString());
-			if (number < 0 || number > Constants.MAX_UN) {
+			Long number = Long.parseLong(withoutSuffix.toString());
+			
+			if (number > Constants.MAX_UN) {
 				System.out.println("WARNING LEXICO: variable fuera de rango");
-				withoutSuffix = new StringBuilder(Constants.MAX_UN);
+				withoutSuffix = new StringBuilder(Constants.MAX_UN.toString());
 			}
+			
 
 		} else if (buffer.charAt(buffer.length() - 1) == 'l') {
 			type = new StringBuilder(Constants.L_INT);
 			for (int i = 0; i < buffer.length() - 2; i++)
 				withoutSuffix.append(buffer.charAt(i));
 			Long number = Long.parseLong(withoutSuffix.toString());
-			if (number < 0 || number > Integer.MAX_VALUE+1) {
+			if (number < 0 || number > (long)Integer.MAX_VALUE+1) {
 				System.out.println("WARNING LEXICO: variable fuera de rango");
 				number = (long) Integer.MAX_VALUE+1;
 				withoutSuffix = new StringBuilder(number.toString());
