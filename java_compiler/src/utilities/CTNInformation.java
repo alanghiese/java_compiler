@@ -2,7 +2,7 @@ package utilities;
 
 public class CTNInformation extends SymbolInformation {
 
-	private String type;
+	
 	private int counter = 0;
 
 	public CTNInformation() {
@@ -20,18 +20,9 @@ public class CTNInformation extends SymbolInformation {
 		return this.counter;
 	}
 	
-	
-	public void setType(String t) {
-		this.type = t;
-	}
-
-	public String getType() {
-		return this.type;
-	}
-
 	@Override
 	public String toString() {
-		return "Constant - Type: " + type;
+		return "Constant - Type: " + super.getType();
 	}
 
 }

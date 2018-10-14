@@ -1,8 +1,12 @@
 package java_compiler;
 
+import java.awt.List;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 import utilities.Constants;
+import utilities.IDInformation;
 
 public class test {
 
@@ -17,7 +21,9 @@ public class test {
 			System.out.println(Constants.ERROR_ARG);
 		}
 		
-
+		LinkedList<Integer> l=new LinkedList<Integer>();
+		l.getLast();
+		
 	}
 
 }
