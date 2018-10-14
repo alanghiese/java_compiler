@@ -21,7 +21,7 @@ public class test {
 			System.out.println(Constants.ERROR_ARG);
 		}
 		
-		LinkedList<Integer> l=new LinkedList<Integer>();
+		LinkedList<String> l=new LinkedList<String>();
 		l.getLast();
 		
 	}
