@@ -1,7 +1,6 @@
 package java_compiler;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import utilities.Constants;
 
