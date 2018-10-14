@@ -1,5 +1,6 @@
 package java_compiler;
 
+import java.awt.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -79,6 +80,11 @@ public class SymbolTable {
 		}
 	}
 	
-	
+	public void setType(String symbol, String type) {
+		SymbolInformation info=symbolTable.get(symbol);
+		if (info!=null) {
+			info.setType(type);
+		}
+	}
 
 }
