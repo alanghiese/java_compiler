@@ -14,6 +14,7 @@ public class ERR_CTN implements SemanticAction {
 		token.setToken(Constants.ERR_TOKEN);
 		buffer.setLength(0);
 		//line.deleteCharAt(0);
+		
 
 	}
 

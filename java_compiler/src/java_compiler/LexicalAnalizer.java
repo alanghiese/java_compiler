@@ -90,6 +90,7 @@ public class LexicalAnalizer {
 				//System.out.println("-----------------" + token.getMsg());
 				token = new Token();
 				status = 0;
+				
 			}
 			
 

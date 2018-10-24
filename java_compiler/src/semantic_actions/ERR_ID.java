@@ -14,6 +14,7 @@ public class ERR_ID implements SemanticAction {
 		token.setMsg("ERROR LEXICO: ID mal definido ");
 		buffer.setLength(0);
 		//line.deleteCharAt(0);
+		
 
 	}
 
