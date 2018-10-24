@@ -67,6 +67,16 @@ public class LexicalAnalizer {
 				transitions.getAction(status, nextChar).execute(buffer, codeLine, token, symbolTable, yylval);
 				
 				status = transitions.getNextState(status, nextChar);
+				
+				if (token.getToken()==Constants.ERR_TOKEN) {
+					
+					System.out.println("-----------------" + token.getMsg());
+					
+					token = new Token();
+					
+				}
+				
+				
 
 			}
 			//System.out.println(codeLine);
@@ -75,7 +85,9 @@ public class LexicalAnalizer {
 				//System.out.println(yylval.sval);
 				System.out.println("-----------------" + token.getMsg());
 			};
+			
 			if (token.getToken()==Constants.ERR_TOKEN) {
+				//System.out.println("-----------------" + token.getMsg());
 				token = new Token();
 				status = 0;
 			}

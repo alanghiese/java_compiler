@@ -13,7 +13,7 @@ public class ERR_CTN implements SemanticAction {
 		token.setLex(buffer.toString());
 		token.setToken(Constants.ERR_TOKEN);
 		buffer.setLength(0);
-		line.deleteCharAt(0);
+		//line.deleteCharAt(0);
 
 	}
 

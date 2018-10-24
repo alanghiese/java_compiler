@@ -4,7 +4,7 @@ public class Token {
 
 	Integer token = Constants.DEFAULT_TOKEN;
 
-	String msg = "";
+	String msg = "Default msg";
 	String lexeme = "";
 	Integer myline = 0;
 
