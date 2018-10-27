@@ -23,4 +23,10 @@ public class TrCND extends Triples {
 		return super.type;
 	}
 
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "CND" + o1.toString() + o2.toString();
+	}
 }

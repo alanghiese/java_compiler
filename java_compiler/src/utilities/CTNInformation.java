@@ -22,7 +22,7 @@ public class CTNInformation extends SymbolInformation {
 	
 	@Override
 	public String toString() {
-		return "Constant - Type: " + super.getType();
+		return "Constante";
 	}
 
 }

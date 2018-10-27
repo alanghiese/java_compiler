@@ -19,4 +19,10 @@ public class SymbolInformation {
 	public String getType() {
 		return this.type;
 	}
+	
+
+	public boolean isFunction() {
+		return false;
+	}
+	
 }

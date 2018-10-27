@@ -1,31 +1,31 @@
 package codigo_intermedio;
 
-public class TrBF extends Triples {
+public class TrFUN extends Triples {
 
-	public TrBF(Operand o1, Operand o2) {
+	public TrFUN(Operand o1, Operand o2) {
 		super(o1, o2);
 		// TODO Auto-generated constructor stub
 	}
 
-	public TrBF(Operand o1) {
+	public TrFUN(Operand o1) {
 		super(o1);
 		// TODO Auto-generated constructor stub
 	}
 
-	public TrBF() {
+	public TrFUN() {
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public String getType() {
 		// TODO Auto-generated method stub
-		return null;
+		return "Comienzo de Funcion";
 	}
 	
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "Bifurcacion por falso" + o1.toString() + o2.toString();
+		return "Funcion" + o1.toString() + o2.toString();
 	}
 
 }

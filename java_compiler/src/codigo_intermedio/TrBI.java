@@ -19,4 +19,11 @@ public class TrBI extends Triples {
 		return "BI";
 	}
 
+	
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "Bifurcacion incondicional" + o1.toString() + o2.toString();
+	}
 }

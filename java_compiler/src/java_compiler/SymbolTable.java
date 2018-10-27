@@ -1,6 +1,5 @@
 package java_compiler;
 
-import java.awt.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -8,6 +7,7 @@ import java.util.Set;
 
 import utilities.CTNInformation;
 import utilities.Constants;
+import utilities.FNCInformation;
 import utilities.FileManager;
 import utilities.IDInformation;
 import utilities.SymbolInformation;
@@ -30,6 +30,11 @@ public class SymbolTable {
 		if (!this.symbolTable.containsKey(name))
 			this.symbolTable.put(name, ctni);
 		((CTNInformation)this.symbolTable.get(name)).increaseCounter();
+	}
+	
+	public void addFNC(String name, FNCInformation fnc) {
+		if (!this.symbolTable.containsKey(name))
+			this.symbolTable.put(name, fnc);
 	}
 
 	public SymbolInformation getLexeme(String name) {
@@ -85,6 +90,14 @@ public class SymbolTable {
 		if (info!=null) {
 			info.setType(type);
 		}
+	}
+	
+	public void removeID(String lex) {
+		this.symbolTable.remove(lex);
+	}
+	
+	public boolean isFunction(String name) {
+		return this.symbolTable.get(name).isFunction();
 	}
 
 }

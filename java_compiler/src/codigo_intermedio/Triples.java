@@ -32,4 +32,7 @@ public abstract class Triples extends Operand{
 	@Override
 	public abstract String getType();
 	
+	@Override
+	public abstract String toString();
+	
 }

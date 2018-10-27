@@ -1,6 +1,7 @@
 package java_compiler;
 
 import codigo_intermedio.Operand;
+import utilities.Token;
 
 //#############################################
 //## file: Parser.java
@@ -80,6 +81,12 @@ public class ParserVal extends Operand{
 	public String getType() {
 		// TODO Auto-generated method stub
 		return LexicalAnalizer.symbolTable.symbolTable.get(sval).getType();
+	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return LexicalAnalizer.symbolTable.symbolTable.get(((Token)this.obj).getLex()).toString();
 	}
 }// end class
 

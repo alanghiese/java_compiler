@@ -14,9 +14,7 @@
 //#line 2 "gramatica"
 package java_compiler;
 
-import utilities.Token;
-import utilities.Constants;
-import utilities.CTNInformation;
+import utilities.*;
 //#line 22 "Parser.java"
 
 public class Parser {
@@ -30,9 +28,9 @@ public class Parser {
 //###############################################################
 // method: debug
 //###############################################################
-	void debug(String msg) {
+	void debug(String msg) {//
 		if (yydebug)
-			System.out.println(msg);
+			System.out.println(msg); 
 	}
 
 //########## STATE STACK ##########

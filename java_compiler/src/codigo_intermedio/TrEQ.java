@@ -15,5 +15,11 @@ public class TrEQ extends TrCND {
 	public TrEQ() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "=" + o1.toString() + o2.toString();
+	}
 
 }

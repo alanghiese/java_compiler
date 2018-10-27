@@ -6,4 +6,9 @@ public class TrMUL extends TrOperations {
 		super(o1, o2);
 	}
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "*" + o1.toString() + o2.toString();
+	}
 }
