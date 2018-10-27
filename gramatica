@@ -39,7 +39,13 @@ lst_var :   ID';' lst_var           {varList.add(((Token) ($1.obj)).getLex());}
 	    ;
 	
 func	:   type ID param func_body     {print("Sintaxis: Declaracion de funcion");
-                                        la.symbolTable.setType((Token)($2.obj).getLex(),(Token)($1.obj).getLex());}
+                                        la.symbolTable.removeID((Token)($2.obj).getLex());
+                                        FNCInformation fnc = new FNCInformation();
+                                        fnc.setType($1);
+                                        la.symbolTable.addFNC((Token)($2.obj).getLex(), fnc);
+                                        la.symbolTable.setType((Token)($2.obj).getLex(),(Token)($1.obj).getLex());
+                                        //remuevo el parametro para esta funcion en particular (considero funciones anidadas)
+                                        listParam.removeLast();}
         |   ID param func_body          {yyerror(((Token) $1.obj).getLine(), "Falta el tipo de retorno de la funcion");} 
 	    |   type param func_body        {yyerror(((Token) $1.obj).getLine(), "No se permiten funciones anonimas");}
 	    |   ID type func_body           {yyerror(((Token) $2.obj).getLine(), "Falta el argumento de la funcion");}
@@ -47,7 +53,10 @@ func	:   type ID param func_body     {print("Sintaxis: Declaracion de funcion");
         ;
 
 param	:   '(' type ID ')'         {   Triples t= new TrFUN();
-                                        triples.add(t);}
+                                        triples.add(t);
+                                        permList.addLast(new Permissions(false,false));
+                                        paramList.addLast(((Token) $3.obj).getLex());    
+                                    }
         |   type ID ')'             {yyerror(((Token) $1.obj).getLine(), "Falta '('");}
         |   '(' ID ')'              {yyerror(((Token) $1.obj).getLine(), "Falta especificar el tipo del parametro de la funcion");}
         |   '(' type ')'            {yyerror(((Token) $2.obj).getLine(), "Falta ID como parametro de la funcion");}
@@ -153,10 +162,18 @@ ctrl_sent   :   exec sent
             |   asig
             ;
 
-inv_fun :   ID '(' func_var ')'	{print("Sintaxis: Invocacion a funcion");
-                                 TERMINAR ESTO!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                                 Triples t= new TrINV($1,$3); 
-                                 triples.add();}
+inv_fun :   ID '(' func_var ')'	{if(correctCall((Token)($1.getLexeme()))){
+                                    print("Sintaxis: Invocacion a funcion");
+                                    Triples t= new TrINV($1,$3); 
+                                    triples.add(t);
+                                    if (!paramList.isEmpty()){
+                                        if ( ((FNCInformation)LexicalAnalizer.symbolTable.getLexeme(((Token) $1.obj).getLex())).isWrite() )
+                                            permList.getLast().setWrite(true);
+                                         if (((Token) $1.obj).getLex().equals(paramList.getFirst()))
+                                            permList.getLast().setPass(true);                                   
+                                    }
+                                 }
+                                }
         |   ID '(' func_var ','    {yyerror(((Token) $2.obj).getLine(), "Falta ')'");}
         ;
         
@@ -168,7 +185,12 @@ func_var    :   ID ';' lst_perm
             |   ID ';'              {yyerror(((Token) $2.obj).getLine(), "Especificacion de permisos faltante");}
             ;
 
-asig    :   ID ASIG expr','		{print("Sintaxis: Asignacion");
+asig    :   ID ASIG expr','		{
+                                    if (!paramList.isEmpty())
+                                        if (((Token) $1.obj).getLex().equals(paramList.getFirst()))
+                                            permList.getLast().setWrite(true);
+                    
+                                    print("Sintaxis: Asignacion");
                                         Triples aux = new TrASG($1,$3);
                                         triples.add(aux);
                                         $$ = new ParserVal(aux);}
@@ -244,6 +266,8 @@ LexicalAnalizer la;
 List<Triples> triples= new LinkedList();
 List<Triples> pendingTriples= new LinkedList();
 List<String> varList = new LinkedList();
+List<String> paramList = new LinkedList();
+List<Permissions> permsList = new LinkedList();
 
 public Parser(String path) {
 		la = new LexicalAnalizer(path);
