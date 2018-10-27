@@ -46,7 +46,8 @@ func	:   type ID param func_body     {print("Sintaxis: Declaracion de funcion");
 	    |   ID type param               {yyerror(((Token) $3.obj).getLine(), "Falta cuerpo de la funcion");}
         ;
 
-param	:   '(' type ID ')'
+param	:   '(' type ID ')'         {   Triples t= new TrFUN();
+                                        triples.add(t);}
         |   type ID ')'             {yyerror(((Token) $1.obj).getLine(), "Falta '('");}
         |   '(' ID ')'              {yyerror(((Token) $1.obj).getLine(), "Falta especificar el tipo del parametro de la funcion");}
         |   '(' type ')'            {yyerror(((Token) $2.obj).getLine(), "Falta ID como parametro de la funcion");}
@@ -152,7 +153,10 @@ ctrl_sent   :   exec sent
             |   asig
             ;
 
-inv_fun :   ID '(' func_var ')'	{print("Sintaxis: Invocacion a funcion");}
+inv_fun :   ID '(' func_var ')'	{print("Sintaxis: Invocacion a funcion");
+                                 TERMINAR ESTO!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                                 Triples t= new TrINV($1,$3); 
+                                 triples.add();}
         |   ID '(' func_var ','    {yyerror(((Token) $2.obj).getLine(), "Falta ')'");}
         ;
         
