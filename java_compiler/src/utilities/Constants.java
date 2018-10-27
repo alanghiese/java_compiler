@@ -24,5 +24,10 @@ public class Constants {
 	public final static Integer FINAL_TOKEN = -58;
 	public final static String IF = "IF";
 	public final static String TYPE_BOOLEAN = "BOOLEAN";
+	
+	public static int FUNC_ALLOW_READ = 1;
+        public static int FUNC_ALLOW_WRITE = 2;
+        public static int FUNC_ALLOW_PASS = 3;
+        public static int FUNC_ALLOW_WRITEPASS = 4;
 
 }
