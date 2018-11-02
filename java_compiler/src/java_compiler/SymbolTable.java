@@ -99,5 +99,9 @@ public class SymbolTable {
 	public boolean isFunction(String name) {
 		return this.symbolTable.get(name).isFunction();
 	}
+        
+        public boolean isVar(String name){
+            return this.symbolTable.get(name).isVar();
+        }
 
 }
