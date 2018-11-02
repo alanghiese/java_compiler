@@ -1,31 +1,33 @@
 package codigo_intermedio;
 
-public class TrFUN extends Triples {
+import utilities.Constants;
 
-	public TrFUN(Operand o1, Operand o2) {
+public class TrCNV extends Triples {
+
+	public TrCNV(Operand o1, Operand o2) {
 		super(o1, o2);
 		// TODO Auto-generated constructor stub
 	}
 
-	public TrFUN(Operand o1) {
+	public TrCNV(Operand o1) {
 		super(o1);
 		// TODO Auto-generated constructor stub
 	}
 
-	public TrFUN() {
+	public TrCNV() {
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public String getType() {
 		// TODO Auto-generated method stub
-		return "Comienzo de Funcion";
+		return Constants.L_INT;
 	}
-	
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "FNC"  + "," + o1.getRef()  + "," + o2.getRef();
+		return "CNV"  + "," + this.getType() + "," + o1.getRef();
 	}
 
 }

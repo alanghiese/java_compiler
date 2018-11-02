@@ -25,7 +25,7 @@ public class TrBF extends Triples {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "Bifurcacion por falso" + o1.toString() + o2.toString();
+		return "BF"  + "," + o1.getRef()  + "," + o2.getRef();
 	}
 
 }

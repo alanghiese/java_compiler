@@ -1,25 +1,31 @@
 package codigo_intermedio;
 
-public class TrNE extends TrCND {
+public class Label extends Triples {
 
-	public TrNE(Operand o1, Operand o2) {
+	public Label(Operand o1, Operand o2) {
 		super(o1, o2);
 		// TODO Auto-generated constructor stub
 	}
 
-	public TrNE(Operand o1) {
+	public Label(Operand o1) {
 		super(o1);
 		// TODO Auto-generated constructor stub
 	}
 
-	public TrNE() {
+	public Label() {
 		// TODO Auto-generated constructor stub
 	}
 
-	
+	@Override
+	public String getType() {
+		// TODO Auto-generated method stub
+		return "Label";
+	}
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "!="  + "," + o1.getRef()  + "," + o2.getRef();
+		return "Label [" + this.getId() + "]" ;
 	}
+
 }

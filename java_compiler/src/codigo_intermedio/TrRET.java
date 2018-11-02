@@ -24,7 +24,7 @@ public class TrRET extends Triples {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "Return" + o1.toString() + o2.toString();
+		return "RET"  + "," + o1.getRef()  + "," + o2.getRef();
 	}
 
 }

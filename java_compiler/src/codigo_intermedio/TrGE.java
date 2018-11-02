@@ -19,6 +19,6 @@ public class TrGE extends TrCND {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return ">=" + o1.toString() + o2.toString();
+		return ">="  + "," + o1.getRef()  + "," + o2.getRef();
 	}
 }

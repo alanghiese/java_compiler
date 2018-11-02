@@ -84,6 +84,11 @@ public class ParserVal extends Operand{
 	}
 	
 	@Override
+	public String getRef() {
+		return this.toString();
+	}
+	
+	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
 		return LexicalAnalizer.symbolTable.symbolTable.get(((Token)this.obj).getLex()).toString();

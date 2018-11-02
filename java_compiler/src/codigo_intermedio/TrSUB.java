@@ -10,7 +10,7 @@ public class TrSUB extends TrOperations{
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "-" + o1.toString() + o2.toString();
+		return "-"  + "," + o1.getRef()  + "," + o2.getRef();
 	}
 
 	

@@ -21,7 +21,7 @@ public class TrPRT extends Triples {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "Print" + o1.toString() + o2.toString();
+		return "Print"  + "," + o1.getRef()  + "," + o2.getRef();
 	}
 
 }

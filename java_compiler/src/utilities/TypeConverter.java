@@ -10,26 +10,26 @@ public class TypeConverter {
 		TypeConverter.types = new String[ROWS][COLS];
 
 		// row 0
-		TypeConverter.types[0][0] = "";
-		TypeConverter.types[0][1] = "";
-		TypeConverter.types[0][2] = "";
+		TypeConverter.types[0][0] = Constants.L_INT;
+		TypeConverter.types[0][1] = Constants.L_INT;
+		TypeConverter.types[0][2] = Constants.CONV_NOT_ALLOWED;
 
 		// row 1
-		TypeConverter.types[1][0] = "";
-		TypeConverter.types[1][1] = "";
-		TypeConverter.types[1][2] = "";
+		TypeConverter.types[1][0] = Constants.L_INT;
+		TypeConverter.types[1][1] = Constants.US_INT;
+		TypeConverter.types[1][2] = Constants.CONV_NOT_ALLOWED;
 
 		// row 2
-		TypeConverter.types[2][0] = "";
-		TypeConverter.types[2][1] = "";
-		TypeConverter.types[2][2] = "";
+		TypeConverter.types[2][0] = Constants.CONV_NOT_ALLOWED;
+		TypeConverter.types[2][1] = Constants.CONV_NOT_ALLOWED;
+		TypeConverter.types[2][2] = Constants.STRING;
 	}
 
 	private static int stringToInt(String s) {
 		switch (s) {
-		case "linteger":
+		case Constants.L_INT:
 			return 0;
-		case "usinteger":
+		case Constants.US_INT:
 			return 1;
 		case Constants.STRING:
 			return 2;

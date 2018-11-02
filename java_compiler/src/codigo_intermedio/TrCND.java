@@ -27,6 +27,6 @@ public class TrCND extends Triples {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "CND" + o1.toString() + o2.toString();
+		return "CND"  + "," + o1.getRef()  + "," + o2.getRef();
 	}
 }
