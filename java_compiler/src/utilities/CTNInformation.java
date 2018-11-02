@@ -24,5 +24,7 @@ public class CTNInformation extends SymbolInformation {
 	public String toString() {
 		return "Constante";
 	}
+        
+        
 
 }
