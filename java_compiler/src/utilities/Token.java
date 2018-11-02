@@ -1,6 +1,9 @@
 package utilities;
 
-public class Token {
+import codigo_intermedio.Operand;
+import java_compiler.LexicalAnalizer;
+
+public class Token extends Operand{
 
 	Integer token = Constants.DEFAULT_TOKEN;
 
@@ -38,5 +41,23 @@ public class Token {
 
 	public Integer getLine() {
 		return this.myline;
+	}
+
+	@Override
+	public String getType() {
+		// TODO Auto-generated method stub
+		return LexicalAnalizer.symbolTable.getType(this.lexeme);
+	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "Token";
+	}
+
+	@Override
+	public String getRef() {
+		// TODO Auto-generated method stub
+		return this.lexeme;
 	}
 }

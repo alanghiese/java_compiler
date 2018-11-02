@@ -11,7 +11,7 @@ import utilities.Token;
  * BYACC/J Semantic Value for parser: Parser This class provides some of the
  * functionality of the yacc/C 'union' directive
  */
-public class ParserVal extends Operand{
+public class ParserVal{
 	/**
 	 * integer value of this 'union'
 	 */
@@ -77,21 +77,11 @@ public class ParserVal extends Operand{
 		sval = val;
 	}
 
-	@Override
-	public String getType() {
-		// TODO Auto-generated method stub
-		return LexicalAnalizer.symbolTable.symbolTable.get(sval).getType();
-	}
-	
-	@Override
-	public String getRef() {
-		return this.toString();
-	}
-	
+		
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return LexicalAnalizer.symbolTable.symbolTable.get(((Token)this.obj).getLex()).toString();
+		return "ParserVal";
 	}
 }// end class
 

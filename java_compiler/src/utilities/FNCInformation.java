@@ -3,6 +3,7 @@ package utilities;
 public class FNCInformation extends SymbolInformation {
 
 	private Permissions permissions = new Permissions(false,false);
+	private String paramType = "Undefined";
 	
 	
 	public FNCInformation() {
@@ -31,6 +32,14 @@ public class FNCInformation extends SymbolInformation {
 
 	public boolean isReadonly() {
 		return !this.permissions.isPass() && !this.permissions.isWrite();
+	}
+
+	public String getParamType() {
+		return paramType;
+	}
+
+	public void setParamType(String paramType) {
+		this.paramType = paramType;
 	}
 
 	@Override

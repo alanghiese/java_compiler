@@ -7,13 +7,33 @@ public abstract class Triples extends Operand{
 	protected Operand o1;
 	protected Operand o2;
 	
+	public static int static_id=0;
+	private int id=0;
+	
 	public Triples(Operand o1, Operand o2) {
-		
+		this.id = Triples.static_id;
+		Triples.static_id++;
 		
 		this.o1 = o1;
 		this.o2 = o2;
 	}
 	
+	public void decreaseId() {
+		this.id--;
+		Triples.static_id--;
+	}
+	
+	public int getId() {
+		return this.id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getRef() {
+		return "["+this.getId()+"]";
+	}
 	
 	
 	

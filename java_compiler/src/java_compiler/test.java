@@ -38,10 +38,6 @@ public class test {
 		LinkedList<Integer> l = new LinkedList<>();
 		
 		
-		
-		
-		
-		
 	}
 
 }

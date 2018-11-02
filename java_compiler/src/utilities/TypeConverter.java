@@ -15,7 +15,7 @@ public class TypeConverter {
 		TypeConverter.types[0][2] = Constants.CONV_NOT_ALLOWED;
 
 		// row 1
-		TypeConverter.types[1][0] = Constants.L_INT;
+		TypeConverter.types[1][0] = Constants.CONV_NOT_ALLOWED;
 		TypeConverter.types[1][1] = Constants.US_INT;
 		TypeConverter.types[1][2] = Constants.CONV_NOT_ALLOWED;
 
@@ -41,6 +41,16 @@ public class TypeConverter {
 		int i1 =  stringToInt(s1);
 		int i2 =  stringToInt(s2);
 		return TypeConverter.types[i1][i2];
+	}
+	
+	public static boolean isValid(String type1, String type2) {
+		return !TypeConverter.getConversion(type1,type2).equals(Constants.CONV_NOT_ALLOWED);
+			
+	}
+	
+	public static boolean isValidBiderctional(String type1, String type2) {
+		return (isValid(type1,type2) || isValid(type2,type1));
+			
 	}
 
 }
