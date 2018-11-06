@@ -64,7 +64,7 @@ func	:   type ID param func_body     {print("Sintaxis: Declaracion de funcion");
                                             yyerror((Token)($1.obj).getLine(), "Semantic Error: El id "+ var +" ya fue usado como variable");
                                         }
                                         //remuevo el parametro para esta funcion en particular (considero funciones anidadas)
-                                        listParam.removeLast();
+                                        listParam.removeLast();}
         |   ID param func_body          {yyerror(((Token) $1.obj).getLine(), "Falta el tipo de retorno de la funcion");} 
 	|   type param func_body        {yyerror(((Token) $1.obj).getLine(), "No se permiten funciones anonimas");}
 	|   ID type func_body           {yyerror(((Token) $2.obj).getLine(), "Falta el argumento de la funcion");}
@@ -123,14 +123,14 @@ s_cond  :   IF '(' cond ')' ctrl_blck ELSE ctrl_blck ENDIF','   {print("Sintaxis
         |   IF '(' cond error ctrl_blck ELSE ctrl_blck ENDIF','       {yyerror(((Token) $2.obj).getLine(), "Falta ')' en la sentencia condicional");}
         |   IF '(' cond ')' ELSE ctrl_blck ENDIF','             {yyerror(((Token) $4.obj).getLine(), "Sentencia/s faltante/s luego de 'IF'");}
         |   IF '(' cond ')' ctrl_blck ctrl_blck ENDIF','        {yyerror(((Token) $4.obj).getLine(), "Falta 'ELSE' o sobran llaves en la declaracion de bloque");}
-        |   IF '(' cond ')' ctrl_blck ELSE ENDIF','             {yyerror(((Token) $6.obj).getLine(), "Bloque faltante luego de 'ELSE'");}
-        |   IF '(' cond ')' ctrl_blck ELSE ctrl_blck error','         {yyerror(((Token) $6.obj).getLine(), "Falta 'ENDIF'");}
-        |   IF '(' cond ')' ctrl_blck ELSE ctrl_blck ENDIF      {yyerror(((Token) $6.obj).getLine(), "Falta ','");}
-        |   IF '(' cond ')' ctrl_blck ENDIF                     {yyerror(((Token) $6.obj).getLine(), "Falta ','");}
+        |   IF '(' cond ')' ctrl_blck ELSE ENDIF','             {yyerror(((Token) $3.obj).getLine(), "Bloque faltante luego de 'ELSE'");}
+        |   IF '(' cond ')' ctrl_blck ELSE ctrl_blck error','         {yyerror(((Token) $3.obj).getLine(), "Falta 'ENDIF'");}
+        |   IF '(' cond ')' ctrl_blck ELSE ctrl_blck ENDIF      {yyerror(((Token) $3.obj).getLine(), "Falta ','");}
+        |   IF '(' cond ')' ctrl_blck ENDIF                     {yyerror(((Token) $3.obj).getLine(), "Falta ','");}
         |   IF cond ')' ctrl_blck ENDIF                         {yyerror(((Token) $2.obj).getLine(), "Falta '('");}
         |   IF '(' ')' ctrl_blck ENDIF                          {yyerror(((Token) $2.obj).getLine(), "Falta condicion en la sentencia condicional");}
         |   IF '(' cond error ctrl_blck ENDIF                         {yyerror(((Token) $2.obj).getLine(), "Falta ')'");}
-        |   IF '(' cond ')' ctrl_blck error','                          {yyerror(((Token) $6.obj).getLine(), "Falta 'ENDIF' en sentencia condicional");}
+        |   IF '(' cond ')' ctrl_blck error','                          {yyerror(((Token) $3.obj).getLine(), "Falta 'ENDIF' en sentencia condicional");}
         |   IF '(' cond ')' ENDIF                               {yyerror(((Token) $4.obj).getLine(), "Falta bloque de sentencias en sentencia condicional");}
         ;
 
@@ -145,6 +145,7 @@ ctrl    :   while '(' cond ')' ctrl_blck             {print("Sintaxis: Sentencia
 while   :   WHILE   {Triple label=new Label();
                     triples.add(label);
                     pendingTriples.add(label);}
+                    ;
         
 prt     :   PRINT'(' STRING ')'','  {print("Sintaxis: Sentencia print");
                                     Triples aux = new TrPRT((Operand)$3.obj);
@@ -231,7 +232,7 @@ func_var    :   ID ';' lst_perm {$$=$1}
             |   ID ';'              {yyerror(((Token) $2.obj).getLine(), "Especificacion de permisos faltante");}
             ;
 
- asig    :   ID ASIG expr','        {if(TypeConverter.isValid(((Token) $3.obj).getType(),((Token) $1.obj).getType()))
+ asig    :   ID ASIG expr','        {if(TypeConverter.isValid(((Token) $3.obj).getType(),((Token) $1.obj).getType())){
  										Triples aux;
 										if (!((Token) $1.obj).getType().equals((Token) $3.obj).getType()  ){
                                             	Triples cnv = new TrCNV((Token)$1.obj);
@@ -271,7 +272,7 @@ expr    :   expr '+' expr 	{if (TypeConverter.isValidBidirectional(((Operand)$1)
 								yyerror(((Token)$2.obj).getLine(),"Semantic Error: Tipos incompatibles en suma");
 							}
                         }
-        |   expr '-' expr   {if (TypeConverter.isValidBidirectional(((Operand)$1).getType(),((Operand)$2).getType()){
+        |   expr '-' expr   {if (TypeConverter.isValidBidirectional(((Operand)$1).getType(),((Operand)$3).getType()){
 	                        Operand o1;
 	                        Operand o2;
 
@@ -283,6 +284,7 @@ expr    :   expr '+' expr 	{if (TypeConverter.isValidBidirectional(((Operand)$1)
 
 							}else{
 								yyerror(((Token)$2.obj).getLine(),"Semantic Error: Tipos incompatibles en resta");
+							}
 							}
         |   term
         ;
@@ -300,6 +302,7 @@ term    :   term '*' fact   {if (TypeConverter.isValidBidirectional(((Operand)$1
 							}else{
 								yyerror(((Token)$2.obj).getLine(),"Semantic Error: Tipos incompatibles en multiplicacion");
 							}
+							}
         |   term '/' fact   {if (TypeConverter.isValidBidirectional(((Operand)$1).getType(),((Operand)$2).getType()){
 	                        Operand o1;
 	                        Operand o2;
@@ -312,7 +315,7 @@ term    :   term '*' fact   {if (TypeConverter.isValidBidirectional(((Operand)$1
 
 							}else{
 								yyerror(((Token)$2.obj).getLine(),"Semantic Error: Tipos incompatibles en division");
-							}
+							}}
         |   fact
         ;
 
