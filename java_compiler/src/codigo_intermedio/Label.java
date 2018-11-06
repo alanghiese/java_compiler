@@ -11,6 +11,7 @@ public class Label extends Triples {
 		super(o1);
 		// TODO Auto-generated constructor stub
 	}
+	
 
 	public Label() {
 		// TODO Auto-generated constructor stub
