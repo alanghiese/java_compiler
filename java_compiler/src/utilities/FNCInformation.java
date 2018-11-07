@@ -3,7 +3,7 @@ package utilities;
 public class FNCInformation extends SymbolInformation {
 
 	private Permissions permissions = new Permissions(false,false);
-	private String paramType = "Undefined";
+	private String paramType = "FNC Undefined";
 	
 	
 	public FNCInformation() {
@@ -17,7 +17,12 @@ public class FNCInformation extends SymbolInformation {
 	public void setPass(boolean b) {
 		this.permissions.setPass(b);
 	}
-		
+	
+	public void setPermissions(Permissions p) {
+		this.permissions.setPass(p.isPass());
+		this.permissions.setWrite(p.isWrite());
+	}
+	
 	public boolean isWrite() {
 		return this.permissions.isWrite();
 	}

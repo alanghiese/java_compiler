@@ -13,6 +13,7 @@ public class TrFUN extends Triples {
 	}
 
 	public TrFUN() {
+		super();
 		// TODO Auto-generated constructor stub
 	}
 
@@ -24,8 +25,8 @@ public class TrFUN extends Triples {
 	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return "FNC"  + "," + o1.getRef()  + "," + o2.getRef();
+
+		return "FNC";
 	}
 
 }

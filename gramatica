@@ -1,8 +1,12 @@
 %{
 package java_compiler;
-import utilities.Token;
-import utilities.Constants;
-import utilities.CTNInformation;
+
+import utilities.*;
+
+import java.util.LinkedList;
+
+import codigo_intermedio.*;
+import java.util.concurrent.atomic.AtomicReference;
 %}
 
 %token  ASIG IF ENDIF ELSE PRINT WHILE USINTEGER LINTEGER READONLY WRITE PASS ID CTE RETURN STRING MAY_IG MEN_IG DIST
@@ -28,7 +32,7 @@ decl    :   var
         ;
 
 var     :   type lst_var',' {print("Sintaxis: Declaracion de variable");
-                            setTypes(((Token)($1.obj)).getLex(),(Token)($1.obj).getLine());}
+                            setTypes(((Token)($1.obj)).getLex(),((Token)$1.obj).getLine());}
 	    |   lst_var','      {yyerror(((Token) $2.obj).getLine(), "Falta especificar el tipo de la variable");}
 	    |   type error','         {yyerror(((Token) $1.obj).getLine(), "Error en la declaracion de variable/s");} 
 ;
@@ -40,17 +44,18 @@ lst_var :   ID';' lst_var           {varList.add(((Token) ($1.obj)).getLex());}
 ;
 	
 func	:   type ID param func_body     {print("Sintaxis: Declaracion de funcion");
-                                        if(!la.symbolTable.isVar((Token)($2.obj).getLex())){
-                                        	if(TypeConverter.isValid(((Token)$1.obj).getType(),typeRet)){
-	                                            la.symbolTable.removeID((Token)($2.obj).getLex());
+                                        if(!la.symbolTable.isVar(((Token)$2.obj).getLex())){
+                                        	if(TypeConverter.isValid(((Token)$1.obj).getLex(),typeRet)){
+	                                            la.symbolTable.removeID(((Token)$2.obj).getLex());
 	                                            FNCInformation fnc = new FNCInformation();
-	                                            fnc.setType((Token)($1.obj).getLex());
+	                                            fnc.setType(((Token)$1.obj).getLex());
 	                                            fnc.setParamType(((Token)$3.obj).getLex());
-	                                            la.symbolTable.addFNC((Token)($2.obj).getLex(), fnc);
-	                                            la.symbolTable.setType((Token)($2.obj).getLex(),(Token)($1.obj).getLex());
+                                                fnc.setPermissions(permsList.removeLast());
+	                                            la.symbolTable.addFNC(((Token)$2.obj).getLex(), fnc);
+	                                            la.symbolTable.setType(((Token)$2.obj).getLex(),((Token)$1.obj).getLex());
 	                                            
-                                            	if(!((Token)$1.obj).getType().equals(typeRet)){
-                                            		Triples cnv = TrCNV(((Triples)$4.obj).getO1());
+                                            	if(!((Token)$1.obj).getLex().equals(typeRet)){
+                                            		Triples cnv = new TrCNV(((Triples)$4.obj).getO1());
                                             		cnv.setId(((Triples)$4.obj).getId());
                                             		triples.add(triples.size()-2,cnv);
                                             		((Triples)$4.obj).setId(((Triples)$4.obj).getId()+1);
@@ -59,12 +64,12 @@ func	:   type ID param func_body     {print("Sintaxis: Declaracion de funcion");
                                             	}
                                             }
                                             else
-                                            	yyerror((Token)($1.obj).getLine(), "Semantic Error: Tipo de retorno incompatible")
+                                            	yyerror(((Token)$1.obj).getLine(), "Semantic Error: Tipo de retorno incompatible");
                                         }else{
-                                            yyerror((Token)($1.obj).getLine(), "Semantic Error: El id "+ var +" ya fue usado como variable");
+                                            yyerror(((Token)$1.obj).getLine(), "Semantic Error: El id "+ ((Token)$2.obj).getLex() +" ya fue usado como variable");
                                         }
                                         //remuevo el parametro para esta funcion en particular (considero funciones anidadas)
-                                        listParam.removeLast();}
+                                        paramList.removeLast();}
         |   ID param func_body          {yyerror(((Token) $1.obj).getLine(), "Falta el tipo de retorno de la funcion");} 
 	|   type param func_body        {yyerror(((Token) $1.obj).getLine(), "No se permiten funciones anonimas");}
 	|   ID type func_body           {yyerror(((Token) $2.obj).getLine(), "Falta el argumento de la funcion");}
@@ -73,7 +78,7 @@ func	:   type ID param func_body     {print("Sintaxis: Declaracion de funcion");
 
 param	:   '(' type ID ')'         {   Triples t= new TrFUN();
                                         triples.add(t);
-                                        permList.addLast(new Permissions(false,false));
+                                        permsList.addLast(new Permissions(false,false));
                                         paramList.addLast(((Token) $3.obj).getLex());   
                                         $$=$2; 
                                      }
@@ -83,8 +88,8 @@ param	:   '(' type ID ')'         {   Triples t= new TrFUN();
         |   '(' type ID             {yyerror(((Token) $3.obj).getLine(), "Falta ')'");}
 ;
 
-func_body   :   '{' sent ret '}' {$$=$3}
-            |   '{' ret '}'			{$$=$2}
+func_body   :   '{' sent ret '}' {$$=$3;}
+            |   '{' ret '}'			{$$=$2;}
 	    |   sent ret '}'                {yyerror(((Token) $3.obj).getLine(), "Falta '{'");}
 	    |  '{' sent ret error','        {yyerror(((Token) $1.obj).getLine(), "Falta '}'");}
 	    |  '{' sent '}'                 {yyerror(((Token) $3.obj).getLine(), "Falta sentencia de retorno");}
@@ -92,7 +97,7 @@ func_body   :   '{' sent ret '}' {$$=$3}
 
 ret	    :   RETURN '(' expr ')'','  {Triples t = new TrRET((Operand)$3.obj);
                                      triples.add(t);
-                                     typeRet.add(((Operand)$3.obj).getType());
+                                     typeRet = ((Operand)$3.obj).getType();
                                      $$ = new ParserVal(t);}
         |   '(' expr ')'','         {yyerror(((Token) $1.obj).getLine(), "Retorno de funcion sin 'RETURN'");}
         |   RETURN expr ')'','      {yyerror(((Token) $1.obj).getLine(), "Falta '('");}
@@ -107,12 +112,15 @@ exec    :   s_cond
         |   inv_fun','
         ;
 
-s_cond  :   IF '(' cond ')' ctrl_blck ELSE ctrl_blck ENDIF','   {print("Sintaxis: Sentencia IF-ELSE");
+s_cond  :   IF '(' cond ')' ctrl_blck ELSE ctrl_blck ENDIF','   {
+                                                                print("Sintaxis: Sentencia IF-ELSE");
                                                                 pendingTriples.removeLast();
                                                                 triples.remove(triples.size()-2);
                                                                 triples.getLast().decreaseId();
                                                             	} 
-        |   IF '(' cond ')' ctrl_blck ENDIF','                  {print("Sintaxis: Sentencia IF");
+        |   IF '(' cond ')' ctrl_blck ENDIF','                  {
+
+                                                                print("Sintaxis: Sentencia IF");
                                                                 pendingTriples.removeLast();
                                                                 triples.getLast().decreaseId();
                                                                 triples.removeLast();}
@@ -142,14 +150,15 @@ ctrl    :   while '(' cond ')' ctrl_blck             {print("Sintaxis: Sentencia
         |   while '(' cond ')' error','              {yyerror(((Token) $4.obj).getLine(), "Sentencia de control sin bloque de sentencias");}
         ;
 
-while   :   WHILE   {Triple label=new Label();
+while   :   WHILE   {Triples label=new Label();
                     triples.add(label);
                     pendingTriples.add(label);}
                     ;
         
-prt     :   PRINT'(' STRING ')'','  {print("Sintaxis: Sentencia print");
+prt     :   PRINT'(' STRING ')'','  {
+                                    print("Sintaxis: Sentencia print");
                                     Triples aux = new TrPRT((Operand)$3.obj);
-                                    tercets.add(aux);
+                                    triples.add(aux);
                                     $$ = new ParserVal(aux);}
         |   '(' STRING ')'','       {yyerror(((Token) $1.obj).getLine(), "'PRINT' faltante en la sentencia de impresion");}
         |   PRINT STRING ')'','     {yyerror(((Token) $2.obj).getLine(), "Falta '('");}
@@ -162,21 +171,21 @@ prt     :   PRINT'(' STRING ')'','  {print("Sintaxis: Sentencia print");
         |   PRINT'(' STRING')'      {yyerror(((Token) $4.obj).getLine(), "Falta ','");}
         ;
 
-cond    :   expr comp expr	{   if (TypeConverter.isValidBidirectional(((Operand)$1).getType(),((Operand)$2).getType()){
+cond    :   expr comp expr	{   if (TypeConverter.isValidBidirectional(((Operand)$1.obj).getType(),((Operand)$3.obj).getType())){
 									
-		                            Triples aux;
-		                            Operand o1;
-		                            Operand o2;
+		                            Triples aux=null;
+		                            AtomicReference<Operand> o1=new AtomicReference<>();
+		                            AtomicReference<Operand> o2=new AtomicReference<>();
 
-		                            getConversion((Operand)$1.obj),(Operand)$3.obj),o1,o2);
+		                            getConversion((Operand)$1.obj,(Operand)$3.obj,o1,o2);
 
 	                                switch (((Token)$2.obj).getLex()){
-	                                    case "<": aux = new TrLT(o1,o2);
-	                                    case ">": aux = new TrGT((o1,o2));
-	                                    case "<=": aux = new TrLE(o1,o2);
-	                                    case ">=": aux = new TrGE(o1,o2);
-	                                    case "=": aux = new TrEQ(o1,o2);
-	                                    case "!=": aux = new TrNE(o1,o2);
+	                                    case "<": aux = new TrLT(o1.get(),o2.get());
+	                                    case ">": aux = new TrGT(o1.get(),o2.get());
+	                                    case "<=": aux = new TrLE(o1.get(),o2.get());
+	                                    case ">=": aux = new TrGE(o1.get(),o2.get());
+	                                    case "=": aux = new TrEQ(o1.get(),o2.get());
+	                                    case "!=": aux = new TrNE(o1.get(),o2.get());
 	                                }
 	                                triples.add(aux);
 	                                Triples t = new TrBF(null, aux);
@@ -204,37 +213,40 @@ ctrl_sent   :   exec sent
             ;
 
 inv_fun :   ID '(' func_var ')'	{	Boolean converted = false;
-									if(correctCall(converted, (Operand)$3.obj,((Token)($1.obj.getLexeme()),((Token)$3.obj)).getLexeme(),((Token)($1.obj.getLine()) )){
+									if(correctCall(converted, (Operand)$3.obj,((Token)$1.obj).getLex(),((Token)$3.obj).getLex(),(((Token)$1.obj).getLine()) )){
                                     print("Sintaxis: Invocacion a funcion");
                                     Operand param;
                                     if (converted.booleanValue())
-                                    	param=tercets.getLast();
+                                    	param=triples.getLast();
                                     else
                                     	param=(Operand)$3.obj;
                                     Triples t= new TrINV((Token)$1.obj,param); 
                                     triples.add(t);
                                     if (!paramList.isEmpty()){
                                          if ( ((FNCInformation)LexicalAnalizer.symbolTable.getLexeme(((Token) $1.obj).getLex())).isWrite() )
-                                             permList.getLast().setWrite(true);
+                                             permsList.getLast().setWrite(true);
                                           if (((Token) $1.obj).getLex().equals(paramList.getFirst()))
-                                             permList.getLast().setPass(true);                                   
-                                     }                                    
+                                             permsList.getLast().setPass(true);                                   
+                                     }   
+                                  $$=new ParserVal(t);                                   
                                  }
                                 }
         |   ID '(' func_var ','    {yyerror(((Token) $2.obj).getLine(), "Falta ')'");}
         ;
         
 
-func_var    :   ID ';' lst_perm {$$=$1}
+func_var    :   ID ';' lst_perm {$$=$1;}
             |   error','   {yyerror(((Token) $2.obj).getLine(), "Argumentos mal definidos");}
             |   error';' lst_perm        {yyerror(((Token) $2.obj).getLine(), "Llamado a funcion sin argumento");}
             |   ID lst_perm         {yyerror(((Token) $1.obj).getLine(), "Falta ';'");}
             |   ID ';'              {yyerror(((Token) $2.obj).getLine(), "Especificacion de permisos faltante");}
             ;
 
- asig    :   ID ASIG expr','        {if(TypeConverter.isValid(((Token) $3.obj).getType(),((Token) $1.obj).getType())){
+
+ asig    :   ID ASIG expr','        {
+                                    if(TypeConverter.isValid(((Token) $1.obj).getType(),((Operand) $3.obj).getType())){
  										Triples aux;
-										if (!((Token) $1.obj).getType().equals((Token) $3.obj).getType()  ){
+										if (!((Token) $1.obj).getType().equals(((Token) $3.obj).getType()  )){
                                             	Triples cnv = new TrCNV((Token)$1.obj);
                                                 triples.add(cnv);
                                                 aux = new TrASG((Operand)$1.obj,cnv);
@@ -246,7 +258,7 @@ func_var    :   ID ';' lst_perm {$$=$1}
                                     $$ = new ParserVal(aux);
                                      if (!paramList.isEmpty())
                                          if (((Token) $1.obj).getLex().equals(paramList.getFirst()))
-                                             permList.getLast().setWrite(true);
+                                             permsList.getLast().setWrite(true);
                                      print("Sintaxis: Asignacion");
                                      }
                                     else
@@ -258,13 +270,13 @@ func_var    :   ID ';' lst_perm {$$=$1}
         ;
 
 
-expr    :   expr '+' expr 	{if (TypeConverter.isValidBidirectional(((Operand)$1).getType(),((Operand)$2).getType()){
-	                        Operand o1;
-	                        Operand o2;
+expr    :   expr '+' expr 	{if (TypeConverter.isValidBidirectional(((Operand)$1.obj).getType(),((Operand)$3.obj).getType())){
+	                        AtomicReference<Operand> o1=new AtomicReference<>();
+	                        AtomicReference<Operand> o2=new AtomicReference<>();
 
-	                        getConversion((Operand)$1.obj),(Operand)$3.obj),o1,o2);
+	                        getConversion((Operand)$1.obj,(Operand)$3.obj,o1,o2);
 	                            
-							Triples aux = new TrADD(o1,o2);
+							Triples aux = new TrADD(o1.get(),o2.get());
                             triples.add(aux);
                             $$ = new ParserVal(aux);
 
@@ -272,13 +284,13 @@ expr    :   expr '+' expr 	{if (TypeConverter.isValidBidirectional(((Operand)$1)
 								yyerror(((Token)$2.obj).getLine(),"Semantic Error: Tipos incompatibles en suma");
 							}
                         }
-        |   expr '-' expr   {if (TypeConverter.isValidBidirectional(((Operand)$1).getType(),((Operand)$3).getType()){
-	                        Operand o1;
-	                        Operand o2;
+        |   expr '-' expr   {if (TypeConverter.isValidBidirectional(((Operand)$1.obj).getType(),((Operand)$3.obj).getType())){
+	                        AtomicReference<Operand> o1=new AtomicReference<>();
+	                        AtomicReference<Operand> o2=new AtomicReference<>();
 
-	                        getConversion((Operand)$1.obj),(Operand)$3.obj),o1,o2);
+	                        getConversion((Operand)$1.obj,(Operand)$3.obj,o1,o2);
 	                            
-							Triples aux = new TrSUB(o1,o2);
+							Triples aux = new TrSUB(o1.get(),o2.get());
                             triples.add(aux);
                             $$ = new ParserVal(aux);
 
@@ -289,13 +301,13 @@ expr    :   expr '+' expr 	{if (TypeConverter.isValidBidirectional(((Operand)$1)
         |   term
         ;
 
-term    :   term '*' fact   {if (TypeConverter.isValidBidirectional(((Operand)$1).getType(),((Operand)$2).getType()){
-	                        Operand o1;
-	                        Operand o2;
+term    :   term '*' fact   {if (TypeConverter.isValidBidirectional(((Operand)$1.obj).getType(),((Operand)$3.obj).getType())){
+	                        AtomicReference<Operand> o1=new AtomicReference<>();
+	                        AtomicReference<Operand> o2=new AtomicReference<>();
 
-	                        getConversion((Operand)$1.obj),(Operand)$3.obj),o1,o2);
+	                        getConversion((Operand)$1.obj,(Operand)$3.obj,o1,o2);
 	                            
-							Triples aux = new TrMUL(o1,o2);
+							Triples aux = new TrMUL(o1.get(),o2.get());
                             triples.add(aux);
                             $$ = new ParserVal(aux);
 
@@ -303,13 +315,13 @@ term    :   term '*' fact   {if (TypeConverter.isValidBidirectional(((Operand)$1
 								yyerror(((Token)$2.obj).getLine(),"Semantic Error: Tipos incompatibles en multiplicacion");
 							}
 							}
-        |   term '/' fact   {if (TypeConverter.isValidBidirectional(((Operand)$1).getType(),((Operand)$2).getType()){
-	                        Operand o1;
-	                        Operand o2;
+        |   term '/' fact   {if (TypeConverter.isValidBidirectional(((Operand)$1.obj).getType(),((Operand)$3.obj).getType())){
+	                        AtomicReference<Operand> o1=new AtomicReference<>();
+	                        AtomicReference<Operand> o2=null;
 
-	                        getConversion((Operand)$1.obj),(Operand)$3.obj),o1,o2);
+	                        getConversion((Operand)$1.obj,(Operand)$3.obj,o1,o2);
 	                            
-							Triples aux = new TrDIV(o1,o2);
+							Triples aux = new TrDIV(o1.get(),o2.get());
                             triples.add(aux);
                             $$ = new ParserVal(aux);
 
@@ -330,13 +342,13 @@ type    :   USINTEGER
         |   LINTEGER
         ;
 
-fact    :   ID
+fact    :   ID {$$ = new ParserVal($1.obj);}
         |   CTE {//numero es positivo
-				Object obj = val_peek(0).obj;
+				Object obj = $1.obj;
 				if (!ifUS(((Token) obj)))
 					testPos((Token) obj);}
         |   '-'CTE  {
-                      Object obj = val_peek(0).obj;
+                      Object obj = $2.obj;
 				if (ifUS(((Token) obj))){
 					yyerror("Constante Unsigned negativa");
                     if (((CTNInformation)LexicalAnalizer.symbolTable.getLexeme(((Token)obj).getLex())).getCounter()>1) 
@@ -346,7 +358,7 @@ fact    :   ID
                     }
 				else
 					testNeg(((Token) obj));
-                        }
+                $$=new ParserVal(obj);}
         |   inv_fun
         ;  
 
@@ -363,13 +375,13 @@ comp    :   '='
 %%
 
 LexicalAnalizer la;
-List<Triples> triples= new LinkedList();
-List<Triples> pendingTriples= new LinkedList();
-List<String> varList = new LinkedList();
+LinkedList<Triples> triples= new LinkedList<>();
+LinkedList<Triples> pendingTriples= new LinkedList<>();
+LinkedList<String> varList = new LinkedList<>();
 int functionAllows=-1;
-List<String> paramList = new LinkedList();
-List<Permissions> permsList = new LinkedList();
-List<String> typeRet = new LinkedList();
+LinkedList<String> paramList = new LinkedList<>();
+LinkedList<Permissions> permsList = new LinkedList<>();
+String typeRet = new String();
 
 public Parser(String path) {
 		la = new LexicalAnalizer(path);
@@ -400,14 +412,14 @@ public void print(String s){
 }
 
 public boolean correctCall(Boolean converted, Operand param, String functionName, String paramName, int line){
-    if(la.symboltable.isFunction(functionName)){
-    	if (la.symboltable.paramAllow(functionName,functionAllows)){
-    		if(!LexicalAnalizer.symboltable.isVar(paramName)){
+    if(la.symbolTable.isFunction(functionName)){
+    	if (la.symbolTable.paramAllow(functionName,functionAllows)){
+    		if(!LexicalAnalizer.symbolTable.isVar(paramName)){
     			yyerror(line, "Semantic Error: Parameto inexistente");
     			return false;
     		}
-    		if(!LexicalAnalizer.symboltable.getType(paramName).equals(LexicalAnalizer.symboltable.getParamType(functionName)))
-	    		if(!TypeConverter.isValid(LexicalAnalizer.symboltable.getType(paramName),LexicalAnalizer.symboltable.getParamType(functionName) )){
+    		if(!LexicalAnalizer.symbolTable.getType(paramName).equals(LexicalAnalizer.symbolTable.getParamType(functionName)))
+	    		if(!TypeConverter.isValid(LexicalAnalizer.symbolTable.getType(paramName),LexicalAnalizer.symbolTable.getParamType(functionName) )){
 	    			yyerror(line, "Semantic Error: Tipo del parametro incompatible");
 	    			return false;
 	    		}
@@ -456,6 +468,7 @@ public void testPos(Token t) {
 			((CTNInformation)LexicalAnalizer.symbolTable.getLexeme(t.getLex())).decreaseCounter();
 		else
 			LexicalAnalizer.symbolTable.removeCTN(t.getLex());
+        t.setLex(l.toString());
 		LexicalAnalizer.symbolTable.addCTN(l.toString(), ctni);
 		
 	}
@@ -463,7 +476,7 @@ public void testPos(Token t) {
         public void blockFound(){
             Triples t = new TrBI();
             triples.add(t);
-            Triple label= new Label();
+            Triples label= new Label();
             triples.add(label);
             pendingTriples.removeLast().setO1(label);
             pendingTriples.add(triples.get(pendingTriples.size()-2));
@@ -483,27 +496,31 @@ public void testPos(Token t) {
             varList.clear();
         }
 
-        public void getConversion(Operand in1, Operand in2,Operand out1, Operand out2){
+        public void getConversion(Operand in1, Operand in2, AtomicReference<Operand> out1, AtomicReference<Operand> out2) {
 
-            if (!in1.getType().equals(in2.getType()){
-            	Triples cnv;
-            	if (!(in1.getType().equals("usinteger")){
-            		cnv= new TrCNV(in1);
-            		out1=cnv;
-            		out2=in2;
-            	}else{
-            		cnv= new TrCNV(in3);
-            		out1=in1;
-            		out2=cnv;
-            	}
-            }else{
-            	out1=in1;
-            	out2=in2;
-            }
-        }
+		if (!in1.getType().equals(in2.getType())) {
+			Triples cnv;
+			if (!(in1.getType().equals("usinteger"))) {
+				cnv = new TrCNV(in1);
+				out1.set(cnv);
+				out2.set(in2);
+			} else {
+				cnv = new TrCNV(in2);
+				out1.set(in1);
+				out2.set(cnv);
+			}
+		} else {
+			out1.set(in1);
+			out2.set(in2);
+		}
+	}
 
 public void gt() {
 		String path = "/home/alan/Documents";
+		LexicalAnalizer.symbolTable.genOutput(path);
+	}
+
+public void getTable(String path) {
 		LexicalAnalizer.symbolTable.genOutput(path);
 	}
 

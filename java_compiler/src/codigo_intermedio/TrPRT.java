@@ -11,6 +11,7 @@ public class TrPRT extends Triples {
 	}
 
 	public TrPRT() {
+		super();
 	}
 
 	@Override

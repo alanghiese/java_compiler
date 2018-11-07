@@ -13,6 +13,7 @@ public class TrRET extends Triples {
 	}
 
 	public TrRET() {
+		super();
 		super.type = super.o1.getType();
 	}
 
@@ -23,8 +24,7 @@ public class TrRET extends Triples {
 	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return "RET"  + "," + o1.getRef()  + "," + o2.getRef();
+		return "RET"  + "," + o1.getRef();
 	}
 
 }

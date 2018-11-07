@@ -13,6 +13,7 @@ public class TrEQ extends TrCND {
 	}
 
 	public TrEQ() {
+		super();
 		// TODO Auto-generated constructor stub
 	}
 	

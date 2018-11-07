@@ -17,6 +17,7 @@ public class test {
 		String list =  new String();
 		int cont = 0;
 		for( Triples t:lt ) {
+			System.out.println(t.getId() +". "+t.toString());
 			list = cont + "." + t.toString() + '\n';
 			cont++;
 			
@@ -31,11 +32,14 @@ public class test {
 			//p.yydebug = true;
 			p.yyparse();
 			p.getTable(args[1]);
+			test t = new test();
+			t.showTriples(p.getTriples());
 		}
 		else {
 			System.out.println(Constants.ERROR_ARG);
 		}
-		LinkedList<Integer> l = new LinkedList<>();
+		
+		
 		
 		
 	}

@@ -111,21 +111,30 @@ public class SymbolTable {
 			return this.symbolTable.get(name).isVar();
 		return false;
 	}
-	
+
 	public boolean paramAllow(String functionName, int allow) {
 		switch (allow) {
-		case Constants.FUNC_ALLOW_PASS: return ((FNCInformation)this.symbolTable.get(functionName)).isPass();
-		case Constants.FUNC_ALLOW_WRITE : return ((FNCInformation)this.symbolTable.get(functionName)).isWrite();
-		case Constants.FUNC_ALLOW_READ: return ((FNCInformation)this.symbolTable.get(functionName)).isReadonly();
-		case Constants.FUNC_ALLOW_WRITEPASS: return ((FNCInformation)this.symbolTable.get(functionName)).isWritePass();
-		
+		case Constants.FUNC_ALLOW_PASS:
+			return ((FNCInformation) this.symbolTable.get(functionName)).isPass()
+					|| ((FNCInformation) this.symbolTable.get(functionName)).isReadonly();
+		case Constants.FUNC_ALLOW_WRITE:
+			return ((FNCInformation) this.symbolTable.get(functionName)).isWrite()
+					|| ((FNCInformation) this.symbolTable.get(functionName)).isReadonly();
+		case Constants.FUNC_ALLOW_READ:
+			return ((FNCInformation) this.symbolTable.get(functionName)).isReadonly();
+		case Constants.FUNC_ALLOW_WRITEPASS:
+			return ((FNCInformation) this.symbolTable.get(functionName)).isWritePass()
+					|| ((FNCInformation) this.symbolTable.get(functionName)).isWrite()
+					|| ((FNCInformation) this.symbolTable.get(functionName)).isPass()
+					|| ((FNCInformation) this.symbolTable.get(functionName)).isReadonly();
+
 		}
 		return false;
 	}
-	
+
 	public String getParamType(String name) {
 		if (this.isFunction(name))
-			return ((FNCInformation)this.symbolTable.get(name)).getParamType();
+			return ((FNCInformation) this.symbolTable.get(name)).getParamType();
 		return "Undefined";
 	}
 

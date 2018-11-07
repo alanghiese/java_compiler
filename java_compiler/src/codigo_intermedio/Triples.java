@@ -10,6 +10,8 @@ public abstract class Triples extends Operand{
 	public static int static_id=0;
 	private int id=0;
 	
+	
+	
 	public Triples(Operand o1, Operand o2) {
 		this.id = Triples.static_id;
 		Triples.static_id++;
@@ -39,10 +41,13 @@ public abstract class Triples extends Operand{
 	
 	public Triples(Operand o1) {
 		this.o1 = o1;
+		this.id = Triples.static_id;
+		Triples.static_id++;
 	}
 	
 	public Triples() {
-		
+		this.id = Triples.static_id;
+		Triples.static_id++;
 	}
 	
 	public Operand getO1() {
@@ -56,6 +61,9 @@ public abstract class Triples extends Operand{
 		this.o1 = o1;
 	}
 	
+	public void setType(String type) {
+		this.type = type;
+	}
 	
 	@Override
 	public abstract String getType();

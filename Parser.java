@@ -18,10 +18,14 @@
 
 //#line 2 "gramatica"
 package java_compiler;
-import utilities.Token;
-import utilities.Constants;
-import utilities.CTNInformation;
-//#line 22 "Parser.java"
+
+import utilities.*;
+
+import java.util.LinkedList;
+
+import codigo_intermedio.*;
+import java.util.concurrent.atomic.AtomicReference;
+//#line 26 "Parser.java"
 
 
 
@@ -633,16 +637,16 @@ final static String yyrule[] = {
 "comp : \"DIST\"",
 };
 
-//#line 364 "gramatica"
+//#line 374 "gramatica"
 
 LexicalAnalizer la;
-List<Triples> triples= new LinkedList();
-List<Triples> pendingTriples= new LinkedList();
-List<String> varList = new LinkedList();
+LinkedList<Triples> triples= new LinkedList<>();
+LinkedList<Triples> pendingTriples= new LinkedList<>();
+LinkedList<String> varList = new LinkedList<>();
 int functionAllows=-1;
-List<String> paramList = new LinkedList();
-List<Permissions> permsList = new LinkedList();
-List<String> typeRet = new LinkedList();
+LinkedList<String> paramList = new LinkedList<>();
+LinkedList<Permissions> permsList = new LinkedList<>();
+String typeRet = new String();
 
 public Parser(String path) {
 		la = new LexicalAnalizer(path);
@@ -673,14 +677,14 @@ public void print(String s){
 }
 
 public boolean correctCall(Boolean converted, Operand param, String functionName, String paramName, int line){
-    if(la.symboltable.isFunction(functionName)){
-    	if (la.symboltable.paramAllow(functionName,functionAllows)){
-    		if(!LexicalAnalizer.symboltable.isVar(paramName)){
+    if(la.symbolTable.isFunction(functionName)){
+    	if (la.symbolTable.paramAllow(functionName,functionAllows)){
+    		if(!LexicalAnalizer.symbolTable.isVar(paramName)){
     			yyerror(line, "Semantic Error: Parameto inexistente");
     			return false;
     		}
-    		if(!LexicalAnalizer.symboltable.getType(paramName).equals(LexicalAnalizer.symboltable.getParamType(functionName)))
-	    		if(!TypeConverter.isValid(LexicalAnalizer.symboltable.getType(paramName),LexicalAnalizer.symboltable.getParamType(functionName) )){
+    		if(!LexicalAnalizer.symbolTable.getType(paramName).equals(LexicalAnalizer.symbolTable.getParamType(functionName)))
+	    		if(!TypeConverter.isValid(LexicalAnalizer.symbolTable.getType(paramName),LexicalAnalizer.symbolTable.getParamType(functionName) )){
 	    			yyerror(line, "Semantic Error: Tipo del parametro incompatible");
 	    			return false;
 	    		}
@@ -729,6 +733,7 @@ public void testPos(Token t) {
 			((CTNInformation)LexicalAnalizer.symbolTable.getLexeme(t.getLex())).decreaseCounter();
 		else
 			LexicalAnalizer.symbolTable.removeCTN(t.getLex());
+        t.setLex(l.toString());
 		LexicalAnalizer.symbolTable.addCTN(l.toString(), ctni);
 		
 	}
@@ -736,7 +741,7 @@ public void testPos(Token t) {
         public void blockFound(){
             Triples t = new TrBI();
             triples.add(t);
-            Triple label= new Label();
+            Triples label= new Label();
             triples.add(label);
             pendingTriples.removeLast().setO1(label);
             pendingTriples.add(triples.get(pendingTriples.size()-2));
@@ -756,31 +761,35 @@ public void testPos(Token t) {
             varList.clear();
         }
 
-        public void getConversion(Operand in1, Operand in2,Operand out1, Operand out2){
+        public void getConversion(Operand in1, Operand in2, AtomicReference<Operand> out1, AtomicReference<Operand> out2) {
 
-            if (!in1.getType().equals(in2.getType()){
-            	Triples cnv;
-            	if (!(in1.getType().equals("usinteger")){
-            		cnv= new TrCNV(in1);
-            		out1=cnv;
-            		out2=in2;
-            	}else{
-            		cnv= new TrCNV(in3);
-            		out1=in1;
-            		out2=cnv;
-            	}
-            }else{
-            	out1=in1;
-            	out2=in2;
-            }
-        }
+		if (!in1.getType().equals(in2.getType())) {
+			Triples cnv;
+			if (!(in1.getType().equals("usinteger"))) {
+				cnv = new TrCNV(in1);
+				out1.set(cnv);
+				out2.set(in2);
+			} else {
+				cnv = new TrCNV(in2);
+				out1.set(in1);
+				out2.set(cnv);
+			}
+		} else {
+			out1.set(in1);
+			out2.set(in2);
+		}
+	}
 
 public void gt() {
 		String path = "/home/alan/Documents";
 		LexicalAnalizer.symbolTable.genOutput(path);
 	}
 
-//#line 712 "Parser.java"
+public void getTable(String path) {
+		LexicalAnalizer.symbolTable.genOutput(path);
+	}
+
+//#line 721 "Parser.java"
 //###############################################################
 // method: yylexdebug : check lexer state
 //###############################################################
@@ -935,56 +944,56 @@ boolean doaction;
       {
 //########## USER-SUPPLIED ACTIONS ##########
 case 1:
-//#line 14 "gramatica"
+//#line 18 "gramatica"
 {print("Sintaxis: Codigo reconocido");}
 break;
 case 8:
-//#line 23 "gramatica"
+//#line 27 "gramatica"
 {yyerror(((Token) val_peek(0).obj).getLine(), "");}
 break;
 case 11:
-//#line 30 "gramatica"
+//#line 34 "gramatica"
 {print("Sintaxis: Declaracion de variable");
-                            setTypes(((Token)(val_peek(2).obj)).getLex(),(Token)(val_peek(2).obj).getLine());}
+                            setTypes(((Token)(val_peek(2).obj)).getLex(),((Token)val_peek(2).obj).getLine());}
 break;
 case 12:
-//#line 32 "gramatica"
+//#line 36 "gramatica"
 {yyerror(((Token) val_peek(0).obj).getLine(), "Falta especificar el tipo de la variable");}
 break;
 case 13:
-//#line 33 "gramatica"
+//#line 37 "gramatica"
 {yyerror(((Token) val_peek(2).obj).getLine(), "Error en la declaracion de variable/s");}
 break;
 case 14:
-//#line 36 "gramatica"
+//#line 40 "gramatica"
 {varList.add(((Token) (val_peek(2).obj)).getLex());}
 break;
 case 15:
-//#line 37 "gramatica"
+//#line 41 "gramatica"
 {yyerror(((Token) val_peek(1).obj).getLine(), "Falta identificador antes del ';'");}
 break;
 case 16:
-//#line 38 "gramatica"
+//#line 42 "gramatica"
 {yyerror(((Token) val_peek(2).obj).getLine(), "Falta ';'");}
 break;
 case 17:
-//#line 39 "gramatica"
+//#line 43 "gramatica"
 {varList.add(((Token) (val_peek(0).obj)).getLex());}
 break;
 case 18:
-//#line 42 "gramatica"
+//#line 46 "gramatica"
 {print("Sintaxis: Declaracion de funcion");
-                                        if(!la.symbolTable.isVar((Token)(val_peek(2).obj).getLex())){
+                                        if(!la.symbolTable.isVar(((Token)val_peek(2).obj).getLex())){
                                         	if(TypeConverter.isValid(((Token)val_peek(3).obj).getType(),typeRet)){
-	                                            la.symbolTable.removeID((Token)(val_peek(2).obj).getLex());
+	                                            la.symbolTable.removeID(((Token)val_peek(2).obj).getLex());
 	                                            FNCInformation fnc = new FNCInformation();
-	                                            fnc.setType((Token)(val_peek(3).obj).getLex());
+	                                            fnc.setType(((Token)val_peek(3).obj).getLex());
 	                                            fnc.setParamType(((Token)val_peek(1).obj).getLex());
-	                                            la.symbolTable.addFNC((Token)(val_peek(2).obj).getLex(), fnc);
-	                                            la.symbolTable.setType((Token)(val_peek(2).obj).getLex(),(Token)(val_peek(3).obj).getLex());
+	                                            la.symbolTable.addFNC(((Token)val_peek(2).obj).getLex(), fnc);
+	                                            la.symbolTable.setType(((Token)val_peek(2).obj).getLex(),((Token)val_peek(3).obj).getLex());
 	                                            
                                             	if(!((Token)val_peek(3).obj).getType().equals(typeRet)){
-                                            		Triples cnv = TrCNV(((Triples)val_peek(0).obj).getO1());
+                                            		Triples cnv = new TrCNV(((Triples)val_peek(0).obj).getO1());
                                             		cnv.setId(((Triples)val_peek(0).obj).getId());
                                             		triples.add(triples.size()-2,cnv);
                                             		((Triples)val_peek(0).obj).setId(((Triples)val_peek(0).obj).getId()+1);
@@ -993,228 +1002,232 @@ case 18:
                                             	}
                                             }
                                             else
-                                            	yyerror((Token)(val_peek(3).obj).getLine(), "Semantic Error: Tipo de retorno incompatible")
+                                            	yyerror(((Token)val_peek(3).obj).getLine(), "Semantic Error: Tipo de retorno incompatible");
                                         }else{
-                                            yyerror((Token)(val_peek(3).obj).getLine(), "Semantic Error: El id "+ var +" ya fue usado como variable");
+                                            yyerror(((Token)val_peek(3).obj).getLine(), "Semantic Error: El id "+ ((Token)val_peek(2).obj).getLex() +" ya fue usado como variable");
                                         }
                                         /*remuevo el parametro para esta funcion en particular (considero funciones anidadas)*/
-                                        listParam.removeLast();}
+                                        paramList.removeLast();}
 break;
 case 19:
-//#line 68 "gramatica"
+//#line 72 "gramatica"
 {yyerror(((Token) val_peek(2).obj).getLine(), "Falta el tipo de retorno de la funcion");}
 break;
 case 20:
-//#line 69 "gramatica"
+//#line 73 "gramatica"
 {yyerror(((Token) val_peek(2).obj).getLine(), "No se permiten funciones anonimas");}
 break;
 case 21:
-//#line 70 "gramatica"
+//#line 74 "gramatica"
 {yyerror(((Token) val_peek(1).obj).getLine(), "Falta el argumento de la funcion");}
 break;
 case 22:
-//#line 71 "gramatica"
+//#line 75 "gramatica"
 {yyerror(((Token) val_peek(0).obj).getLine(), "Falta cuerpo de la funcion");}
 break;
 case 23:
-//#line 74 "gramatica"
+//#line 78 "gramatica"
 {   Triples t= new TrFUN();
                                         triples.add(t);
-                                        permList.addLast(new Permissions(false,false));
+                                        permsList.addLast(new Permissions(false,false));
                                         paramList.addLast(((Token) val_peek(1).obj).getLex());   
                                         yyval=val_peek(2); 
                                      }
 break;
 case 24:
-//#line 80 "gramatica"
+//#line 84 "gramatica"
 {yyerror(((Token) val_peek(2).obj).getLine(), "Falta '('");}
 break;
 case 25:
-//#line 81 "gramatica"
+//#line 85 "gramatica"
 {yyerror(((Token) val_peek(2).obj).getLine(), "Falta especificar el tipo del parametro de la funcion");}
 break;
 case 26:
-//#line 82 "gramatica"
+//#line 86 "gramatica"
 {yyerror(((Token) val_peek(1).obj).getLine(), "Falta ID como parametro de la funcion");}
 break;
 case 27:
-//#line 83 "gramatica"
+//#line 87 "gramatica"
 {yyerror(((Token) val_peek(0).obj).getLine(), "Falta ')'");}
 break;
 case 28:
-//#line 86 "gramatica"
-{yyval=val_peek(1)}
+//#line 90 "gramatica"
+{yyval=val_peek(1);}
 break;
 case 29:
-//#line 87 "gramatica"
-{yyval=val_peek(1)}
+//#line 91 "gramatica"
+{yyval=val_peek(1);}
 break;
 case 30:
-//#line 88 "gramatica"
+//#line 92 "gramatica"
 {yyerror(((Token) val_peek(0).obj).getLine(), "Falta '{'");}
 break;
 case 31:
-//#line 89 "gramatica"
+//#line 93 "gramatica"
 {yyerror(((Token) val_peek(4).obj).getLine(), "Falta '}'");}
 break;
 case 32:
-//#line 90 "gramatica"
+//#line 94 "gramatica"
 {yyerror(((Token) val_peek(0).obj).getLine(), "Falta sentencia de retorno");}
 break;
 case 33:
-//#line 93 "gramatica"
+//#line 97 "gramatica"
 {Triples t = new TrRET((Operand)val_peek(2).obj);
                                      triples.add(t);
-                                     typeRet.add(((Operand)val_peek(2).obj).getType());
+                                     typeRet = ((Operand)val_peek(2).obj).getType();
                                      yyval = new ParserVal(t);}
 break;
 case 34:
-//#line 97 "gramatica"
+//#line 101 "gramatica"
 {yyerror(((Token) val_peek(3).obj).getLine(), "Retorno de funcion sin 'RETURN'");}
 break;
 case 35:
-//#line 98 "gramatica"
+//#line 102 "gramatica"
 {yyerror(((Token) val_peek(3).obj).getLine(), "Falta '('");}
 break;
 case 36:
-//#line 99 "gramatica"
+//#line 103 "gramatica"
 {yyerror(((Token) val_peek(2).obj).getLine(), "Falta valor de retorno de la funcion");}
 break;
 case 37:
-//#line 100 "gramatica"
+//#line 104 "gramatica"
 {yyerror(((Token) val_peek(2).obj).getLine(), "Falta ')'");}
 break;
 case 38:
-//#line 101 "gramatica"
+//#line 105 "gramatica"
 {yyerror(((Token) val_peek(0).obj).getLine(), "Falta ','");}
 break;
 case 43:
-//#line 110 "gramatica"
-{print("Sintaxis: Sentencia IF-ELSE");
+//#line 114 "gramatica"
+{
+                                                                print("Sintaxis: Sentencia IF-ELSE");
                                                                 pendingTriples.removeLast();
                                                                 triples.remove(triples.size()-2);
                                                                 triples.getLast().decreaseId();
                                                             	}
 break;
 case 44:
-//#line 115 "gramatica"
-{print("Sintaxis: Sentencia IF");
+//#line 120 "gramatica"
+{
+
+                                                                print("Sintaxis: Sentencia IF");
                                                                 pendingTriples.removeLast();
                                                                 triples.getLast().decreaseId();
                                                                 triples.removeLast();}
 break;
 case 45:
-//#line 119 "gramatica"
+//#line 126 "gramatica"
 {yyerror(((Token) val_peek(7).obj).getLine(), "'ELSE' sin 'IF'");}
 break;
 case 46:
-//#line 120 "gramatica"
+//#line 127 "gramatica"
 {yyerror(((Token) val_peek(5).obj).getLine(), "'ENDIF' sin 'IF'");}
 break;
 case 47:
-//#line 121 "gramatica"
+//#line 128 "gramatica"
 {yyerror(((Token) val_peek(7).obj).getLine(), "Falta '(' en condicion de sentencia condicional");}
 break;
 case 48:
-//#line 122 "gramatica"
+//#line 129 "gramatica"
 {yyerror(((Token) val_peek(6).obj).getLine(), "condicion faltante en sentencia condicional");}
 break;
 case 49:
-//#line 123 "gramatica"
+//#line 130 "gramatica"
 {yyerror(((Token) val_peek(7).obj).getLine(), "Falta ')' en la sentencia condicional");}
 break;
 case 50:
-//#line 124 "gramatica"
+//#line 131 "gramatica"
 {yyerror(((Token) val_peek(4).obj).getLine(), "Sentencia/s faltante/s luego de 'IF'");}
 break;
 case 51:
-//#line 125 "gramatica"
+//#line 132 "gramatica"
 {yyerror(((Token) val_peek(4).obj).getLine(), "Falta 'ELSE' o sobran llaves en la declaracion de bloque");}
 break;
 case 52:
-//#line 126 "gramatica"
+//#line 133 "gramatica"
 {yyerror(((Token) val_peek(5).obj).getLine(), "Bloque faltante luego de 'ELSE'");}
 break;
 case 53:
-//#line 127 "gramatica"
+//#line 134 "gramatica"
 {yyerror(((Token) val_peek(6).obj).getLine(), "Falta 'ENDIF'");}
 break;
 case 54:
-//#line 128 "gramatica"
+//#line 135 "gramatica"
 {yyerror(((Token) val_peek(5).obj).getLine(), "Falta ','");}
 break;
 case 55:
-//#line 129 "gramatica"
+//#line 136 "gramatica"
 {yyerror(((Token) val_peek(3).obj).getLine(), "Falta ','");}
 break;
 case 56:
-//#line 130 "gramatica"
+//#line 137 "gramatica"
 {yyerror(((Token) val_peek(3).obj).getLine(), "Falta '('");}
 break;
 case 57:
-//#line 131 "gramatica"
+//#line 138 "gramatica"
 {yyerror(((Token) val_peek(3).obj).getLine(), "Falta condicion en la sentencia condicional");}
 break;
 case 58:
-//#line 132 "gramatica"
+//#line 139 "gramatica"
 {yyerror(((Token) val_peek(4).obj).getLine(), "Falta ')'");}
 break;
 case 59:
-//#line 133 "gramatica"
+//#line 140 "gramatica"
 {yyerror(((Token) val_peek(4).obj).getLine(), "Falta 'ENDIF' en sentencia condicional");}
 break;
 case 60:
-//#line 134 "gramatica"
+//#line 141 "gramatica"
 {yyerror(((Token) val_peek(1).obj).getLine(), "Falta bloque de sentencias en sentencia condicional");}
 break;
 case 61:
-//#line 137 "gramatica"
+//#line 144 "gramatica"
 {print("Sintaxis: Sentencia While");
                                                      completeLast((Triples)val_peek(2).obj);}
 break;
 case 62:
-//#line 139 "gramatica"
+//#line 146 "gramatica"
 {yyerror(((Token) val_peek(3).obj).getLine(), "'SENTENCIA DE CONTROL' desconocida");}
 break;
 case 63:
-//#line 140 "gramatica"
+//#line 147 "gramatica"
 {yyerror(((Token) val_peek(3).obj).getLine(), "Falta'('");}
 break;
 case 64:
-//#line 141 "gramatica"
+//#line 148 "gramatica"
 {yyerror(((Token) val_peek(3).obj).getLine(), "Falta ')'");}
 break;
 case 65:
-//#line 142 "gramatica"
+//#line 149 "gramatica"
 {yyerror(((Token) val_peek(2).obj).getLine(), "Sentencia de control sin bloque de sentencias");}
 break;
 case 66:
-//#line 145 "gramatica"
-{Triple label=new Label();
+//#line 152 "gramatica"
+{Triples label=new Label();
                     triples.add(label);
                     pendingTriples.add(label);}
 break;
 case 67:
-//#line 150 "gramatica"
-{print("Sintaxis: Sentencia print");
+//#line 157 "gramatica"
+{
+                                    print("Sintaxis: Sentencia print");
                                     Triples aux = new TrPRT((Operand)val_peek(2).obj);
-                                    tercets.add(aux);
+                                    triples.add(aux);
                                     yyval = new ParserVal(aux);}
 break;
 case 68:
-//#line 154 "gramatica"
+//#line 162 "gramatica"
 {yyerror(((Token) val_peek(3).obj).getLine(), "'PRINT' faltante en la sentencia de impresion");}
 break;
 case 69:
-//#line 155 "gramatica"
+//#line 163 "gramatica"
 {yyerror(((Token) val_peek(2).obj).getLine(), "Falta '('");}
 break;
 case 70:
-//#line 156 "gramatica"
+//#line 164 "gramatica"
 {yyerror(((Token) val_peek(1).obj).getLine(), "Falta ')'");}
 break;
 case 71:
-//#line 157 "gramatica"
+//#line 165 "gramatica"
 {print("Sintaxis: Sentencia print");
                                     Triples aux= new TrPRT();
                                     triples.add(aux);
@@ -1222,26 +1235,26 @@ case 71:
                                     }
 break;
 case 72:
-//#line 162 "gramatica"
+//#line 170 "gramatica"
 {yyerror(((Token) val_peek(0).obj).getLine(), "Falta ','");}
 break;
 case 73:
-//#line 165 "gramatica"
-{   if (TypeConverter.isValidBidirectional(((Operand)val_peek(2)).getType(),((Operand)val_peek(1)).getType()){
+//#line 173 "gramatica"
+{   if (TypeConverter.isValidBidirectional(((Operand)val_peek(2).obj).getType(),((Operand)val_peek(0).obj).getType())){
 									
-		                            Triples aux;
-		                            Operand o1;
-		                            Operand o2;
+		                            Triples aux=null;
+		                            AtomicReference<Operand> o1=new AtomicReference<>();
+		                            AtomicReference<Operand> o2=new AtomicReference<>();
 
-		                            getConversion((Operand)val_peek(2).obj),(Operand)val_peek(0).obj),o1,o2);
+		                            getConversion((Operand)val_peek(2).obj,(Operand)val_peek(0).obj,o1,o2);
 
 	                                switch (((Token)val_peek(1).obj).getLex()){
-	                                    case "<": aux = new TrLT(o1,o2);
-	                                    case ">": aux = new TrGT((o1,o2));
-	                                    case "<=": aux = new TrLE(o1,o2);
-	                                    case ">=": aux = new TrGE(o1,o2);
-	                                    case "=": aux = new TrEQ(o1,o2);
-	                                    case "!=": aux = new TrNE(o1,o2);
+	                                    case "<": aux = new TrLT(o1.get(),o2.get());
+	                                    case ">": aux = new TrGT(o1.get(),o2.get());
+	                                    case "<=": aux = new TrLE(o1.get(),o2.get());
+	                                    case ">=": aux = new TrGE(o1.get(),o2.get());
+	                                    case "=": aux = new TrEQ(o1.get(),o2.get());
+	                                    case "!=": aux = new TrNE(o1.get(),o2.get());
 	                                }
 	                                triples.add(aux);
 	                                Triples t = new TrBF(null, aux);
@@ -1255,75 +1268,76 @@ case 73:
                             }
 break;
 case 74:
-//#line 191 "gramatica"
+//#line 199 "gramatica"
 {yyerror(((Token) val_peek(1).obj).getLine(), "Falta expresion del lado izquierdo del comparador");}
 break;
 case 75:
-//#line 192 "gramatica"
+//#line 200 "gramatica"
 {yyerror(((Token) val_peek(0).obj).getLine(), "Falta expresion del lado derecho del comparador");}
 break;
 case 76:
-//#line 195 "gramatica"
+//#line 203 "gramatica"
 {blockFound();}
 break;
 case 77:
-//#line 196 "gramatica"
+//#line 204 "gramatica"
 {blockFound();}
 break;
 case 78:
-//#line 197 "gramatica"
+//#line 205 "gramatica"
 {blockFound();}
 break;
 case 83:
-//#line 206 "gramatica"
+//#line 214 "gramatica"
 {	Boolean converted = false;
-									if(correctCall(converted, (Operand)val_peek(1).obj,((Token)(val_peek(3).obj.getLexeme()),((Token)val_peek(1).obj)).getLexeme(),((Token)(val_peek(3).obj.getLine()) )){
+									if(correctCall(converted, (Operand)val_peek(1).obj,((Token)val_peek(3).obj).getLex(),((Token)val_peek(1).obj).getLex(),(((Token)val_peek(3).obj).getLine()) )){
                                     print("Sintaxis: Invocacion a funcion");
                                     Operand param;
                                     if (converted.booleanValue())
-                                    	param=tercets.getLast();
+                                    	param=triples.getLast();
                                     else
                                     	param=(Operand)val_peek(1).obj;
                                     Triples t= new TrINV((Token)val_peek(3).obj,param); 
                                     triples.add(t);
                                     if (!paramList.isEmpty()){
                                          if ( ((FNCInformation)LexicalAnalizer.symbolTable.getLexeme(((Token) val_peek(3).obj).getLex())).isWrite() )
-                                             permList.getLast().setWrite(true);
+                                             permsList.getLast().setWrite(true);
                                           if (((Token) val_peek(3).obj).getLex().equals(paramList.getFirst()))
-                                             permList.getLast().setPass(true);                                   
+                                             permsList.getLast().setPass(true);                                   
                                      }                                    
                                  }
                                 }
 break;
 case 84:
-//#line 224 "gramatica"
+//#line 232 "gramatica"
 {yyerror(((Token) val_peek(2).obj).getLine(), "Falta ')'");}
 break;
 case 85:
-//#line 228 "gramatica"
-{yyval=val_peek(2)}
+//#line 236 "gramatica"
+{yyval=val_peek(2);}
 break;
 case 86:
-//#line 229 "gramatica"
+//#line 237 "gramatica"
 {yyerror(((Token) val_peek(0).obj).getLine(), "Argumentos mal definidos");}
 break;
 case 87:
-//#line 230 "gramatica"
+//#line 238 "gramatica"
 {yyerror(((Token) val_peek(1).obj).getLine(), "Llamado a funcion sin argumento");}
 break;
 case 88:
-//#line 231 "gramatica"
+//#line 239 "gramatica"
 {yyerror(((Token) val_peek(1).obj).getLine(), "Falta ';'");}
 break;
 case 89:
-//#line 232 "gramatica"
+//#line 240 "gramatica"
 {yyerror(((Token) val_peek(0).obj).getLine(), "Especificacion de permisos faltante");}
 break;
 case 90:
-//#line 235 "gramatica"
-{if(TypeConverter.isValid(((Token) val_peek(1).obj).getType(),((Token) val_peek(3).obj).getType())){
+//#line 244 "gramatica"
+{
+                                    if(TypeConverter.isValid(((Token) val_peek(3).obj).getType(),((Operand) val_peek(1).obj).getType())){
  										Triples aux;
-										if (!((Token) val_peek(3).obj).getType().equals((Token) val_peek(1).obj).getType()  ){
+										if (!((Token) val_peek(3).obj).getType().equals(((Token) val_peek(1).obj).getType()  )){
                                             	Triples cnv = new TrCNV((Token)val_peek(3).obj);
                                                 triples.add(cnv);
                                                 aux = new TrASG((Operand)val_peek(3).obj,cnv);
@@ -1335,37 +1349,37 @@ case 90:
                                     yyval = new ParserVal(aux);
                                      if (!paramList.isEmpty())
                                          if (((Token) val_peek(3).obj).getLex().equals(paramList.getFirst()))
-                                             permList.getLast().setWrite(true);
+                                             permsList.getLast().setWrite(true);
                                      print("Sintaxis: Asignacion");
                                      }
                                     else
                                        yyerror(((Token) val_peek(3).obj).getLine(),"Semantic Error: Tipo invalido en la asignacion :(");}
 break;
 case 91:
-//#line 254 "gramatica"
+//#line 264 "gramatica"
 {yyerror(((Token) val_peek(0).obj).getLine(), "Asignacion sin id del lado izq");}
 break;
 case 92:
-//#line 255 "gramatica"
+//#line 265 "gramatica"
 {yyerror(((Token) val_peek(2).obj).getLine(), "Asignacion sin :=");}
 break;
 case 93:
-//#line 256 "gramatica"
+//#line 266 "gramatica"
 {yyerror(((Token) val_peek(0).obj).getLine(), "Falta expresion del lado derecho del :=");}
 break;
 case 94:
-//#line 257 "gramatica"
+//#line 267 "gramatica"
 {yyerror(((Token) val_peek(2).obj).getLine(), "Falta ','");}
 break;
 case 95:
-//#line 261 "gramatica"
-{if (TypeConverter.isValidBidirectional(((Operand)val_peek(2)).getType(),((Operand)val_peek(1)).getType()){
-	                        Operand o1;
-	                        Operand o2;
+//#line 271 "gramatica"
+{if (TypeConverter.isValidBidirectional(((Operand)val_peek(2).obj).getType(),((Operand)val_peek(0).obj).getType())){
+	                        AtomicReference<Operand> o1=new AtomicReference<>();
+	                        AtomicReference<Operand> o2=new AtomicReference<>();
 
-	                        getConversion((Operand)val_peek(2).obj),(Operand)val_peek(0).obj),o1,o2);
+	                        getConversion((Operand)val_peek(2).obj,(Operand)val_peek(0).obj,o1,o2);
 	                            
-							Triples aux = new TrADD(o1,o2);
+							Triples aux = new TrADD(o1.get(),o2.get());
                             triples.add(aux);
                             yyval = new ParserVal(aux);
 
@@ -1375,14 +1389,14 @@ case 95:
                         }
 break;
 case 96:
-//#line 275 "gramatica"
-{if (TypeConverter.isValidBidirectional(((Operand)val_peek(2)).getType(),((Operand)val_peek(0)).getType()){
-	                        Operand o1;
-	                        Operand o2;
+//#line 285 "gramatica"
+{if (TypeConverter.isValidBidirectional(((Operand)val_peek(2).obj).getType(),((Operand)val_peek(0).obj).getType())){
+	                        AtomicReference<Operand> o1=new AtomicReference<>();
+	                        AtomicReference<Operand> o2=new AtomicReference<>();
 
-	                        getConversion((Operand)val_peek(2).obj),(Operand)val_peek(0).obj),o1,o2);
+	                        getConversion((Operand)val_peek(2).obj,(Operand)val_peek(0).obj,o1,o2);
 	                            
-							Triples aux = new TrSUB(o1,o2);
+							Triples aux = new TrSUB(o1.get(),o2.get());
                             triples.add(aux);
                             yyval = new ParserVal(aux);
 
@@ -1392,14 +1406,14 @@ case 96:
 							}
 break;
 case 98:
-//#line 292 "gramatica"
-{if (TypeConverter.isValidBidirectional(((Operand)val_peek(2)).getType(),((Operand)val_peek(1)).getType()){
-	                        Operand o1;
-	                        Operand o2;
+//#line 302 "gramatica"
+{if (TypeConverter.isValidBidirectional(((Operand)val_peek(2).obj).getType(),((Operand)val_peek(0).obj).getType())){
+	                        AtomicReference<Operand> o1=new AtomicReference<>();
+	                        AtomicReference<Operand> o2=new AtomicReference<>();
 
-	                        getConversion((Operand)val_peek(2).obj),(Operand)val_peek(0).obj),o1,o2);
+	                        getConversion((Operand)val_peek(2).obj,(Operand)val_peek(0).obj,o1,o2);
 	                            
-							Triples aux = new TrMUL(o1,o2);
+							Triples aux = new TrMUL(o1.get(),o2.get());
                             triples.add(aux);
                             yyval = new ParserVal(aux);
 
@@ -1409,14 +1423,14 @@ case 98:
 							}
 break;
 case 99:
-//#line 306 "gramatica"
-{if (TypeConverter.isValidBidirectional(((Operand)val_peek(2)).getType(),((Operand)val_peek(1)).getType()){
-	                        Operand o1;
-	                        Operand o2;
+//#line 316 "gramatica"
+{if (TypeConverter.isValidBidirectional(((Operand)val_peek(2).obj).getType(),((Operand)val_peek(0).obj).getType())){
+	                        AtomicReference<Operand> o1=new AtomicReference<>();
+	                        AtomicReference<Operand> o2=null;
 
-	                        getConversion((Operand)val_peek(2).obj),(Operand)val_peek(0).obj),o1,o2);
+	                        getConversion((Operand)val_peek(2).obj,(Operand)val_peek(0).obj,o1,o2);
 	                            
-							Triples aux = new TrDIV(o1,o2);
+							Triples aux = new TrDIV(o1.get(),o2.get());
                             triples.add(aux);
                             yyval = new ParserVal(aux);
 
@@ -1425,30 +1439,34 @@ case 99:
 							}}
 break;
 case 101:
-//#line 322 "gramatica"
+//#line 332 "gramatica"
 {functionAllows=Constants.FUNC_ALLOW_READ;}
 break;
 case 102:
-//#line 323 "gramatica"
+//#line 333 "gramatica"
 {functionAllows=Constants.FUNC_ALLOW_WRITE;}
 break;
 case 103:
-//#line 324 "gramatica"
+//#line 334 "gramatica"
 {functionAllows=Constants.FUNC_ALLOW_PASS;}
 break;
 case 104:
-//#line 325 "gramatica"
+//#line 335 "gramatica"
 {functionAllows=Constants.FUNC_ALLOW_WRITEPASS;}
 break;
+case 108:
+//#line 343 "gramatica"
+{yyval = new ParserVal(val_peek(0).obj);}
+break;
 case 109:
-//#line 334 "gramatica"
+//#line 344 "gramatica"
 {/*numero es positivo*/
 				Object obj = val_peek(0).obj;
 				if (!ifUS(((Token) obj)))
 					testPos((Token) obj);}
 break;
 case 110:
-//#line 338 "gramatica"
+//#line 348 "gramatica"
 {
                       Object obj = val_peek(0).obj;
 				if (ifUS(((Token) obj))){
@@ -1460,9 +1478,9 @@ case 110:
                     }
 				else
 					testNeg(((Token) obj));
-                        }
+                yyval=new ParserVal(obj);}
 break;
-//#line 1389 "Parser.java"
+//#line 1407 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####

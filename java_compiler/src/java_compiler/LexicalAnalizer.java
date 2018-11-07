@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,12 +31,12 @@ public class LexicalAnalizer {
 		}
 	}
 
-	public int yylex(ParserVal yylval) {
-		//yylval.obj = new Token();
+	public int yylex(AtomicReference<ParserVal> reference) {
+		ParserVal yylval = new ParserVal();
 		//((Token)yylval.obj).setLine(2);
 		int status = 0;
 		Token token = new Token();
-		
+
 		
 		while ((token.getToken() == Constants.DEFAULT_TOKEN || token.getToken() == Constants.ERR_TOKEN) && !FINISH) {
 
@@ -96,8 +97,8 @@ public class LexicalAnalizer {
 
 		}
 		
-		
-		
+		reference.set(yylval);
+		//System.out.println(token.getLex() + " " + ((Token)yylval.obj).getLex());
 		
 		return token.getToken();
 	}

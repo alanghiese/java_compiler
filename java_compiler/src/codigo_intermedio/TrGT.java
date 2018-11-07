@@ -13,6 +13,7 @@ public class TrGT extends TrCND {
 	}
 
 	public TrGT() {
+		super();
 		// TODO Auto-generated constructor stub
 	}
 	@Override

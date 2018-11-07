@@ -13,6 +13,7 @@ public class TrGE extends TrCND {
 	}
 
 	public TrGE() {
+		super();
 		// TODO Auto-generated constructor stub
 	}
 
