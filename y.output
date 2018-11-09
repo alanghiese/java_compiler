@@ -22,124 +22,127 @@
   16          | ID error lst_var
   17          | ID
 
-  18  func : type ID param func_body
-  19       | ID param func_body
-  20       | type param func_body
-  21       | ID type func_body
-  22       | ID type param
+  18  func : func_head func_body
 
-  23  param : '(' type ID ')'
-  24        | type ID ')'
-  25        | '(' ID ')'
-  26        | '(' type ')'
-  27        | '(' type ID
+  19  func_head : type ID param
+  20            | ID param
+  21            | type param
+
+  22  param : '(' type ID ')'
+  23        | type ID ')'
+  24        | '(' ID ')'
+  25        | '(' type ')'
+  26        | '(' type ID
+  27        | '(' ')'
 
   28  func_body : '{' sent ret '}'
   29            | '{' ret '}'
   30            | sent ret '}'
   31            | '{' sent ret error ','
   32            | '{' sent '}'
+  33            | '{' '}'
 
-  33  ret : RETURN '(' expr ')' ','
-  34      | '(' expr ')' ','
-  35      | RETURN expr ')' ','
-  36      | RETURN '(' ')' ','
-  37      | RETURN '(' expr ','
-  38      | RETURN '(' expr ')'
+  34  ret : RETURN '(' expr ')' ','
+  35      | '(' expr ')' ','
+  36      | RETURN expr ')' ','
+  37      | RETURN '(' ')' ','
+  38      | RETURN '(' expr ','
+  39      | RETURN '(' expr ')'
 
-  39  exec : s_cond
-  40       | ctrl
-  41       | prt
-  42       | inv_fun ','
+  40  exec : s_cond
+  41       | ctrl
+  42       | prt
+  43       | inv_fun ','
 
-  43  s_cond : IF '(' cond ')' ctrl_blck ELSE ctrl_blck ENDIF ','
-  44         | IF '(' cond ')' ctrl_blck ENDIF ','
-  45         | '(' cond ')' ctrl_blck ELSE ctrl_blck ENDIF ','
-  46         | '(' cond ')' ctrl_blck ENDIF ','
-  47         | IF cond ')' ctrl_blck ELSE ctrl_blck ENDIF ','
-  48         | IF '(' ')' ctrl_blck ELSE ctrl_blck ENDIF ','
-  49         | IF '(' cond error ctrl_blck ELSE ctrl_blck ENDIF ','
-  50         | IF '(' cond ')' ELSE ctrl_blck ENDIF ','
-  51         | IF '(' cond ')' ctrl_blck ctrl_blck ENDIF ','
-  52         | IF '(' cond ')' ctrl_blck ELSE ENDIF ','
-  53         | IF '(' cond ')' ctrl_blck ELSE ctrl_blck error ','
-  54         | IF '(' cond ')' ctrl_blck ELSE ctrl_blck ENDIF
-  55         | IF '(' cond ')' ctrl_blck ENDIF
-  56         | IF cond ')' ctrl_blck ENDIF
-  57         | IF '(' ')' ctrl_blck ENDIF
-  58         | IF '(' cond error ctrl_blck ENDIF
-  59         | IF '(' cond ')' ctrl_blck error ','
-  60         | IF '(' cond ')' ENDIF
+  44  s_cond : IF '(' cond ')' ctrl_blck ELSE ctrl_blck ENDIF ','
+  45         | IF '(' cond ')' ctrl_blck ENDIF ','
+  46         | '(' cond ')' ctrl_blck ELSE ctrl_blck ENDIF ','
+  47         | '(' cond ')' ctrl_blck ENDIF ','
+  48         | IF cond ')' ctrl_blck ELSE ctrl_blck ENDIF ','
+  49         | IF '(' ')' ctrl_blck ELSE ctrl_blck ENDIF ','
+  50         | IF '(' cond error ctrl_blck ELSE ctrl_blck ENDIF ','
+  51         | IF '(' cond ')' ELSE ctrl_blck ENDIF ','
+  52         | IF '(' cond ')' ctrl_blck ctrl_blck ENDIF ','
+  53         | IF '(' cond ')' ctrl_blck ELSE ENDIF ','
+  54         | IF '(' cond ')' ctrl_blck ELSE ctrl_blck error ','
+  55         | IF '(' cond ')' ctrl_blck ELSE ctrl_blck ENDIF
+  56         | IF '(' cond ')' ctrl_blck ENDIF
+  57         | IF cond ')' ctrl_blck ENDIF
+  58         | IF '(' ')' ctrl_blck ENDIF
+  59         | IF '(' cond error ctrl_blck ENDIF
+  60         | IF '(' cond ')' ctrl_blck error ','
+  61         | IF '(' cond ')' ENDIF
 
-  61  ctrl : WHILE '(' cond ')' ctrl_blck
-  62       | error '(' cond ')' ctrl_blck
-  63       | WHILE cond ')' ctrl_blck
-  64       | WHILE '(' cond error ctrl_blck
-  65       | WHILE '(' cond ')' error ','
+  62  ctrl : while '(' cond ')' ctrl_blck
+  63       | while cond ')' ctrl_blck
+  64       | while '(' cond error ctrl_blck
+  65       | while '(' cond ')' error ','
 
-  66  prt : PRINT '(' STRING ')' ','
-  67      | '(' STRING ')' ','
-  68      | PRINT STRING ')' ','
-  69      | PRINT '(' STRING ','
-  70      | PRINT '(' ')' ','
-  71      | PRINT '(' STRING ')'
+  66  while : WHILE
 
-  72  cond : expr comp expr
-  73       | comp expr
-  74       | expr comp
+  67  prt : PRINT '(' STRING ')' ','
+  68      | '(' STRING ')' ','
+  69      | PRINT STRING ')' ','
+  70      | PRINT '(' STRING ','
+  71      | PRINT '(' ')' ','
+  72      | PRINT '(' STRING ')'
 
-  75  ctrl_blck : exec
-  76            | asig
-  77            | '{' ctrl_sent '}'
+  73  cond : expr comp expr
+  74       | comp expr
+  75       | expr comp
 
-  78  ctrl_sent : exec sent
-  79            | asig sent
-  80            | exec
-  81            | asig
+  76  ctrl_blck : exec
+  77            | asig
+  78            | '{' ctrl_sent '}'
 
-  82  inv_fun : ID '(' func_var ')'
-  83          | ID '(' func_var ','
+  79  ctrl_sent : exec sent
+  80            | asig sent
+  81            | exec
+  82            | asig
 
-  84  func_var : ID ';' lst_perm
-  85           | error ','
-  86           | error ';' lst_perm
-  87           | ID lst_perm
-  88           | ID ';'
+  83  inv_fun : ID '(' func_var ')'
+  84          | ID '(' func_var ','
 
-  89  asig : ID ASIG expr ','
-  90       | ASIG expr ','
-  91       | ID expr ','
-  92       | ID ASIG ','
-  93       | ID ASIG expr
+  85  func_var : ID ';' lst_perm
+  86           | error ','
+  87           | error ';' lst_perm
+  88           | ID lst_perm
+  89           | ID ';'
 
-  94  expr : expr '+' expr
-  95       | expr '-' expr
-  96       | term
+  90  asig : ID ASIG expr ','
+  91       | ASIG expr ','
+  92       | ID expr ','
+  93       | ID ASIG ','
+  94       | ID ASIG expr
 
-  97  term : term '*' fact
-  98       | term '/' fact
-  99       | fact
+  95  expr : expr '+' expr
+  96       | expr '-' expr
+  97       | term
 
- 100  lst_perm : READONLY
- 101           | WRITE
- 102           | PASS
- 103           | WRITE ';' PASS
- 104           | WRITE ';' error ','
+  98  term : term '*' fact
+  99       | term '/' fact
+ 100       | fact
 
- 105  type : USINTEGER
- 106       | LINTEGER
+ 101  lst_perm : READONLY
+ 102           | WRITE
+ 103           | PASS
+ 104           | WRITE ';' PASS
+ 105           | WRITE ';' error ','
 
- 107  fact : ID
- 108       | CTE
- 109       | '-' CTE
- 110       | inv_fun
+ 106  type : USINTEGER
+ 107       | LINTEGER
 
- 111  comp : '='
- 112       | '<'
- 113       | '>'
- 114       | "MEN_IG"
- 115       | "MAY_IG"
- 116       | "DIST"
+ 108  fact : ID
+ 109       | CTE
+ 110       | '-' CTE
+ 111       | inv_fun
+
+ 112  comp : '='
+ 113       | '<'
+ 114       | '>'
+ 115       | "MEN_IG"
+ 116       | "MAY_IG"
+ 117       | "DIST"
 
 state 0
 	$accept : . prog $end  (0)
@@ -165,189 +168,167 @@ state 0
 	func  goto 17
 	type  goto 18
 	lst_var  goto 19
-	s_cond  goto 20
-	ctrl  goto 21
-	prt  goto 22
-	inv_fun  goto 23
+	func_head  goto 20
+	s_cond  goto 21
+	ctrl  goto 22
+	prt  goto 23
+	inv_fun  goto 24
+	while  goto 25
 
 
 state 1
 	sent : error . ','  (8)
-	ctrl : error . '(' cond ')' ctrl_blck  (62)
 
-	','  shift 24
-	'('  shift 25
+	','  shift 26
 	.  error
 
 
 state 2
-	asig : ASIG . expr ','  (90)
+	asig : ASIG . expr ','  (91)
 
-	ID  shift 26
-	CTE  shift 27
-	'-'  shift 28
+	ID  shift 27
+	CTE  shift 28
+	'-'  shift 29
 	.  error
 
-	expr  goto 29
-	inv_fun  goto 30
-	term  goto 31
-	fact  goto 32
+	expr  goto 30
+	inv_fun  goto 31
+	term  goto 32
+	fact  goto 33
 
 
 state 3
-	s_cond : IF . '(' cond ')' ctrl_blck ELSE ctrl_blck ENDIF ','  (43)
-	s_cond : IF . '(' cond ')' ctrl_blck ENDIF ','  (44)
-	s_cond : IF . cond ')' ctrl_blck ELSE ctrl_blck ENDIF ','  (47)
-	s_cond : IF . '(' ')' ctrl_blck ELSE ctrl_blck ENDIF ','  (48)
-	s_cond : IF . '(' cond error ctrl_blck ELSE ctrl_blck ENDIF ','  (49)
-	s_cond : IF . '(' cond ')' ELSE ctrl_blck ENDIF ','  (50)
-	s_cond : IF . '(' cond ')' ctrl_blck ctrl_blck ENDIF ','  (51)
-	s_cond : IF . '(' cond ')' ctrl_blck ELSE ENDIF ','  (52)
-	s_cond : IF . '(' cond ')' ctrl_blck ELSE ctrl_blck error ','  (53)
-	s_cond : IF . '(' cond ')' ctrl_blck ELSE ctrl_blck ENDIF  (54)
-	s_cond : IF . '(' cond ')' ctrl_blck ENDIF  (55)
-	s_cond : IF . cond ')' ctrl_blck ENDIF  (56)
-	s_cond : IF . '(' ')' ctrl_blck ENDIF  (57)
-	s_cond : IF . '(' cond error ctrl_blck ENDIF  (58)
-	s_cond : IF . '(' cond ')' ctrl_blck error ','  (59)
-	s_cond : IF . '(' cond ')' ENDIF  (60)
+	s_cond : IF . '(' cond ')' ctrl_blck ELSE ctrl_blck ENDIF ','  (44)
+	s_cond : IF . '(' cond ')' ctrl_blck ENDIF ','  (45)
+	s_cond : IF . cond ')' ctrl_blck ELSE ctrl_blck ENDIF ','  (48)
+	s_cond : IF . '(' ')' ctrl_blck ELSE ctrl_blck ENDIF ','  (49)
+	s_cond : IF . '(' cond error ctrl_blck ELSE ctrl_blck ENDIF ','  (50)
+	s_cond : IF . '(' cond ')' ELSE ctrl_blck ENDIF ','  (51)
+	s_cond : IF . '(' cond ')' ctrl_blck ctrl_blck ENDIF ','  (52)
+	s_cond : IF . '(' cond ')' ctrl_blck ELSE ENDIF ','  (53)
+	s_cond : IF . '(' cond ')' ctrl_blck ELSE ctrl_blck error ','  (54)
+	s_cond : IF . '(' cond ')' ctrl_blck ELSE ctrl_blck ENDIF  (55)
+	s_cond : IF . '(' cond ')' ctrl_blck ENDIF  (56)
+	s_cond : IF . cond ')' ctrl_blck ENDIF  (57)
+	s_cond : IF . '(' ')' ctrl_blck ENDIF  (58)
+	s_cond : IF . '(' cond error ctrl_blck ENDIF  (59)
+	s_cond : IF . '(' cond ')' ctrl_blck error ','  (60)
+	s_cond : IF . '(' cond ')' ENDIF  (61)
 
-	ID  shift 26
-	CTE  shift 27
-	'-'  shift 28
-	'('  shift 33
-	'='  shift 34
-	'<'  shift 35
-	'>'  shift 36
-	"MEN_IG"  shift 37
-	"MAY_IG"  shift 38
-	"DIST"  shift 39
+	ID  shift 27
+	CTE  shift 28
+	'-'  shift 29
+	'('  shift 34
+	'='  shift 35
+	'<'  shift 36
+	'>'  shift 37
+	"MEN_IG"  shift 38
+	"MAY_IG"  shift 39
+	"DIST"  shift 40
 	.  error
 
-	expr  goto 40
-	inv_fun  goto 30
-	cond  goto 41
-	comp  goto 42
-	term  goto 31
-	fact  goto 32
+	expr  goto 41
+	inv_fun  goto 31
+	cond  goto 42
+	comp  goto 43
+	term  goto 32
+	fact  goto 33
 
 
 state 4
-	prt : PRINT . '(' STRING ')' ','  (66)
-	prt : PRINT . STRING ')' ','  (68)
-	prt : PRINT . '(' STRING ','  (69)
-	prt : PRINT . '(' ')' ','  (70)
-	prt : PRINT . '(' STRING ')'  (71)
+	prt : PRINT . '(' STRING ')' ','  (67)
+	prt : PRINT . STRING ')' ','  (69)
+	prt : PRINT . '(' STRING ','  (70)
+	prt : PRINT . '(' ')' ','  (71)
+	prt : PRINT . '(' STRING ')'  (72)
 
-	STRING  shift 43
-	'('  shift 44
+	STRING  shift 44
+	'('  shift 45
 	.  error
 
 
 state 5
-	ctrl : WHILE . '(' cond ')' ctrl_blck  (61)
-	ctrl : WHILE . cond ')' ctrl_blck  (63)
-	ctrl : WHILE . '(' cond error ctrl_blck  (64)
-	ctrl : WHILE . '(' cond ')' error ','  (65)
+	while : WHILE .  (66)
 
-	ID  shift 26
-	CTE  shift 27
-	'-'  shift 28
-	'('  shift 45
-	'='  shift 34
-	'<'  shift 35
-	'>'  shift 36
-	"MEN_IG"  shift 37
-	"MAY_IG"  shift 38
-	"DIST"  shift 39
-	.  error
-
-	expr  goto 40
-	inv_fun  goto 30
-	cond  goto 46
-	comp  goto 42
-	term  goto 31
-	fact  goto 32
+	.  reduce 66
 
 
 state 6
-	type : USINTEGER .  (105)
+	type : USINTEGER .  (106)
 
-	.  reduce 105
+	.  reduce 106
 
 
 state 7
-	type : LINTEGER .  (106)
+	type : LINTEGER .  (107)
 
-	.  reduce 106
+	.  reduce 107
 
 
 state 8
 	lst_var : ID . ';' lst_var  (14)
 	lst_var : ID . error lst_var  (16)
 	lst_var : ID .  (17)
-	func : ID . param func_body  (19)
-	func : ID . type func_body  (21)
-	func : ID . type param  (22)
-	inv_fun : ID . '(' func_var ')'  (82)
-	inv_fun : ID . '(' func_var ','  (83)
-	asig : ID . ASIG expr ','  (89)
-	asig : ID . expr ','  (91)
-	asig : ID . ASIG ','  (92)
-	asig : ID . ASIG expr  (93)
+	func_head : ID . param  (20)
+	inv_fun : ID . '(' func_var ')'  (83)
+	inv_fun : ID . '(' func_var ','  (84)
+	asig : ID . ASIG expr ','  (90)
+	asig : ID . expr ','  (92)
+	asig : ID . ASIG ','  (93)
+	asig : ID . ASIG expr  (94)
 
-	error  shift 47
-	ASIG  shift 48
+	error  shift 46
+	ASIG  shift 47
 	USINTEGER  shift 6
 	LINTEGER  shift 7
-	ID  shift 26
-	CTE  shift 27
-	'-'  shift 28
-	';'  shift 49
-	'('  shift 50
+	ID  shift 27
+	CTE  shift 28
+	'-'  shift 29
+	';'  shift 48
+	'('  shift 49
 	','  reduce 17
 
-	type  goto 51
-	param  goto 52
-	expr  goto 53
-	inv_fun  goto 30
-	term  goto 31
-	fact  goto 32
+	type  goto 50
+	param  goto 51
+	expr  goto 52
+	inv_fun  goto 31
+	term  goto 32
+	fact  goto 33
 
 
 state 9
 	lst_var : ';' . lst_var  (15)
 
-	ID  shift 54
+	ID  shift 53
 	';'  shift 9
 	.  error
 
-	lst_var  goto 55
+	lst_var  goto 54
 
 
 state 10
-	s_cond : '(' . cond ')' ctrl_blck ELSE ctrl_blck ENDIF ','  (45)
-	s_cond : '(' . cond ')' ctrl_blck ENDIF ','  (46)
-	prt : '(' . STRING ')' ','  (67)
+	s_cond : '(' . cond ')' ctrl_blck ELSE ctrl_blck ENDIF ','  (46)
+	s_cond : '(' . cond ')' ctrl_blck ENDIF ','  (47)
+	prt : '(' . STRING ')' ','  (68)
 
-	ID  shift 26
-	CTE  shift 27
-	STRING  shift 56
-	'-'  shift 28
-	'='  shift 34
-	'<'  shift 35
-	'>'  shift 36
-	"MEN_IG"  shift 37
-	"MAY_IG"  shift 38
-	"DIST"  shift 39
+	ID  shift 27
+	CTE  shift 28
+	STRING  shift 55
+	'-'  shift 29
+	'='  shift 35
+	'<'  shift 36
+	'>'  shift 37
+	"MEN_IG"  shift 38
+	"MAY_IG"  shift 39
+	"DIST"  shift 40
 	.  error
 
-	expr  goto 40
-	inv_fun  goto 30
-	cond  goto 57
-	comp  goto 42
-	term  goto 31
-	fact  goto 32
+	expr  goto 41
+	inv_fun  goto 31
+	cond  goto 56
+	comp  goto 43
+	term  goto 32
+	fact  goto 33
 
 
 state 11
@@ -362,7 +343,6 @@ state 12
 	sent : sent . exec  (3)
 	sent : sent . asig  (4)
 
-	error  shift 58
 	ASIG  shift 2
 	IF  shift 3
 	PRINT  shift 4
@@ -374,17 +354,19 @@ state 12
 	'('  shift 10
 	$end  reduce 1
 
-	decl  goto 59
-	exec  goto 60
-	asig  goto 61
+	decl  goto 57
+	exec  goto 58
+	asig  goto 59
 	var  goto 16
 	func  goto 17
 	type  goto 18
 	lst_var  goto 19
-	s_cond  goto 20
-	ctrl  goto 21
-	prt  goto 22
-	inv_fun  goto 23
+	func_head  goto 20
+	s_cond  goto 21
+	ctrl  goto 22
+	prt  goto 23
+	inv_fun  goto 24
+	while  goto 25
 
 
 state 13
@@ -420,1024 +402,552 @@ state 17
 state 18
 	var : type . lst_var ','  (11)
 	var : type . error ','  (13)
-	func : type . ID param func_body  (18)
-	func : type . param func_body  (20)
+	func_head : type . ID param  (19)
+	func_head : type . param  (21)
 
-	error  shift 62
+	error  shift 60
 	USINTEGER  shift 6
 	LINTEGER  shift 7
-	ID  shift 63
+	ID  shift 61
 	';'  shift 9
-	'('  shift 64
+	'('  shift 62
 	.  error
 
-	type  goto 65
-	lst_var  goto 66
-	param  goto 67
+	type  goto 50
+	lst_var  goto 63
+	param  goto 64
 
 
 state 19
 	var : lst_var . ','  (12)
 
-	','  shift 68
+	','  shift 65
 	.  error
 
 
 state 20
-	exec : s_cond .  (39)
+	func : func_head . func_body  (18)
 
-	.  reduce 39
+	error  shift 1
+	ASIG  shift 2
+	IF  shift 3
+	PRINT  shift 4
+	WHILE  shift 5
+	USINTEGER  shift 6
+	LINTEGER  shift 7
+	ID  shift 8
+	';'  shift 9
+	'('  shift 10
+	'{'  shift 66
+	.  error
+
+	sent  goto 67
+	decl  goto 13
+	exec  goto 14
+	asig  goto 15
+	var  goto 16
+	func  goto 17
+	type  goto 18
+	lst_var  goto 19
+	func_head  goto 20
+	func_body  goto 68
+	s_cond  goto 21
+	ctrl  goto 22
+	prt  goto 23
+	inv_fun  goto 24
+	while  goto 25
 
 
 state 21
-	exec : ctrl .  (40)
+	exec : s_cond .  (40)
 
 	.  reduce 40
 
 
 state 22
-	exec : prt .  (41)
+	exec : ctrl .  (41)
 
 	.  reduce 41
 
 
 state 23
-	exec : inv_fun . ','  (42)
+	exec : prt .  (42)
+
+	.  reduce 42
+
+
+state 24
+	exec : inv_fun . ','  (43)
 
 	','  shift 69
 	.  error
 
 
-state 24
+state 25
+	ctrl : while . '(' cond ')' ctrl_blck  (62)
+	ctrl : while . cond ')' ctrl_blck  (63)
+	ctrl : while . '(' cond error ctrl_blck  (64)
+	ctrl : while . '(' cond ')' error ','  (65)
+
+	ID  shift 27
+	CTE  shift 28
+	'-'  shift 29
+	'('  shift 70
+	'='  shift 35
+	'<'  shift 36
+	'>'  shift 37
+	"MEN_IG"  shift 38
+	"MAY_IG"  shift 39
+	"DIST"  shift 40
+	.  error
+
+	expr  goto 41
+	inv_fun  goto 31
+	cond  goto 71
+	comp  goto 43
+	term  goto 32
+	fact  goto 33
+
+
+state 26
 	sent : error ',' .  (8)
 
 	.  reduce 8
 
 
-state 25
-	ctrl : error '(' . cond ')' ctrl_blck  (62)
-
-	ID  shift 26
-	CTE  shift 27
-	'-'  shift 28
-	'='  shift 34
-	'<'  shift 35
-	'>'  shift 36
-	"MEN_IG"  shift 37
-	"MAY_IG"  shift 38
-	"DIST"  shift 39
-	.  error
-
-	expr  goto 40
-	inv_fun  goto 30
-	cond  goto 70
-	comp  goto 42
-	term  goto 31
-	fact  goto 32
-
-
-26: shift/reduce conflict (shift 71, reduce 107) on '('
-state 26
-	inv_fun : ID . '(' func_var ')'  (82)
-	inv_fun : ID . '(' func_var ','  (83)
-	fact : ID .  (107)
-
-	'('  shift 71
-	$end  reduce 107
-	error  reduce 107
-	ASIG  reduce 107
-	IF  reduce 107
-	ENDIF  reduce 107
-	ELSE  reduce 107
-	PRINT  reduce 107
-	WHILE  reduce 107
-	USINTEGER  reduce 107
-	LINTEGER  reduce 107
-	ID  reduce 107
-	RETURN  reduce 107
-	'+'  reduce 107
-	'-'  reduce 107
-	'*'  reduce 107
-	'/'  reduce 107
-	','  reduce 107
-	';'  reduce 107
-	')'  reduce 107
-	'{'  reduce 107
-	'}'  reduce 107
-	'='  reduce 107
-	'<'  reduce 107
-	'>'  reduce 107
-	"MEN_IG"  reduce 107
-	"MAY_IG"  reduce 107
-	"DIST"  reduce 107
-
-
+27: shift/reduce conflict (shift 72, reduce 108) on '('
 state 27
-	fact : CTE .  (108)
+	inv_fun : ID . '(' func_var ')'  (83)
+	inv_fun : ID . '(' func_var ','  (84)
+	fact : ID .  (108)
 
-	.  reduce 108
+	'('  shift 72
+	$end  reduce 108
+	error  reduce 108
+	ASIG  reduce 108
+	IF  reduce 108
+	ENDIF  reduce 108
+	ELSE  reduce 108
+	PRINT  reduce 108
+	WHILE  reduce 108
+	USINTEGER  reduce 108
+	LINTEGER  reduce 108
+	ID  reduce 108
+	RETURN  reduce 108
+	'+'  reduce 108
+	'-'  reduce 108
+	'*'  reduce 108
+	'/'  reduce 108
+	','  reduce 108
+	';'  reduce 108
+	')'  reduce 108
+	'{'  reduce 108
+	'}'  reduce 108
+	'='  reduce 108
+	'<'  reduce 108
+	'>'  reduce 108
+	"MEN_IG"  reduce 108
+	"MAY_IG"  reduce 108
+	"DIST"  reduce 108
 
 
 state 28
-	fact : '-' . CTE  (109)
+	fact : CTE .  (109)
 
-	CTE  shift 72
-	.  error
+	.  reduce 109
 
 
 state 29
-	asig : ASIG expr . ','  (90)
-	expr : expr . '+' expr  (94)
-	expr : expr . '-' expr  (95)
+	fact : '-' . CTE  (110)
 
-	'+'  shift 73
-	'-'  shift 74
-	','  shift 75
+	CTE  shift 73
 	.  error
 
 
 state 30
-	fact : inv_fun .  (110)
+	asig : ASIG expr . ','  (91)
+	expr : expr . '+' expr  (95)
+	expr : expr . '-' expr  (96)
 
-	.  reduce 110
+	'+'  shift 74
+	'-'  shift 75
+	','  shift 76
+	.  error
 
 
 state 31
-	expr : term .  (96)
-	term : term . '*' fact  (97)
-	term : term . '/' fact  (98)
-
-	'*'  shift 76
-	'/'  shift 77
-	$end  reduce 96
-	error  reduce 96
-	ASIG  reduce 96
-	IF  reduce 96
-	ENDIF  reduce 96
-	ELSE  reduce 96
-	PRINT  reduce 96
-	WHILE  reduce 96
-	USINTEGER  reduce 96
-	LINTEGER  reduce 96
-	ID  reduce 96
-	RETURN  reduce 96
-	'+'  reduce 96
-	'-'  reduce 96
-	','  reduce 96
-	';'  reduce 96
-	'('  reduce 96
-	')'  reduce 96
-	'{'  reduce 96
-	'}'  reduce 96
-	'='  reduce 96
-	'<'  reduce 96
-	'>'  reduce 96
-	"MEN_IG"  reduce 96
-	"MAY_IG"  reduce 96
-	"DIST"  reduce 96
-
-
-state 32
-	term : fact .  (99)
-
-	.  reduce 99
-
-
-state 33
-	s_cond : IF '(' . cond ')' ctrl_blck ELSE ctrl_blck ENDIF ','  (43)
-	s_cond : IF '(' . cond ')' ctrl_blck ENDIF ','  (44)
-	s_cond : IF '(' . ')' ctrl_blck ELSE ctrl_blck ENDIF ','  (48)
-	s_cond : IF '(' . cond error ctrl_blck ELSE ctrl_blck ENDIF ','  (49)
-	s_cond : IF '(' . cond ')' ELSE ctrl_blck ENDIF ','  (50)
-	s_cond : IF '(' . cond ')' ctrl_blck ctrl_blck ENDIF ','  (51)
-	s_cond : IF '(' . cond ')' ctrl_blck ELSE ENDIF ','  (52)
-	s_cond : IF '(' . cond ')' ctrl_blck ELSE ctrl_blck error ','  (53)
-	s_cond : IF '(' . cond ')' ctrl_blck ELSE ctrl_blck ENDIF  (54)
-	s_cond : IF '(' . cond ')' ctrl_blck ENDIF  (55)
-	s_cond : IF '(' . ')' ctrl_blck ENDIF  (57)
-	s_cond : IF '(' . cond error ctrl_blck ENDIF  (58)
-	s_cond : IF '(' . cond ')' ctrl_blck error ','  (59)
-	s_cond : IF '(' . cond ')' ENDIF  (60)
-
-	ID  shift 26
-	CTE  shift 27
-	'-'  shift 28
-	')'  shift 78
-	'='  shift 34
-	'<'  shift 35
-	'>'  shift 36
-	"MEN_IG"  shift 37
-	"MAY_IG"  shift 38
-	"DIST"  shift 39
-	.  error
-
-	expr  goto 40
-	inv_fun  goto 30
-	cond  goto 79
-	comp  goto 42
-	term  goto 31
-	fact  goto 32
-
-
-state 34
-	comp : '=' .  (111)
+	fact : inv_fun .  (111)
 
 	.  reduce 111
 
 
+state 32
+	expr : term .  (97)
+	term : term . '*' fact  (98)
+	term : term . '/' fact  (99)
+
+	'*'  shift 77
+	'/'  shift 78
+	$end  reduce 97
+	error  reduce 97
+	ASIG  reduce 97
+	IF  reduce 97
+	ENDIF  reduce 97
+	ELSE  reduce 97
+	PRINT  reduce 97
+	WHILE  reduce 97
+	USINTEGER  reduce 97
+	LINTEGER  reduce 97
+	ID  reduce 97
+	RETURN  reduce 97
+	'+'  reduce 97
+	'-'  reduce 97
+	','  reduce 97
+	';'  reduce 97
+	'('  reduce 97
+	')'  reduce 97
+	'{'  reduce 97
+	'}'  reduce 97
+	'='  reduce 97
+	'<'  reduce 97
+	'>'  reduce 97
+	"MEN_IG"  reduce 97
+	"MAY_IG"  reduce 97
+	"DIST"  reduce 97
+
+
+state 33
+	term : fact .  (100)
+
+	.  reduce 100
+
+
+state 34
+	s_cond : IF '(' . cond ')' ctrl_blck ELSE ctrl_blck ENDIF ','  (44)
+	s_cond : IF '(' . cond ')' ctrl_blck ENDIF ','  (45)
+	s_cond : IF '(' . ')' ctrl_blck ELSE ctrl_blck ENDIF ','  (49)
+	s_cond : IF '(' . cond error ctrl_blck ELSE ctrl_blck ENDIF ','  (50)
+	s_cond : IF '(' . cond ')' ELSE ctrl_blck ENDIF ','  (51)
+	s_cond : IF '(' . cond ')' ctrl_blck ctrl_blck ENDIF ','  (52)
+	s_cond : IF '(' . cond ')' ctrl_blck ELSE ENDIF ','  (53)
+	s_cond : IF '(' . cond ')' ctrl_blck ELSE ctrl_blck error ','  (54)
+	s_cond : IF '(' . cond ')' ctrl_blck ELSE ctrl_blck ENDIF  (55)
+	s_cond : IF '(' . cond ')' ctrl_blck ENDIF  (56)
+	s_cond : IF '(' . ')' ctrl_blck ENDIF  (58)
+	s_cond : IF '(' . cond error ctrl_blck ENDIF  (59)
+	s_cond : IF '(' . cond ')' ctrl_blck error ','  (60)
+	s_cond : IF '(' . cond ')' ENDIF  (61)
+
+	ID  shift 27
+	CTE  shift 28
+	'-'  shift 29
+	')'  shift 79
+	'='  shift 35
+	'<'  shift 36
+	'>'  shift 37
+	"MEN_IG"  shift 38
+	"MAY_IG"  shift 39
+	"DIST"  shift 40
+	.  error
+
+	expr  goto 41
+	inv_fun  goto 31
+	cond  goto 80
+	comp  goto 43
+	term  goto 32
+	fact  goto 33
+
+
 state 35
-	comp : '<' .  (112)
+	comp : '=' .  (112)
 
 	.  reduce 112
 
 
 state 36
-	comp : '>' .  (113)
+	comp : '<' .  (113)
 
 	.  reduce 113
 
 
 state 37
-	comp : "MEN_IG" .  (114)
+	comp : '>' .  (114)
 
 	.  reduce 114
 
 
 state 38
-	comp : "MAY_IG" .  (115)
+	comp : "MEN_IG" .  (115)
 
 	.  reduce 115
 
 
 state 39
-	comp : "DIST" .  (116)
+	comp : "MAY_IG" .  (116)
 
 	.  reduce 116
 
 
 state 40
-	cond : expr . comp expr  (72)
-	cond : expr . comp  (74)
-	expr : expr . '+' expr  (94)
-	expr : expr . '-' expr  (95)
+	comp : "DIST" .  (117)
 
-	'+'  shift 73
-	'-'  shift 74
-	'='  shift 34
-	'<'  shift 35
-	'>'  shift 36
-	"MEN_IG"  shift 37
-	"MAY_IG"  shift 38
-	"DIST"  shift 39
-	.  error
-
-	comp  goto 80
+	.  reduce 117
 
 
 state 41
-	s_cond : IF cond . ')' ctrl_blck ELSE ctrl_blck ENDIF ','  (47)
-	s_cond : IF cond . ')' ctrl_blck ENDIF  (56)
+	cond : expr . comp expr  (73)
+	cond : expr . comp  (75)
+	expr : expr . '+' expr  (95)
+	expr : expr . '-' expr  (96)
 
-	')'  shift 81
+	'+'  shift 74
+	'-'  shift 75
+	'='  shift 35
+	'<'  shift 36
+	'>'  shift 37
+	"MEN_IG"  shift 38
+	"MAY_IG"  shift 39
+	"DIST"  shift 40
 	.  error
+
+	comp  goto 81
 
 
 state 42
-	cond : comp . expr  (73)
+	s_cond : IF cond . ')' ctrl_blck ELSE ctrl_blck ENDIF ','  (48)
+	s_cond : IF cond . ')' ctrl_blck ENDIF  (57)
 
-	ID  shift 26
-	CTE  shift 27
-	'-'  shift 28
+	')'  shift 82
 	.  error
-
-	expr  goto 82
-	inv_fun  goto 30
-	term  goto 31
-	fact  goto 32
 
 
 state 43
-	prt : PRINT STRING . ')' ','  (68)
+	cond : comp . expr  (74)
 
-	')'  shift 83
+	ID  shift 27
+	CTE  shift 28
+	'-'  shift 29
 	.  error
+
+	expr  goto 83
+	inv_fun  goto 31
+	term  goto 32
+	fact  goto 33
 
 
 state 44
-	prt : PRINT '(' . STRING ')' ','  (66)
-	prt : PRINT '(' . STRING ','  (69)
-	prt : PRINT '(' . ')' ','  (70)
-	prt : PRINT '(' . STRING ')'  (71)
+	prt : PRINT STRING . ')' ','  (69)
 
-	STRING  shift 84
-	')'  shift 85
+	')'  shift 84
 	.  error
 
 
 state 45
-	ctrl : WHILE '(' . cond ')' ctrl_blck  (61)
-	ctrl : WHILE '(' . cond error ctrl_blck  (64)
-	ctrl : WHILE '(' . cond ')' error ','  (65)
+	prt : PRINT '(' . STRING ')' ','  (67)
+	prt : PRINT '(' . STRING ','  (70)
+	prt : PRINT '(' . ')' ','  (71)
+	prt : PRINT '(' . STRING ')'  (72)
 
-	ID  shift 26
-	CTE  shift 27
-	'-'  shift 28
-	'='  shift 34
-	'<'  shift 35
-	'>'  shift 36
-	"MEN_IG"  shift 37
-	"MAY_IG"  shift 38
-	"DIST"  shift 39
+	STRING  shift 85
+	')'  shift 86
 	.  error
-
-	expr  goto 40
-	inv_fun  goto 30
-	cond  goto 86
-	comp  goto 42
-	term  goto 31
-	fact  goto 32
 
 
 state 46
-	ctrl : WHILE cond . ')' ctrl_blck  (63)
+	lst_var : ID error . lst_var  (16)
 
-	')'  shift 87
+	ID  shift 53
+	';'  shift 9
 	.  error
+
+	lst_var  goto 87
 
 
 state 47
-	lst_var : ID error . lst_var  (16)
+	asig : ID ASIG . expr ','  (90)
+	asig : ID ASIG . ','  (93)
+	asig : ID ASIG . expr  (94)
 
-	ID  shift 54
-	';'  shift 9
+	ID  shift 27
+	CTE  shift 28
+	'-'  shift 29
+	','  shift 88
 	.  error
 
-	lst_var  goto 88
+	expr  goto 89
+	inv_fun  goto 31
+	term  goto 32
+	fact  goto 33
 
 
 state 48
-	asig : ID ASIG . expr ','  (89)
-	asig : ID ASIG . ','  (92)
-	asig : ID ASIG . expr  (93)
-
-	ID  shift 26
-	CTE  shift 27
-	'-'  shift 28
-	','  shift 89
-	.  error
-
-	expr  goto 90
-	inv_fun  goto 30
-	term  goto 31
-	fact  goto 32
-
-
-state 49
 	lst_var : ID ';' . lst_var  (14)
 
-	ID  shift 54
+	ID  shift 53
 	';'  shift 9
 	.  error
 
-	lst_var  goto 91
+	lst_var  goto 90
 
 
-state 50
-	param : '(' . type ID ')'  (23)
-	param : '(' . ID ')'  (25)
-	param : '(' . type ')'  (26)
-	param : '(' . type ID  (27)
-	inv_fun : ID '(' . func_var ')'  (82)
-	inv_fun : ID '(' . func_var ','  (83)
+state 49
+	param : '(' . type ID ')'  (22)
+	param : '(' . ID ')'  (24)
+	param : '(' . type ')'  (25)
+	param : '(' . type ID  (26)
+	param : '(' . ')'  (27)
+	inv_fun : ID '(' . func_var ')'  (83)
+	inv_fun : ID '(' . func_var ','  (84)
 
-	error  shift 92
+	error  shift 91
 	USINTEGER  shift 6
 	LINTEGER  shift 7
-	ID  shift 93
+	ID  shift 92
+	')'  shift 93
 	.  error
 
 	type  goto 94
 	func_var  goto 95
 
 
-state 51
-	func : ID type . func_body  (21)
-	func : ID type . param  (22)
-	param : type . ID ')'  (24)
+state 50
+	param : type . ID ')'  (23)
 
-	error  shift 1
-	ASIG  shift 2
-	IF  shift 3
-	PRINT  shift 4
-	WHILE  shift 5
-	USINTEGER  shift 6
-	LINTEGER  shift 7
 	ID  shift 96
-	';'  shift 9
-	'('  shift 97
-	'{'  shift 98
 	.  error
 
-	sent  goto 99
-	decl  goto 13
-	exec  goto 14
-	asig  goto 15
-	var  goto 16
-	func  goto 17
-	type  goto 100
-	lst_var  goto 19
-	param  goto 101
-	func_body  goto 102
-	s_cond  goto 20
-	ctrl  goto 21
-	prt  goto 22
-	inv_fun  goto 23
+
+state 51
+	func_head : ID param .  (20)
+
+	.  reduce 20
 
 
 state 52
-	func : ID param . func_body  (19)
+	asig : ID expr . ','  (92)
+	expr : expr . '+' expr  (95)
+	expr : expr . '-' expr  (96)
 
-	error  shift 1
-	ASIG  shift 2
-	IF  shift 3
-	PRINT  shift 4
-	WHILE  shift 5
-	USINTEGER  shift 6
-	LINTEGER  shift 7
-	ID  shift 8
-	';'  shift 9
-	'('  shift 10
-	'{'  shift 98
+	'+'  shift 74
+	'-'  shift 75
+	','  shift 97
 	.  error
-
-	sent  goto 99
-	decl  goto 13
-	exec  goto 14
-	asig  goto 15
-	var  goto 16
-	func  goto 17
-	type  goto 18
-	lst_var  goto 19
-	func_body  goto 103
-	s_cond  goto 20
-	ctrl  goto 21
-	prt  goto 22
-	inv_fun  goto 23
 
 
 state 53
-	asig : ID expr . ','  (91)
-	expr : expr . '+' expr  (94)
-	expr : expr . '-' expr  (95)
-
-	'+'  shift 73
-	'-'  shift 74
-	','  shift 104
-	.  error
-
-
-state 54
 	lst_var : ID . ';' lst_var  (14)
 	lst_var : ID . error lst_var  (16)
 	lst_var : ID .  (17)
 
-	error  shift 47
-	';'  shift 49
+	error  shift 46
+	';'  shift 48
 	','  reduce 17
 
 
-state 55
+state 54
 	lst_var : ';' lst_var .  (15)
 
 	.  reduce 15
 
 
-state 56
-	prt : '(' STRING . ')' ','  (67)
+state 55
+	prt : '(' STRING . ')' ','  (68)
 
-	')'  shift 105
+	')'  shift 98
+	.  error
+
+
+state 56
+	s_cond : '(' cond . ')' ctrl_blck ELSE ctrl_blck ENDIF ','  (46)
+	s_cond : '(' cond . ')' ctrl_blck ENDIF ','  (47)
+
+	')'  shift 99
 	.  error
 
 
 state 57
-	s_cond : '(' cond . ')' ctrl_blck ELSE ctrl_blck ENDIF ','  (45)
-	s_cond : '(' cond . ')' ctrl_blck ENDIF ','  (46)
-
-	')'  shift 106
-	.  error
-
-
-state 58
-	ctrl : error . '(' cond ')' ctrl_blck  (62)
-
-	'('  shift 25
-	.  error
-
-
-state 59
 	sent : sent decl .  (2)
 
 	.  reduce 2
 
 
-state 60
+state 58
 	sent : sent exec .  (3)
 
 	.  reduce 3
 
 
-state 61
+state 59
 	sent : sent asig .  (4)
 
 	.  reduce 4
 
 
-state 62
+state 60
 	var : type error . ','  (13)
 
-	','  shift 107
+	','  shift 100
 	.  error
 
 
-state 63
+state 61
 	lst_var : ID . ';' lst_var  (14)
 	lst_var : ID . error lst_var  (16)
 	lst_var : ID .  (17)
-	func : type ID . param func_body  (18)
+	func_head : type ID . param  (19)
 
-	error  shift 47
+	error  shift 46
 	USINTEGER  shift 6
 	LINTEGER  shift 7
-	';'  shift 49
-	'('  shift 64
+	';'  shift 48
+	'('  shift 62
 	','  reduce 17
 
-	type  goto 65
-	param  goto 108
+	type  goto 50
+	param  goto 101
 
 
-state 64
-	param : '(' . type ID ')'  (23)
-	param : '(' . ID ')'  (25)
-	param : '(' . type ')'  (26)
-	param : '(' . type ID  (27)
+state 62
+	param : '(' . type ID ')'  (22)
+	param : '(' . ID ')'  (24)
+	param : '(' . type ')'  (25)
+	param : '(' . type ID  (26)
+	param : '(' . ')'  (27)
 
 	USINTEGER  shift 6
 	LINTEGER  shift 7
-	ID  shift 109
+	ID  shift 102
+	')'  shift 93
 	.  error
 
 	type  goto 94
 
 
-state 65
-	param : type . ID ')'  (24)
-
-	ID  shift 110
-	.  error
-
-
-state 66
+state 63
 	var : type lst_var . ','  (11)
 
-	','  shift 111
+	','  shift 103
 	.  error
 
 
-state 67
-	func : type param . func_body  (20)
+state 64
+	func_head : type param .  (21)
 
-	error  shift 1
-	ASIG  shift 2
-	IF  shift 3
-	PRINT  shift 4
-	WHILE  shift 5
-	USINTEGER  shift 6
-	LINTEGER  shift 7
-	ID  shift 8
-	';'  shift 9
-	'('  shift 10
-	'{'  shift 98
-	.  error
-
-	sent  goto 99
-	decl  goto 13
-	exec  goto 14
-	asig  goto 15
-	var  goto 16
-	func  goto 17
-	type  goto 18
-	lst_var  goto 19
-	func_body  goto 112
-	s_cond  goto 20
-	ctrl  goto 21
-	prt  goto 22
-	inv_fun  goto 23
+	.  reduce 21
 
 
-state 68
+state 65
 	var : lst_var ',' .  (12)
 
 	.  reduce 12
 
 
-state 69
-	exec : inv_fun ',' .  (42)
-
-	.  reduce 42
-
-
-state 70
-	ctrl : error '(' cond . ')' ctrl_blck  (62)
-
-	')'  shift 113
-	.  error
-
-
-state 71
-	inv_fun : ID '(' . func_var ')'  (82)
-	inv_fun : ID '(' . func_var ','  (83)
-
-	error  shift 92
-	ID  shift 114
-	.  error
-
-	func_var  goto 95
-
-
-state 72
-	fact : '-' CTE .  (109)
-
-	.  reduce 109
-
-
-state 73
-	expr : expr '+' . expr  (94)
-
-	ID  shift 26
-	CTE  shift 27
-	'-'  shift 28
-	.  error
-
-	expr  goto 115
-	inv_fun  goto 30
-	term  goto 31
-	fact  goto 32
-
-
-state 74
-	expr : expr '-' . expr  (95)
-
-	ID  shift 26
-	CTE  shift 27
-	'-'  shift 28
-	.  error
-
-	expr  goto 116
-	inv_fun  goto 30
-	term  goto 31
-	fact  goto 32
-
-
-state 75
-	asig : ASIG expr ',' .  (90)
-
-	.  reduce 90
-
-
-state 76
-	term : term '*' . fact  (97)
-
-	ID  shift 26
-	CTE  shift 27
-	'-'  shift 28
-	.  error
-
-	inv_fun  goto 30
-	fact  goto 117
-
-
-state 77
-	term : term '/' . fact  (98)
-
-	ID  shift 26
-	CTE  shift 27
-	'-'  shift 28
-	.  error
-
-	inv_fun  goto 30
-	fact  goto 118
-
-
-state 78
-	s_cond : IF '(' ')' . ctrl_blck ELSE ctrl_blck ENDIF ','  (48)
-	s_cond : IF '(' ')' . ctrl_blck ENDIF  (57)
-
-	error  shift 58
-	ASIG  shift 2
-	IF  shift 3
-	PRINT  shift 4
-	WHILE  shift 5
-	ID  shift 119
-	'('  shift 10
-	'{'  shift 120
-	.  error
-
-	exec  goto 121
-	asig  goto 122
-	s_cond  goto 20
-	ctrl  goto 21
-	prt  goto 22
-	inv_fun  goto 23
-	ctrl_blck  goto 123
-
-
-state 79
-	s_cond : IF '(' cond . ')' ctrl_blck ELSE ctrl_blck ENDIF ','  (43)
-	s_cond : IF '(' cond . ')' ctrl_blck ENDIF ','  (44)
-	s_cond : IF '(' cond . error ctrl_blck ELSE ctrl_blck ENDIF ','  (49)
-	s_cond : IF '(' cond . ')' ELSE ctrl_blck ENDIF ','  (50)
-	s_cond : IF '(' cond . ')' ctrl_blck ctrl_blck ENDIF ','  (51)
-	s_cond : IF '(' cond . ')' ctrl_blck ELSE ENDIF ','  (52)
-	s_cond : IF '(' cond . ')' ctrl_blck ELSE ctrl_blck error ','  (53)
-	s_cond : IF '(' cond . ')' ctrl_blck ELSE ctrl_blck ENDIF  (54)
-	s_cond : IF '(' cond . ')' ctrl_blck ENDIF  (55)
-	s_cond : IF '(' cond . error ctrl_blck ENDIF  (58)
-	s_cond : IF '(' cond . ')' ctrl_blck error ','  (59)
-	s_cond : IF '(' cond . ')' ENDIF  (60)
-
-	error  shift 124
-	')'  shift 125
-	.  error
-
-
-state 80
-	cond : expr comp . expr  (72)
-	cond : expr comp .  (74)
-
-	ID  shift 26
-	CTE  shift 27
-	'-'  shift 28
-	error  reduce 74
-	')'  reduce 74
-
-	expr  goto 126
-	inv_fun  goto 30
-	term  goto 31
-	fact  goto 32
-
-
-state 81
-	s_cond : IF cond ')' . ctrl_blck ELSE ctrl_blck ENDIF ','  (47)
-	s_cond : IF cond ')' . ctrl_blck ENDIF  (56)
-
-	error  shift 58
-	ASIG  shift 2
-	IF  shift 3
-	PRINT  shift 4
-	WHILE  shift 5
-	ID  shift 119
-	'('  shift 10
-	'{'  shift 120
-	.  error
-
-	exec  goto 121
-	asig  goto 122
-	s_cond  goto 20
-	ctrl  goto 21
-	prt  goto 22
-	inv_fun  goto 23
-	ctrl_blck  goto 127
-
-
-state 82
-	cond : comp expr .  (73)
-	expr : expr . '+' expr  (94)
-	expr : expr . '-' expr  (95)
-
-	'+'  shift 73
-	'-'  shift 74
-	error  reduce 73
-	')'  reduce 73
-
-
-state 83
-	prt : PRINT STRING ')' . ','  (68)
-
-	','  shift 128
-	.  error
-
-
-state 84
-	prt : PRINT '(' STRING . ')' ','  (66)
-	prt : PRINT '(' STRING . ','  (69)
-	prt : PRINT '(' STRING . ')'  (71)
-
-	','  shift 129
-	')'  shift 130
-	.  error
-
-
-state 85
-	prt : PRINT '(' ')' . ','  (70)
-
-	','  shift 131
-	.  error
-
-
-state 86
-	ctrl : WHILE '(' cond . ')' ctrl_blck  (61)
-	ctrl : WHILE '(' cond . error ctrl_blck  (64)
-	ctrl : WHILE '(' cond . ')' error ','  (65)
-
-	error  shift 132
-	')'  shift 133
-	.  error
-
-
-state 87
-	ctrl : WHILE cond ')' . ctrl_blck  (63)
-
-	error  shift 58
-	ASIG  shift 2
-	IF  shift 3
-	PRINT  shift 4
-	WHILE  shift 5
-	ID  shift 119
-	'('  shift 10
-	'{'  shift 120
-	.  error
-
-	exec  goto 121
-	asig  goto 122
-	s_cond  goto 20
-	ctrl  goto 21
-	prt  goto 22
-	inv_fun  goto 23
-	ctrl_blck  goto 134
-
-
-state 88
-	lst_var : ID error lst_var .  (16)
-
-	.  reduce 16
-
-
-state 89
-	asig : ID ASIG ',' .  (92)
-
-	.  reduce 92
-
-
-state 90
-	asig : ID ASIG expr . ','  (89)
-	asig : ID ASIG expr .  (93)
-	expr : expr . '+' expr  (94)
-	expr : expr . '-' expr  (95)
-
-	'+'  shift 73
-	'-'  shift 74
-	','  shift 135
-	$end  reduce 93
-	error  reduce 93
-	ASIG  reduce 93
-	IF  reduce 93
-	ENDIF  reduce 93
-	ELSE  reduce 93
-	PRINT  reduce 93
-	WHILE  reduce 93
-	USINTEGER  reduce 93
-	LINTEGER  reduce 93
-	ID  reduce 93
-	RETURN  reduce 93
-	';'  reduce 93
-	'('  reduce 93
-	'{'  reduce 93
-	'}'  reduce 93
-
-
-state 91
-	lst_var : ID ';' lst_var .  (14)
-
-	.  reduce 14
-
-
-state 92
-	func_var : error . ','  (85)
-	func_var : error . ';' lst_perm  (86)
-
-	','  shift 136
-	';'  shift 137
-	.  error
-
-
-state 93
-	param : '(' ID . ')'  (25)
-	func_var : ID . ';' lst_perm  (84)
-	func_var : ID . lst_perm  (87)
-	func_var : ID . ';'  (88)
-
-	READONLY  shift 138
-	WRITE  shift 139
-	PASS  shift 140
-	';'  shift 141
-	')'  shift 142
-	.  error
-
-	lst_perm  goto 143
-
-
-state 94
-	param : '(' type . ID ')'  (23)
-	param : '(' type . ')'  (26)
-	param : '(' type . ID  (27)
-
-	ID  shift 144
-	')'  shift 145
-	.  error
-
-
-state 95
-	inv_fun : ID '(' func_var . ')'  (82)
-	inv_fun : ID '(' func_var . ','  (83)
-
-	','  shift 146
-	')'  shift 147
-	.  error
-
-
-state 96
-	lst_var : ID . ';' lst_var  (14)
-	lst_var : ID . error lst_var  (16)
-	lst_var : ID .  (17)
-	func : ID . param func_body  (19)
-	func : ID . type func_body  (21)
-	func : ID . type param  (22)
-	param : type ID . ')'  (24)
-	inv_fun : ID . '(' func_var ')'  (82)
-	inv_fun : ID . '(' func_var ','  (83)
-	asig : ID . ASIG expr ','  (89)
-	asig : ID . expr ','  (91)
-	asig : ID . ASIG ','  (92)
-	asig : ID . ASIG expr  (93)
-
-	error  shift 47
-	ASIG  shift 48
-	USINTEGER  shift 6
-	LINTEGER  shift 7
-	ID  shift 26
-	CTE  shift 27
-	'-'  shift 28
-	';'  shift 49
-	'('  shift 50
-	')'  shift 148
-	','  reduce 17
-
-	type  goto 51
-	param  goto 52
-	expr  goto 53
-	inv_fun  goto 30
-	term  goto 31
-	fact  goto 32
-
-
-state 97
-	param : '(' . type ID ')'  (23)
-	param : '(' . ID ')'  (25)
-	param : '(' . type ')'  (26)
-	param : '(' . type ID  (27)
-	s_cond : '(' . cond ')' ctrl_blck ELSE ctrl_blck ENDIF ','  (45)
-	s_cond : '(' . cond ')' ctrl_blck ENDIF ','  (46)
-	prt : '(' . STRING ')' ','  (67)
-
-	USINTEGER  shift 6
-	LINTEGER  shift 7
-	ID  shift 149
-	CTE  shift 27
-	STRING  shift 56
-	'-'  shift 28
-	'='  shift 34
-	'<'  shift 35
-	'>'  shift 36
-	"MEN_IG"  shift 37
-	"MAY_IG"  shift 38
-	"DIST"  shift 39
-	.  error
-
-	type  goto 94
-	expr  goto 40
-	inv_fun  goto 30
-	cond  goto 57
-	comp  goto 42
-	term  goto 31
-	fact  goto 32
-
-
-state 98
+state 66
 	func_body : '{' . sent ret '}'  (28)
 	func_body : '{' . ret '}'  (29)
 	func_body : '{' . sent ret error ','  (31)
 	func_body : '{' . sent '}'  (32)
+	func_body : '{' . '}'  (33)
 
 	error  shift 1
 	ASIG  shift 2
@@ -1447,12 +957,13 @@ state 98
 	USINTEGER  shift 6
 	LINTEGER  shift 7
 	ID  shift 8
-	RETURN  shift 150
+	RETURN  shift 104
 	';'  shift 9
-	'('  shift 151
+	'('  shift 105
+	'}'  shift 106
 	.  error
 
-	sent  goto 152
+	sent  goto 107
 	decl  goto 13
 	exec  goto 14
 	asig  goto 15
@@ -1460,20 +971,21 @@ state 98
 	func  goto 17
 	type  goto 18
 	lst_var  goto 19
-	ret  goto 153
-	s_cond  goto 20
-	ctrl  goto 21
-	prt  goto 22
-	inv_fun  goto 23
+	func_head  goto 20
+	ret  goto 108
+	s_cond  goto 21
+	ctrl  goto 22
+	prt  goto 23
+	inv_fun  goto 24
+	while  goto 25
 
 
-state 99
+state 67
 	sent : sent . decl  (2)
 	sent : sent . exec  (3)
 	sent : sent . asig  (4)
 	func_body : sent . ret '}'  (30)
 
-	error  shift 58
 	ASIG  shift 2
 	IF  shift 3
 	PRINT  shift 4
@@ -1481,638 +993,476 @@ state 99
 	USINTEGER  shift 6
 	LINTEGER  shift 7
 	ID  shift 8
-	RETURN  shift 150
+	RETURN  shift 104
 	';'  shift 9
-	'('  shift 151
+	'('  shift 105
 	.  error
 
-	decl  goto 59
-	exec  goto 60
-	asig  goto 61
+	decl  goto 57
+	exec  goto 58
+	asig  goto 59
 	var  goto 16
 	func  goto 17
 	type  goto 18
 	lst_var  goto 19
-	ret  goto 154
-	s_cond  goto 20
-	ctrl  goto 21
-	prt  goto 22
-	inv_fun  goto 23
+	func_head  goto 20
+	ret  goto 109
+	s_cond  goto 21
+	ctrl  goto 22
+	prt  goto 23
+	inv_fun  goto 24
+	while  goto 25
 
 
-state 100
-	var : type . lst_var ','  (11)
-	var : type . error ','  (13)
-	func : type . ID param func_body  (18)
-	func : type . param func_body  (20)
-	param : type . ID ')'  (24)
+state 68
+	func : func_head func_body .  (18)
 
-	error  shift 62
-	USINTEGER  shift 6
-	LINTEGER  shift 7
-	ID  shift 155
-	';'  shift 9
-	'('  shift 64
+	.  reduce 18
+
+
+state 69
+	exec : inv_fun ',' .  (43)
+
+	.  reduce 43
+
+
+state 70
+	ctrl : while '(' . cond ')' ctrl_blck  (62)
+	ctrl : while '(' . cond error ctrl_blck  (64)
+	ctrl : while '(' . cond ')' error ','  (65)
+
+	ID  shift 27
+	CTE  shift 28
+	'-'  shift 29
+	'='  shift 35
+	'<'  shift 36
+	'>'  shift 37
+	"MEN_IG"  shift 38
+	"MAY_IG"  shift 39
+	"DIST"  shift 40
 	.  error
 
-	type  goto 65
-	lst_var  goto 66
-	param  goto 67
+	expr  goto 41
+	inv_fun  goto 31
+	cond  goto 110
+	comp  goto 43
+	term  goto 32
+	fact  goto 33
 
 
-state 101
-	func : ID type param .  (22)
+state 71
+	ctrl : while cond . ')' ctrl_blck  (63)
 
-	.  reduce 22
-
-
-state 102
-	func : ID type func_body .  (21)
-
-	.  reduce 21
+	')'  shift 111
+	.  error
 
 
-state 103
-	func : ID param func_body .  (19)
+state 72
+	inv_fun : ID '(' . func_var ')'  (83)
+	inv_fun : ID '(' . func_var ','  (84)
 
-	.  reduce 19
+	error  shift 91
+	ID  shift 112
+	.  error
+
+	func_var  goto 95
 
 
-state 104
-	asig : ID expr ',' .  (91)
+state 73
+	fact : '-' CTE .  (110)
+
+	.  reduce 110
+
+
+state 74
+	expr : expr '+' . expr  (95)
+
+	ID  shift 27
+	CTE  shift 28
+	'-'  shift 29
+	.  error
+
+	expr  goto 113
+	inv_fun  goto 31
+	term  goto 32
+	fact  goto 33
+
+
+state 75
+	expr : expr '-' . expr  (96)
+
+	ID  shift 27
+	CTE  shift 28
+	'-'  shift 29
+	.  error
+
+	expr  goto 114
+	inv_fun  goto 31
+	term  goto 32
+	fact  goto 33
+
+
+state 76
+	asig : ASIG expr ',' .  (91)
 
 	.  reduce 91
 
 
-state 105
-	prt : '(' STRING ')' . ','  (67)
+state 77
+	term : term '*' . fact  (98)
 
-	','  shift 156
+	ID  shift 27
+	CTE  shift 28
+	'-'  shift 29
 	.  error
 
+	inv_fun  goto 31
+	fact  goto 115
 
-state 106
-	s_cond : '(' cond ')' . ctrl_blck ELSE ctrl_blck ENDIF ','  (45)
-	s_cond : '(' cond ')' . ctrl_blck ENDIF ','  (46)
 
-	error  shift 58
+state 78
+	term : term '/' . fact  (99)
+
+	ID  shift 27
+	CTE  shift 28
+	'-'  shift 29
+	.  error
+
+	inv_fun  goto 31
+	fact  goto 116
+
+
+state 79
+	s_cond : IF '(' ')' . ctrl_blck ELSE ctrl_blck ENDIF ','  (49)
+	s_cond : IF '(' ')' . ctrl_blck ENDIF  (58)
+
 	ASIG  shift 2
 	IF  shift 3
 	PRINT  shift 4
 	WHILE  shift 5
-	ID  shift 119
+	ID  shift 117
 	'('  shift 10
-	'{'  shift 120
+	'{'  shift 118
 	.  error
 
-	exec  goto 121
-	asig  goto 122
-	s_cond  goto 20
-	ctrl  goto 21
-	prt  goto 22
-	inv_fun  goto 23
-	ctrl_blck  goto 157
+	exec  goto 119
+	asig  goto 120
+	s_cond  goto 21
+	ctrl  goto 22
+	prt  goto 23
+	inv_fun  goto 24
+	ctrl_blck  goto 121
+	while  goto 25
 
 
-state 107
+state 80
+	s_cond : IF '(' cond . ')' ctrl_blck ELSE ctrl_blck ENDIF ','  (44)
+	s_cond : IF '(' cond . ')' ctrl_blck ENDIF ','  (45)
+	s_cond : IF '(' cond . error ctrl_blck ELSE ctrl_blck ENDIF ','  (50)
+	s_cond : IF '(' cond . ')' ELSE ctrl_blck ENDIF ','  (51)
+	s_cond : IF '(' cond . ')' ctrl_blck ctrl_blck ENDIF ','  (52)
+	s_cond : IF '(' cond . ')' ctrl_blck ELSE ENDIF ','  (53)
+	s_cond : IF '(' cond . ')' ctrl_blck ELSE ctrl_blck error ','  (54)
+	s_cond : IF '(' cond . ')' ctrl_blck ELSE ctrl_blck ENDIF  (55)
+	s_cond : IF '(' cond . ')' ctrl_blck ENDIF  (56)
+	s_cond : IF '(' cond . error ctrl_blck ENDIF  (59)
+	s_cond : IF '(' cond . ')' ctrl_blck error ','  (60)
+	s_cond : IF '(' cond . ')' ENDIF  (61)
+
+	error  shift 122
+	')'  shift 123
+	.  error
+
+
+state 81
+	cond : expr comp . expr  (73)
+	cond : expr comp .  (75)
+
+	ID  shift 27
+	CTE  shift 28
+	'-'  shift 29
+	error  reduce 75
+	')'  reduce 75
+
+	expr  goto 124
+	inv_fun  goto 31
+	term  goto 32
+	fact  goto 33
+
+
+state 82
+	s_cond : IF cond ')' . ctrl_blck ELSE ctrl_blck ENDIF ','  (48)
+	s_cond : IF cond ')' . ctrl_blck ENDIF  (57)
+
+	ASIG  shift 2
+	IF  shift 3
+	PRINT  shift 4
+	WHILE  shift 5
+	ID  shift 117
+	'('  shift 10
+	'{'  shift 118
+	.  error
+
+	exec  goto 119
+	asig  goto 120
+	s_cond  goto 21
+	ctrl  goto 22
+	prt  goto 23
+	inv_fun  goto 24
+	ctrl_blck  goto 125
+	while  goto 25
+
+
+state 83
+	cond : comp expr .  (74)
+	expr : expr . '+' expr  (95)
+	expr : expr . '-' expr  (96)
+
+	'+'  shift 74
+	'-'  shift 75
+	error  reduce 74
+	')'  reduce 74
+
+
+state 84
+	prt : PRINT STRING ')' . ','  (69)
+
+	','  shift 126
+	.  error
+
+
+state 85
+	prt : PRINT '(' STRING . ')' ','  (67)
+	prt : PRINT '(' STRING . ','  (70)
+	prt : PRINT '(' STRING . ')'  (72)
+
+	','  shift 127
+	')'  shift 128
+	.  error
+
+
+state 86
+	prt : PRINT '(' ')' . ','  (71)
+
+	','  shift 129
+	.  error
+
+
+state 87
+	lst_var : ID error lst_var .  (16)
+
+	.  reduce 16
+
+
+state 88
+	asig : ID ASIG ',' .  (93)
+
+	.  reduce 93
+
+
+state 89
+	asig : ID ASIG expr . ','  (90)
+	asig : ID ASIG expr .  (94)
+	expr : expr . '+' expr  (95)
+	expr : expr . '-' expr  (96)
+
+	'+'  shift 74
+	'-'  shift 75
+	','  shift 130
+	$end  reduce 94
+	error  reduce 94
+	ASIG  reduce 94
+	IF  reduce 94
+	ENDIF  reduce 94
+	ELSE  reduce 94
+	PRINT  reduce 94
+	WHILE  reduce 94
+	USINTEGER  reduce 94
+	LINTEGER  reduce 94
+	ID  reduce 94
+	RETURN  reduce 94
+	';'  reduce 94
+	'('  reduce 94
+	'{'  reduce 94
+	'}'  reduce 94
+
+
+state 90
+	lst_var : ID ';' lst_var .  (14)
+
+	.  reduce 14
+
+
+state 91
+	func_var : error . ','  (86)
+	func_var : error . ';' lst_perm  (87)
+
+	','  shift 131
+	';'  shift 132
+	.  error
+
+
+state 92
+	param : '(' ID . ')'  (24)
+	func_var : ID . ';' lst_perm  (85)
+	func_var : ID . lst_perm  (88)
+	func_var : ID . ';'  (89)
+
+	READONLY  shift 133
+	WRITE  shift 134
+	PASS  shift 135
+	';'  shift 136
+	')'  shift 137
+	.  error
+
+	lst_perm  goto 138
+
+
+state 93
+	param : '(' ')' .  (27)
+
+	.  reduce 27
+
+
+state 94
+	param : '(' type . ID ')'  (22)
+	param : '(' type . ')'  (25)
+	param : '(' type . ID  (26)
+
+	ID  shift 139
+	')'  shift 140
+	.  error
+
+
+state 95
+	inv_fun : ID '(' func_var . ')'  (83)
+	inv_fun : ID '(' func_var . ','  (84)
+
+	','  shift 141
+	')'  shift 142
+	.  error
+
+
+state 96
+	param : type ID . ')'  (23)
+
+	')'  shift 143
+	.  error
+
+
+state 97
+	asig : ID expr ',' .  (92)
+
+	.  reduce 92
+
+
+state 98
+	prt : '(' STRING ')' . ','  (68)
+
+	','  shift 144
+	.  error
+
+
+state 99
+	s_cond : '(' cond ')' . ctrl_blck ELSE ctrl_blck ENDIF ','  (46)
+	s_cond : '(' cond ')' . ctrl_blck ENDIF ','  (47)
+
+	ASIG  shift 2
+	IF  shift 3
+	PRINT  shift 4
+	WHILE  shift 5
+	ID  shift 117
+	'('  shift 10
+	'{'  shift 118
+	.  error
+
+	exec  goto 119
+	asig  goto 120
+	s_cond  goto 21
+	ctrl  goto 22
+	prt  goto 23
+	inv_fun  goto 24
+	ctrl_blck  goto 145
+	while  goto 25
+
+
+state 100
 	var : type error ',' .  (13)
 
 	.  reduce 13
 
 
-state 108
-	func : type ID param . func_body  (18)
+state 101
+	func_head : type ID param .  (19)
 
-	error  shift 1
-	ASIG  shift 2
-	IF  shift 3
-	PRINT  shift 4
-	WHILE  shift 5
-	USINTEGER  shift 6
-	LINTEGER  shift 7
-	ID  shift 8
-	';'  shift 9
-	'('  shift 10
-	'{'  shift 98
-	.  error
-
-	sent  goto 99
-	decl  goto 13
-	exec  goto 14
-	asig  goto 15
-	var  goto 16
-	func  goto 17
-	type  goto 18
-	lst_var  goto 19
-	func_body  goto 158
-	s_cond  goto 20
-	ctrl  goto 21
-	prt  goto 22
-	inv_fun  goto 23
+	.  reduce 19
 
 
-state 109
-	param : '(' ID . ')'  (25)
+state 102
+	param : '(' ID . ')'  (24)
 
-	')'  shift 142
+	')'  shift 137
 	.  error
 
 
-state 110
-	param : type ID . ')'  (24)
-
-	')'  shift 148
-	.  error
-
-
-state 111
+state 103
 	var : type lst_var ',' .  (11)
 
 	.  reduce 11
 
 
-state 112
-	func : type param func_body .  (20)
+state 104
+	ret : RETURN . '(' expr ')' ','  (34)
+	ret : RETURN . expr ')' ','  (36)
+	ret : RETURN . '(' ')' ','  (37)
+	ret : RETURN . '(' expr ','  (38)
+	ret : RETURN . '(' expr ')'  (39)
 
-	.  reduce 20
-
-
-state 113
-	ctrl : error '(' cond ')' . ctrl_blck  (62)
-
-	error  shift 58
-	ASIG  shift 2
-	IF  shift 3
-	PRINT  shift 4
-	WHILE  shift 5
-	ID  shift 119
-	'('  shift 10
-	'{'  shift 120
+	ID  shift 27
+	CTE  shift 28
+	'-'  shift 29
+	'('  shift 146
 	.  error
 
-	exec  goto 121
-	asig  goto 122
-	s_cond  goto 20
-	ctrl  goto 21
-	prt  goto 22
-	inv_fun  goto 23
-	ctrl_blck  goto 159
+	expr  goto 147
+	inv_fun  goto 31
+	term  goto 32
+	fact  goto 33
 
 
-state 114
-	func_var : ID . ';' lst_perm  (84)
-	func_var : ID . lst_perm  (87)
-	func_var : ID . ';'  (88)
+state 105
+	ret : '(' . expr ')' ','  (35)
+	s_cond : '(' . cond ')' ctrl_blck ELSE ctrl_blck ENDIF ','  (46)
+	s_cond : '(' . cond ')' ctrl_blck ENDIF ','  (47)
+	prt : '(' . STRING ')' ','  (68)
 
-	READONLY  shift 138
-	WRITE  shift 139
-	PASS  shift 140
-	';'  shift 141
+	ID  shift 27
+	CTE  shift 28
+	STRING  shift 55
+	'-'  shift 29
+	'='  shift 35
+	'<'  shift 36
+	'>'  shift 37
+	"MEN_IG"  shift 38
+	"MAY_IG"  shift 39
+	"DIST"  shift 40
 	.  error
 
-	lst_perm  goto 143
+	expr  goto 148
+	inv_fun  goto 31
+	cond  goto 56
+	comp  goto 43
+	term  goto 32
+	fact  goto 33
 
 
-state 115
-	expr : expr . '+' expr  (94)
-	expr : expr '+' expr .  (94)
-	expr : expr . '-' expr  (95)
+state 106
+	func_body : '{' '}' .  (33)
 
-	.  reduce 94
+	.  reduce 33
 
 
-state 116
-	expr : expr . '+' expr  (94)
-	expr : expr . '-' expr  (95)
-	expr : expr '-' expr .  (95)
-
-	.  reduce 95
-
-
-state 117
-	term : term '*' fact .  (97)
-
-	.  reduce 97
-
-
-state 118
-	term : term '/' fact .  (98)
-
-	.  reduce 98
-
-
-state 119
-	inv_fun : ID . '(' func_var ')'  (82)
-	inv_fun : ID . '(' func_var ','  (83)
-	asig : ID . ASIG expr ','  (89)
-	asig : ID . expr ','  (91)
-	asig : ID . ASIG ','  (92)
-	asig : ID . ASIG expr  (93)
-
-	ASIG  shift 48
-	ID  shift 26
-	CTE  shift 27
-	'-'  shift 28
-	'('  shift 71
-	.  error
-
-	expr  goto 53
-	inv_fun  goto 30
-	term  goto 31
-	fact  goto 32
-
-
-state 120
-	ctrl_blck : '{' . ctrl_sent '}'  (77)
-
-	error  shift 58
-	ASIG  shift 2
-	IF  shift 3
-	PRINT  shift 4
-	WHILE  shift 5
-	ID  shift 119
-	'('  shift 10
-	.  error
-
-	exec  goto 160
-	asig  goto 161
-	s_cond  goto 20
-	ctrl  goto 21
-	prt  goto 22
-	inv_fun  goto 23
-	ctrl_sent  goto 162
-
-
-state 121
-	ctrl_blck : exec .  (75)
-
-	.  reduce 75
-
-
-state 122
-	ctrl_blck : asig .  (76)
-
-	.  reduce 76
-
-
-state 123
-	s_cond : IF '(' ')' ctrl_blck . ELSE ctrl_blck ENDIF ','  (48)
-	s_cond : IF '(' ')' ctrl_blck . ENDIF  (57)
-
-	ENDIF  shift 163
-	ELSE  shift 164
-	.  error
-
-
-state 124
-	s_cond : IF '(' cond error . ctrl_blck ELSE ctrl_blck ENDIF ','  (49)
-	s_cond : IF '(' cond error . ctrl_blck ENDIF  (58)
-
-	error  shift 58
-	ASIG  shift 2
-	IF  shift 3
-	PRINT  shift 4
-	WHILE  shift 5
-	ID  shift 119
-	'('  shift 10
-	'{'  shift 120
-	.  error
-
-	exec  goto 121
-	asig  goto 122
-	s_cond  goto 20
-	ctrl  goto 21
-	prt  goto 22
-	inv_fun  goto 23
-	ctrl_blck  goto 165
-
-
-state 125
-	s_cond : IF '(' cond ')' . ctrl_blck ELSE ctrl_blck ENDIF ','  (43)
-	s_cond : IF '(' cond ')' . ctrl_blck ENDIF ','  (44)
-	s_cond : IF '(' cond ')' . ELSE ctrl_blck ENDIF ','  (50)
-	s_cond : IF '(' cond ')' . ctrl_blck ctrl_blck ENDIF ','  (51)
-	s_cond : IF '(' cond ')' . ctrl_blck ELSE ENDIF ','  (52)
-	s_cond : IF '(' cond ')' . ctrl_blck ELSE ctrl_blck error ','  (53)
-	s_cond : IF '(' cond ')' . ctrl_blck ELSE ctrl_blck ENDIF  (54)
-	s_cond : IF '(' cond ')' . ctrl_blck ENDIF  (55)
-	s_cond : IF '(' cond ')' . ctrl_blck error ','  (59)
-	s_cond : IF '(' cond ')' . ENDIF  (60)
-
-	error  shift 58
-	ASIG  shift 2
-	IF  shift 3
-	ENDIF  shift 166
-	ELSE  shift 167
-	PRINT  shift 4
-	WHILE  shift 5
-	ID  shift 119
-	'('  shift 10
-	'{'  shift 120
-	.  error
-
-	exec  goto 121
-	asig  goto 122
-	s_cond  goto 20
-	ctrl  goto 21
-	prt  goto 22
-	inv_fun  goto 23
-	ctrl_blck  goto 168
-
-
-state 126
-	cond : expr comp expr .  (72)
-	expr : expr . '+' expr  (94)
-	expr : expr . '-' expr  (95)
-
-	'+'  shift 73
-	'-'  shift 74
-	error  reduce 72
-	')'  reduce 72
-
-
-state 127
-	s_cond : IF cond ')' ctrl_blck . ELSE ctrl_blck ENDIF ','  (47)
-	s_cond : IF cond ')' ctrl_blck . ENDIF  (56)
-
-	ENDIF  shift 169
-	ELSE  shift 170
-	.  error
-
-
-state 128
-	prt : PRINT STRING ')' ',' .  (68)
-
-	.  reduce 68
-
-
-state 129
-	prt : PRINT '(' STRING ',' .  (69)
-
-	.  reduce 69
-
-
-state 130
-	prt : PRINT '(' STRING ')' . ','  (66)
-	prt : PRINT '(' STRING ')' .  (71)
-
-	','  shift 171
-	$end  reduce 71
-	error  reduce 71
-	ASIG  reduce 71
-	IF  reduce 71
-	ENDIF  reduce 71
-	ELSE  reduce 71
-	PRINT  reduce 71
-	WHILE  reduce 71
-	USINTEGER  reduce 71
-	LINTEGER  reduce 71
-	ID  reduce 71
-	RETURN  reduce 71
-	';'  reduce 71
-	'('  reduce 71
-	'{'  reduce 71
-	'}'  reduce 71
-
-
-state 131
-	prt : PRINT '(' ')' ',' .  (70)
-
-	.  reduce 70
-
-
-state 132
-	ctrl : WHILE '(' cond error . ctrl_blck  (64)
-
-	error  shift 58
-	ASIG  shift 2
-	IF  shift 3
-	PRINT  shift 4
-	WHILE  shift 5
-	ID  shift 119
-	'('  shift 10
-	'{'  shift 120
-	.  error
-
-	exec  goto 121
-	asig  goto 122
-	s_cond  goto 20
-	ctrl  goto 21
-	prt  goto 22
-	inv_fun  goto 23
-	ctrl_blck  goto 172
-
-
-state 133
-	ctrl : WHILE '(' cond ')' . ctrl_blck  (61)
-	ctrl : WHILE '(' cond ')' . error ','  (65)
-
-	error  shift 173
-	ASIG  shift 2
-	IF  shift 3
-	PRINT  shift 4
-	WHILE  shift 5
-	ID  shift 119
-	'('  shift 10
-	'{'  shift 120
-	.  error
-
-	exec  goto 121
-	asig  goto 122
-	s_cond  goto 20
-	ctrl  goto 21
-	prt  goto 22
-	inv_fun  goto 23
-	ctrl_blck  goto 174
-
-
-state 134
-	ctrl : WHILE cond ')' ctrl_blck .  (63)
-
-	.  reduce 63
-
-
-state 135
-	asig : ID ASIG expr ',' .  (89)
-
-	.  reduce 89
-
-
-state 136
-	func_var : error ',' .  (85)
-
-	.  reduce 85
-
-
-state 137
-	func_var : error ';' . lst_perm  (86)
-
-	READONLY  shift 138
-	WRITE  shift 139
-	PASS  shift 140
-	.  error
-
-	lst_perm  goto 175
-
-
-state 138
-	lst_perm : READONLY .  (100)
-
-	.  reduce 100
-
-
-state 139
-	lst_perm : WRITE .  (101)
-	lst_perm : WRITE . ';' PASS  (103)
-	lst_perm : WRITE . ';' error ','  (104)
-
-	';'  shift 176
-	','  reduce 101
-	')'  reduce 101
-
-
-state 140
-	lst_perm : PASS .  (102)
-
-	.  reduce 102
-
-
-state 141
-	func_var : ID ';' . lst_perm  (84)
-	func_var : ID ';' .  (88)
-
-	READONLY  shift 138
-	WRITE  shift 139
-	PASS  shift 140
-	','  reduce 88
-	')'  reduce 88
-
-	lst_perm  goto 177
-
-
-state 142
-	param : '(' ID ')' .  (25)
-
-	.  reduce 25
-
-
-state 143
-	func_var : ID lst_perm .  (87)
-
-	.  reduce 87
-
-
-state 144
-	param : '(' type ID . ')'  (23)
-	param : '(' type ID .  (27)
-
-	')'  shift 178
-	$end  reduce 27
-	error  reduce 27
-	ASIG  reduce 27
-	IF  reduce 27
-	PRINT  reduce 27
-	WHILE  reduce 27
-	USINTEGER  reduce 27
-	LINTEGER  reduce 27
-	ID  reduce 27
-	RETURN  reduce 27
-	';'  reduce 27
-	'('  reduce 27
-	'{'  reduce 27
-	'}'  reduce 27
-
-
-state 145
-	param : '(' type ')' .  (26)
-
-	.  reduce 26
-
-
-state 146
-	inv_fun : ID '(' func_var ',' .  (83)
-
-	.  reduce 83
-
-
-state 147
-	inv_fun : ID '(' func_var ')' .  (82)
-
-	.  reduce 82
-
-
-state 148
-	param : type ID ')' .  (24)
-
-	.  reduce 24
-
-
-state 149
-	param : '(' ID . ')'  (25)
-	inv_fun : ID . '(' func_var ')'  (82)
-	inv_fun : ID . '(' func_var ','  (83)
-	fact : ID .  (107)
-
-	'('  shift 71
-	')'  shift 142
-	'+'  reduce 107
-	'-'  reduce 107
-	'*'  reduce 107
-	'/'  reduce 107
-	'='  reduce 107
-	'<'  reduce 107
-	'>'  reduce 107
-	"MEN_IG"  reduce 107
-	"MAY_IG"  reduce 107
-	"DIST"  reduce 107
-
-
-state 150
-	ret : RETURN . '(' expr ')' ','  (33)
-	ret : RETURN . expr ')' ','  (35)
-	ret : RETURN . '(' ')' ','  (36)
-	ret : RETURN . '(' expr ','  (37)
-	ret : RETURN . '(' expr ')'  (38)
-
-	ID  shift 26
-	CTE  shift 27
-	'-'  shift 28
-	'('  shift 179
-	.  error
-
-	expr  goto 180
-	inv_fun  goto 30
-	term  goto 31
-	fact  goto 32
-
-
-state 151
-	ret : '(' . expr ')' ','  (34)
-	s_cond : '(' . cond ')' ctrl_blck ELSE ctrl_blck ENDIF ','  (45)
-	s_cond : '(' . cond ')' ctrl_blck ENDIF ','  (46)
-	prt : '(' . STRING ')' ','  (67)
-
-	ID  shift 26
-	CTE  shift 27
-	STRING  shift 56
-	'-'  shift 28
-	'='  shift 34
-	'<'  shift 35
-	'>'  shift 36
-	"MEN_IG"  shift 37
-	"MAY_IG"  shift 38
-	"DIST"  shift 39
-	.  error
-
-	expr  goto 181
-	inv_fun  goto 30
-	cond  goto 57
-	comp  goto 42
-	term  goto 31
-	fact  goto 32
-
-
-state 152
+state 107
 	sent : sent . decl  (2)
 	sent : sent . exec  (3)
 	sent : sent . asig  (4)
@@ -2120,7 +1470,6 @@ state 152
 	func_body : '{' sent . ret error ','  (31)
 	func_body : '{' sent . '}'  (32)
 
-	error  shift 58
 	ASIG  shift 2
 	IF  shift 3
 	PRINT  shift 4
@@ -2128,119 +1477,555 @@ state 152
 	USINTEGER  shift 6
 	LINTEGER  shift 7
 	ID  shift 8
-	RETURN  shift 150
+	RETURN  shift 104
 	';'  shift 9
-	'('  shift 151
-	'}'  shift 182
+	'('  shift 105
+	'}'  shift 149
 	.  error
 
-	decl  goto 59
-	exec  goto 60
-	asig  goto 61
+	decl  goto 57
+	exec  goto 58
+	asig  goto 59
 	var  goto 16
 	func  goto 17
 	type  goto 18
 	lst_var  goto 19
-	ret  goto 183
-	s_cond  goto 20
-	ctrl  goto 21
-	prt  goto 22
-	inv_fun  goto 23
+	func_head  goto 20
+	ret  goto 150
+	s_cond  goto 21
+	ctrl  goto 22
+	prt  goto 23
+	inv_fun  goto 24
+	while  goto 25
+
+
+state 108
+	func_body : '{' ret . '}'  (29)
+
+	'}'  shift 151
+	.  error
+
+
+state 109
+	func_body : sent ret . '}'  (30)
+
+	'}'  shift 152
+	.  error
+
+
+state 110
+	ctrl : while '(' cond . ')' ctrl_blck  (62)
+	ctrl : while '(' cond . error ctrl_blck  (64)
+	ctrl : while '(' cond . ')' error ','  (65)
+
+	error  shift 153
+	')'  shift 154
+	.  error
+
+
+state 111
+	ctrl : while cond ')' . ctrl_blck  (63)
+
+	ASIG  shift 2
+	IF  shift 3
+	PRINT  shift 4
+	WHILE  shift 5
+	ID  shift 117
+	'('  shift 10
+	'{'  shift 118
+	.  error
+
+	exec  goto 119
+	asig  goto 120
+	s_cond  goto 21
+	ctrl  goto 22
+	prt  goto 23
+	inv_fun  goto 24
+	ctrl_blck  goto 155
+	while  goto 25
+
+
+state 112
+	func_var : ID . ';' lst_perm  (85)
+	func_var : ID . lst_perm  (88)
+	func_var : ID . ';'  (89)
+
+	READONLY  shift 133
+	WRITE  shift 134
+	PASS  shift 135
+	';'  shift 136
+	.  error
+
+	lst_perm  goto 138
+
+
+state 113
+	expr : expr . '+' expr  (95)
+	expr : expr '+' expr .  (95)
+	expr : expr . '-' expr  (96)
+
+	.  reduce 95
+
+
+state 114
+	expr : expr . '+' expr  (95)
+	expr : expr . '-' expr  (96)
+	expr : expr '-' expr .  (96)
+
+	.  reduce 96
+
+
+state 115
+	term : term '*' fact .  (98)
+
+	.  reduce 98
+
+
+state 116
+	term : term '/' fact .  (99)
+
+	.  reduce 99
+
+
+state 117
+	inv_fun : ID . '(' func_var ')'  (83)
+	inv_fun : ID . '(' func_var ','  (84)
+	asig : ID . ASIG expr ','  (90)
+	asig : ID . expr ','  (92)
+	asig : ID . ASIG ','  (93)
+	asig : ID . ASIG expr  (94)
+
+	ASIG  shift 47
+	ID  shift 27
+	CTE  shift 28
+	'-'  shift 29
+	'('  shift 72
+	.  error
+
+	expr  goto 52
+	inv_fun  goto 31
+	term  goto 32
+	fact  goto 33
+
+
+state 118
+	ctrl_blck : '{' . ctrl_sent '}'  (78)
+
+	ASIG  shift 2
+	IF  shift 3
+	PRINT  shift 4
+	WHILE  shift 5
+	ID  shift 117
+	'('  shift 10
+	.  error
+
+	exec  goto 156
+	asig  goto 157
+	s_cond  goto 21
+	ctrl  goto 22
+	prt  goto 23
+	inv_fun  goto 24
+	while  goto 25
+	ctrl_sent  goto 158
+
+
+state 119
+	ctrl_blck : exec .  (76)
+
+	.  reduce 76
+
+
+state 120
+	ctrl_blck : asig .  (77)
+
+	.  reduce 77
+
+
+state 121
+	s_cond : IF '(' ')' ctrl_blck . ELSE ctrl_blck ENDIF ','  (49)
+	s_cond : IF '(' ')' ctrl_blck . ENDIF  (58)
+
+	ENDIF  shift 159
+	ELSE  shift 160
+	.  error
+
+
+state 122
+	s_cond : IF '(' cond error . ctrl_blck ELSE ctrl_blck ENDIF ','  (50)
+	s_cond : IF '(' cond error . ctrl_blck ENDIF  (59)
+
+	ASIG  shift 2
+	IF  shift 3
+	PRINT  shift 4
+	WHILE  shift 5
+	ID  shift 117
+	'('  shift 10
+	'{'  shift 118
+	.  error
+
+	exec  goto 119
+	asig  goto 120
+	s_cond  goto 21
+	ctrl  goto 22
+	prt  goto 23
+	inv_fun  goto 24
+	ctrl_blck  goto 161
+	while  goto 25
+
+
+state 123
+	s_cond : IF '(' cond ')' . ctrl_blck ELSE ctrl_blck ENDIF ','  (44)
+	s_cond : IF '(' cond ')' . ctrl_blck ENDIF ','  (45)
+	s_cond : IF '(' cond ')' . ELSE ctrl_blck ENDIF ','  (51)
+	s_cond : IF '(' cond ')' . ctrl_blck ctrl_blck ENDIF ','  (52)
+	s_cond : IF '(' cond ')' . ctrl_blck ELSE ENDIF ','  (53)
+	s_cond : IF '(' cond ')' . ctrl_blck ELSE ctrl_blck error ','  (54)
+	s_cond : IF '(' cond ')' . ctrl_blck ELSE ctrl_blck ENDIF  (55)
+	s_cond : IF '(' cond ')' . ctrl_blck ENDIF  (56)
+	s_cond : IF '(' cond ')' . ctrl_blck error ','  (60)
+	s_cond : IF '(' cond ')' . ENDIF  (61)
+
+	ASIG  shift 2
+	IF  shift 3
+	ENDIF  shift 162
+	ELSE  shift 163
+	PRINT  shift 4
+	WHILE  shift 5
+	ID  shift 117
+	'('  shift 10
+	'{'  shift 118
+	.  error
+
+	exec  goto 119
+	asig  goto 120
+	s_cond  goto 21
+	ctrl  goto 22
+	prt  goto 23
+	inv_fun  goto 24
+	ctrl_blck  goto 164
+	while  goto 25
+
+
+state 124
+	cond : expr comp expr .  (73)
+	expr : expr . '+' expr  (95)
+	expr : expr . '-' expr  (96)
+
+	'+'  shift 74
+	'-'  shift 75
+	error  reduce 73
+	')'  reduce 73
+
+
+state 125
+	s_cond : IF cond ')' ctrl_blck . ELSE ctrl_blck ENDIF ','  (48)
+	s_cond : IF cond ')' ctrl_blck . ENDIF  (57)
+
+	ENDIF  shift 165
+	ELSE  shift 166
+	.  error
+
+
+state 126
+	prt : PRINT STRING ')' ',' .  (69)
+
+	.  reduce 69
+
+
+state 127
+	prt : PRINT '(' STRING ',' .  (70)
+
+	.  reduce 70
+
+
+state 128
+	prt : PRINT '(' STRING ')' . ','  (67)
+	prt : PRINT '(' STRING ')' .  (72)
+
+	','  shift 167
+	$end  reduce 72
+	error  reduce 72
+	ASIG  reduce 72
+	IF  reduce 72
+	ENDIF  reduce 72
+	ELSE  reduce 72
+	PRINT  reduce 72
+	WHILE  reduce 72
+	USINTEGER  reduce 72
+	LINTEGER  reduce 72
+	ID  reduce 72
+	RETURN  reduce 72
+	';'  reduce 72
+	'('  reduce 72
+	'{'  reduce 72
+	'}'  reduce 72
+
+
+state 129
+	prt : PRINT '(' ')' ',' .  (71)
+
+	.  reduce 71
+
+
+state 130
+	asig : ID ASIG expr ',' .  (90)
+
+	.  reduce 90
+
+
+state 131
+	func_var : error ',' .  (86)
+
+	.  reduce 86
+
+
+state 132
+	func_var : error ';' . lst_perm  (87)
+
+	READONLY  shift 133
+	WRITE  shift 134
+	PASS  shift 135
+	.  error
+
+	lst_perm  goto 168
+
+
+state 133
+	lst_perm : READONLY .  (101)
+
+	.  reduce 101
+
+
+state 134
+	lst_perm : WRITE .  (102)
+	lst_perm : WRITE . ';' PASS  (104)
+	lst_perm : WRITE . ';' error ','  (105)
+
+	';'  shift 169
+	','  reduce 102
+	')'  reduce 102
+
+
+state 135
+	lst_perm : PASS .  (103)
+
+	.  reduce 103
+
+
+state 136
+	func_var : ID ';' . lst_perm  (85)
+	func_var : ID ';' .  (89)
+
+	READONLY  shift 133
+	WRITE  shift 134
+	PASS  shift 135
+	','  reduce 89
+	')'  reduce 89
+
+	lst_perm  goto 170
+
+
+state 137
+	param : '(' ID ')' .  (24)
+
+	.  reduce 24
+
+
+state 138
+	func_var : ID lst_perm .  (88)
+
+	.  reduce 88
+
+
+state 139
+	param : '(' type ID . ')'  (22)
+	param : '(' type ID .  (26)
+
+	')'  shift 171
+	error  reduce 26
+	ASIG  reduce 26
+	IF  reduce 26
+	PRINT  reduce 26
+	WHILE  reduce 26
+	USINTEGER  reduce 26
+	LINTEGER  reduce 26
+	ID  reduce 26
+	';'  reduce 26
+	'('  reduce 26
+	'{'  reduce 26
+
+
+state 140
+	param : '(' type ')' .  (25)
+
+	.  reduce 25
+
+
+state 141
+	inv_fun : ID '(' func_var ',' .  (84)
+
+	.  reduce 84
+
+
+state 142
+	inv_fun : ID '(' func_var ')' .  (83)
+
+	.  reduce 83
+
+
+state 143
+	param : type ID ')' .  (23)
+
+	.  reduce 23
+
+
+state 144
+	prt : '(' STRING ')' ',' .  (68)
+
+	.  reduce 68
+
+
+state 145
+	s_cond : '(' cond ')' ctrl_blck . ELSE ctrl_blck ENDIF ','  (46)
+	s_cond : '(' cond ')' ctrl_blck . ENDIF ','  (47)
+
+	ENDIF  shift 172
+	ELSE  shift 173
+	.  error
+
+
+state 146
+	ret : RETURN '(' . expr ')' ','  (34)
+	ret : RETURN '(' . ')' ','  (37)
+	ret : RETURN '(' . expr ','  (38)
+	ret : RETURN '(' . expr ')'  (39)
+
+	ID  shift 27
+	CTE  shift 28
+	'-'  shift 29
+	')'  shift 174
+	.  error
+
+	expr  goto 175
+	inv_fun  goto 31
+	term  goto 32
+	fact  goto 33
+
+
+state 147
+	ret : RETURN expr . ')' ','  (36)
+	expr : expr . '+' expr  (95)
+	expr : expr . '-' expr  (96)
+
+	'+'  shift 74
+	'-'  shift 75
+	')'  shift 176
+	.  error
+
+
+state 148
+	ret : '(' expr . ')' ','  (35)
+	cond : expr . comp expr  (73)
+	cond : expr . comp  (75)
+	expr : expr . '+' expr  (95)
+	expr : expr . '-' expr  (96)
+
+	'+'  shift 74
+	'-'  shift 75
+	')'  shift 177
+	'='  shift 35
+	'<'  shift 36
+	'>'  shift 37
+	"MEN_IG"  shift 38
+	"MAY_IG"  shift 39
+	"DIST"  shift 40
+	.  error
+
+	comp  goto 81
+
+
+state 149
+	func_body : '{' sent '}' .  (32)
+
+	.  reduce 32
+
+
+state 150
+	func_body : '{' sent ret . '}'  (28)
+	func_body : '{' sent ret . error ','  (31)
+
+	error  shift 178
+	'}'  shift 179
+	.  error
+
+
+state 151
+	func_body : '{' ret '}' .  (29)
+
+	.  reduce 29
+
+
+state 152
+	func_body : sent ret '}' .  (30)
+
+	.  reduce 30
 
 
 state 153
-	func_body : '{' ret . '}'  (29)
+	ctrl : while '(' cond error . ctrl_blck  (64)
 
-	'}'  shift 184
-	.  error
-
-
-state 154
-	func_body : sent ret . '}'  (30)
-
-	'}'  shift 185
-	.  error
-
-
-state 155
-	lst_var : ID . ';' lst_var  (14)
-	lst_var : ID . error lst_var  (16)
-	lst_var : ID .  (17)
-	func : type ID . param func_body  (18)
-	param : type ID . ')'  (24)
-
-	error  shift 47
-	USINTEGER  shift 6
-	LINTEGER  shift 7
-	';'  shift 49
-	'('  shift 64
-	')'  shift 148
-	','  reduce 17
-
-	type  goto 65
-	param  goto 108
-
-
-state 156
-	prt : '(' STRING ')' ',' .  (67)
-
-	.  reduce 67
-
-
-state 157
-	s_cond : '(' cond ')' ctrl_blck . ELSE ctrl_blck ENDIF ','  (45)
-	s_cond : '(' cond ')' ctrl_blck . ENDIF ','  (46)
-
-	ENDIF  shift 186
-	ELSE  shift 187
-	.  error
-
-
-state 158
-	func : type ID param func_body .  (18)
-
-	.  reduce 18
-
-
-state 159
-	ctrl : error '(' cond ')' ctrl_blck .  (62)
-
-	.  reduce 62
-
-
-state 160
-	ctrl_sent : exec . sent  (78)
-	ctrl_sent : exec .  (80)
-
-	error  shift 1
 	ASIG  shift 2
 	IF  shift 3
 	PRINT  shift 4
 	WHILE  shift 5
-	USINTEGER  shift 6
-	LINTEGER  shift 7
-	ID  shift 8
-	';'  shift 9
+	ID  shift 117
 	'('  shift 10
-	'}'  reduce 80
+	'{'  shift 118
+	.  error
 
-	sent  goto 188
-	decl  goto 13
-	exec  goto 14
-	asig  goto 15
-	var  goto 16
-	func  goto 17
-	type  goto 18
-	lst_var  goto 19
-	s_cond  goto 20
-	ctrl  goto 21
-	prt  goto 22
-	inv_fun  goto 23
+	exec  goto 119
+	asig  goto 120
+	s_cond  goto 21
+	ctrl  goto 22
+	prt  goto 23
+	inv_fun  goto 24
+	ctrl_blck  goto 180
+	while  goto 25
 
 
-state 161
-	ctrl_sent : asig . sent  (79)
-	ctrl_sent : asig .  (81)
+state 154
+	ctrl : while '(' cond ')' . ctrl_blck  (62)
+	ctrl : while '(' cond ')' . error ','  (65)
+
+	error  shift 181
+	ASIG  shift 2
+	IF  shift 3
+	PRINT  shift 4
+	WHILE  shift 5
+	ID  shift 117
+	'('  shift 10
+	'{'  shift 118
+	.  error
+
+	exec  goto 119
+	asig  goto 120
+	s_cond  goto 21
+	ctrl  goto 22
+	prt  goto 23
+	inv_fun  goto 24
+	ctrl_blck  goto 182
+	while  goto 25
+
+
+state 155
+	ctrl : while cond ')' ctrl_blck .  (63)
+
+	.  reduce 63
+
+
+state 156
+	ctrl_sent : exec . sent  (79)
+	ctrl_sent : exec .  (81)
 
 	error  shift 1
 	ASIG  shift 2
@@ -2254,7 +2039,7 @@ state 161
 	'('  shift 10
 	'}'  reduce 81
 
-	sent  goto 189
+	sent  goto 183
 	decl  goto 13
 	exec  goto 14
 	asig  goto 15
@@ -2262,310 +2047,19 @@ state 161
 	func  goto 17
 	type  goto 18
 	lst_var  goto 19
-	s_cond  goto 20
-	ctrl  goto 21
-	prt  goto 22
-	inv_fun  goto 23
-
-
-state 162
-	ctrl_blck : '{' ctrl_sent . '}'  (77)
-
-	'}'  shift 190
-	.  error
-
-
-state 163
-	s_cond : IF '(' ')' ctrl_blck ENDIF .  (57)
-
-	.  reduce 57
-
-
-state 164
-	s_cond : IF '(' ')' ctrl_blck ELSE . ctrl_blck ENDIF ','  (48)
-
-	error  shift 58
-	ASIG  shift 2
-	IF  shift 3
-	PRINT  shift 4
-	WHILE  shift 5
-	ID  shift 119
-	'('  shift 10
-	'{'  shift 120
-	.  error
-
-	exec  goto 121
-	asig  goto 122
-	s_cond  goto 20
-	ctrl  goto 21
-	prt  goto 22
-	inv_fun  goto 23
-	ctrl_blck  goto 191
-
-
-state 165
-	s_cond : IF '(' cond error ctrl_blck . ELSE ctrl_blck ENDIF ','  (49)
-	s_cond : IF '(' cond error ctrl_blck . ENDIF  (58)
-
-	ENDIF  shift 192
-	ELSE  shift 193
-	.  error
-
-
-state 166
-	s_cond : IF '(' cond ')' ENDIF .  (60)
-
-	.  reduce 60
-
-
-state 167
-	s_cond : IF '(' cond ')' ELSE . ctrl_blck ENDIF ','  (50)
-
-	error  shift 58
-	ASIG  shift 2
-	IF  shift 3
-	PRINT  shift 4
-	WHILE  shift 5
-	ID  shift 119
-	'('  shift 10
-	'{'  shift 120
-	.  error
-
-	exec  goto 121
-	asig  goto 122
-	s_cond  goto 20
-	ctrl  goto 21
-	prt  goto 22
-	inv_fun  goto 23
-	ctrl_blck  goto 194
-
-
-state 168
-	s_cond : IF '(' cond ')' ctrl_blck . ELSE ctrl_blck ENDIF ','  (43)
-	s_cond : IF '(' cond ')' ctrl_blck . ENDIF ','  (44)
-	s_cond : IF '(' cond ')' ctrl_blck . ctrl_blck ENDIF ','  (51)
-	s_cond : IF '(' cond ')' ctrl_blck . ELSE ENDIF ','  (52)
-	s_cond : IF '(' cond ')' ctrl_blck . ELSE ctrl_blck error ','  (53)
-	s_cond : IF '(' cond ')' ctrl_blck . ELSE ctrl_blck ENDIF  (54)
-	s_cond : IF '(' cond ')' ctrl_blck . ENDIF  (55)
-	s_cond : IF '(' cond ')' ctrl_blck . error ','  (59)
-
-	error  shift 195
-	ASIG  shift 2
-	IF  shift 3
-	ENDIF  shift 196
-	ELSE  shift 197
-	PRINT  shift 4
-	WHILE  shift 5
-	ID  shift 119
-	'('  shift 10
-	'{'  shift 120
-	.  error
-
-	exec  goto 121
-	asig  goto 122
-	s_cond  goto 20
-	ctrl  goto 21
-	prt  goto 22
-	inv_fun  goto 23
-	ctrl_blck  goto 198
-
-
-state 169
-	s_cond : IF cond ')' ctrl_blck ENDIF .  (56)
-
-	.  reduce 56
-
-
-state 170
-	s_cond : IF cond ')' ctrl_blck ELSE . ctrl_blck ENDIF ','  (47)
-
-	error  shift 58
-	ASIG  shift 2
-	IF  shift 3
-	PRINT  shift 4
-	WHILE  shift 5
-	ID  shift 119
-	'('  shift 10
-	'{'  shift 120
-	.  error
-
-	exec  goto 121
-	asig  goto 122
-	s_cond  goto 20
-	ctrl  goto 21
-	prt  goto 22
-	inv_fun  goto 23
-	ctrl_blck  goto 199
-
-
-state 171
-	prt : PRINT '(' STRING ')' ',' .  (66)
-
-	.  reduce 66
-
-
-state 172
-	ctrl : WHILE '(' cond error ctrl_blck .  (64)
-
-	.  reduce 64
-
-
-state 173
-	ctrl : error . '(' cond ')' ctrl_blck  (62)
-	ctrl : WHILE '(' cond ')' error . ','  (65)
-
-	','  shift 200
-	'('  shift 25
-	.  error
-
-
-state 174
-	ctrl : WHILE '(' cond ')' ctrl_blck .  (61)
-
-	.  reduce 61
-
-
-state 175
-	func_var : error ';' lst_perm .  (86)
-
-	.  reduce 86
-
-
-state 176
-	lst_perm : WRITE ';' . PASS  (103)
-	lst_perm : WRITE ';' . error ','  (104)
-
-	error  shift 201
-	PASS  shift 202
-	.  error
-
-
-state 177
-	func_var : ID ';' lst_perm .  (84)
-
-	.  reduce 84
-
-
-state 178
-	param : '(' type ID ')' .  (23)
-
-	.  reduce 23
-
-
-state 179
-	ret : RETURN '(' . expr ')' ','  (33)
-	ret : RETURN '(' . ')' ','  (36)
-	ret : RETURN '(' . expr ','  (37)
-	ret : RETURN '(' . expr ')'  (38)
-
-	ID  shift 26
-	CTE  shift 27
-	'-'  shift 28
-	')'  shift 203
-	.  error
-
-	expr  goto 204
-	inv_fun  goto 30
-	term  goto 31
-	fact  goto 32
-
-
-state 180
-	ret : RETURN expr . ')' ','  (35)
-	expr : expr . '+' expr  (94)
-	expr : expr . '-' expr  (95)
-
-	'+'  shift 73
-	'-'  shift 74
-	')'  shift 205
-	.  error
-
-
-state 181
-	ret : '(' expr . ')' ','  (34)
-	cond : expr . comp expr  (72)
-	cond : expr . comp  (74)
-	expr : expr . '+' expr  (94)
-	expr : expr . '-' expr  (95)
-
-	'+'  shift 73
-	'-'  shift 74
-	')'  shift 206
-	'='  shift 34
-	'<'  shift 35
-	'>'  shift 36
-	"MEN_IG"  shift 37
-	"MAY_IG"  shift 38
-	"DIST"  shift 39
-	.  error
-
-	comp  goto 80
-
-
-state 182
-	func_body : '{' sent '}' .  (32)
-
-	.  reduce 32
-
-
-state 183
-	func_body : '{' sent ret . '}'  (28)
-	func_body : '{' sent ret . error ','  (31)
-
-	error  shift 207
-	'}'  shift 208
-	.  error
-
-
-state 184
-	func_body : '{' ret '}' .  (29)
-
-	.  reduce 29
-
-
-state 185
-	func_body : sent ret '}' .  (30)
-
-	.  reduce 30
-
-
-state 186
-	s_cond : '(' cond ')' ctrl_blck ENDIF . ','  (46)
-
-	','  shift 209
-	.  error
-
-
-state 187
-	s_cond : '(' cond ')' ctrl_blck ELSE . ctrl_blck ENDIF ','  (45)
-
-	error  shift 58
-	ASIG  shift 2
-	IF  shift 3
-	PRINT  shift 4
-	WHILE  shift 5
-	ID  shift 119
-	'('  shift 10
-	'{'  shift 120
-	.  error
-
-	exec  goto 121
-	asig  goto 122
-	s_cond  goto 20
-	ctrl  goto 21
-	prt  goto 22
-	inv_fun  goto 23
-	ctrl_blck  goto 210
-
-
-state 188
-	sent : sent . decl  (2)
-	sent : sent . exec  (3)
-	sent : sent . asig  (4)
-	ctrl_sent : exec sent .  (78)
-
-	error  shift 58
+	func_head  goto 20
+	s_cond  goto 21
+	ctrl  goto 22
+	prt  goto 23
+	inv_fun  goto 24
+	while  goto 25
+
+
+state 157
+	ctrl_sent : asig . sent  (80)
+	ctrl_sent : asig .  (82)
+
+	error  shift 1
 	ASIG  shift 2
 	IF  shift 3
 	PRINT  shift 4
@@ -2575,28 +2069,291 @@ state 188
 	ID  shift 8
 	';'  shift 9
 	'('  shift 10
-	'}'  reduce 78
+	'}'  reduce 82
 
-	decl  goto 59
-	exec  goto 60
-	asig  goto 61
+	sent  goto 184
+	decl  goto 13
+	exec  goto 14
+	asig  goto 15
 	var  goto 16
 	func  goto 17
 	type  goto 18
 	lst_var  goto 19
-	s_cond  goto 20
-	ctrl  goto 21
-	prt  goto 22
-	inv_fun  goto 23
+	func_head  goto 20
+	s_cond  goto 21
+	ctrl  goto 22
+	prt  goto 23
+	inv_fun  goto 24
+	while  goto 25
 
 
-state 189
+state 158
+	ctrl_blck : '{' ctrl_sent . '}'  (78)
+
+	'}'  shift 185
+	.  error
+
+
+state 159
+	s_cond : IF '(' ')' ctrl_blck ENDIF .  (58)
+
+	.  reduce 58
+
+
+state 160
+	s_cond : IF '(' ')' ctrl_blck ELSE . ctrl_blck ENDIF ','  (49)
+
+	ASIG  shift 2
+	IF  shift 3
+	PRINT  shift 4
+	WHILE  shift 5
+	ID  shift 117
+	'('  shift 10
+	'{'  shift 118
+	.  error
+
+	exec  goto 119
+	asig  goto 120
+	s_cond  goto 21
+	ctrl  goto 22
+	prt  goto 23
+	inv_fun  goto 24
+	ctrl_blck  goto 186
+	while  goto 25
+
+
+state 161
+	s_cond : IF '(' cond error ctrl_blck . ELSE ctrl_blck ENDIF ','  (50)
+	s_cond : IF '(' cond error ctrl_blck . ENDIF  (59)
+
+	ENDIF  shift 187
+	ELSE  shift 188
+	.  error
+
+
+state 162
+	s_cond : IF '(' cond ')' ENDIF .  (61)
+
+	.  reduce 61
+
+
+state 163
+	s_cond : IF '(' cond ')' ELSE . ctrl_blck ENDIF ','  (51)
+
+	ASIG  shift 2
+	IF  shift 3
+	PRINT  shift 4
+	WHILE  shift 5
+	ID  shift 117
+	'('  shift 10
+	'{'  shift 118
+	.  error
+
+	exec  goto 119
+	asig  goto 120
+	s_cond  goto 21
+	ctrl  goto 22
+	prt  goto 23
+	inv_fun  goto 24
+	ctrl_blck  goto 189
+	while  goto 25
+
+
+state 164
+	s_cond : IF '(' cond ')' ctrl_blck . ELSE ctrl_blck ENDIF ','  (44)
+	s_cond : IF '(' cond ')' ctrl_blck . ENDIF ','  (45)
+	s_cond : IF '(' cond ')' ctrl_blck . ctrl_blck ENDIF ','  (52)
+	s_cond : IF '(' cond ')' ctrl_blck . ELSE ENDIF ','  (53)
+	s_cond : IF '(' cond ')' ctrl_blck . ELSE ctrl_blck error ','  (54)
+	s_cond : IF '(' cond ')' ctrl_blck . ELSE ctrl_blck ENDIF  (55)
+	s_cond : IF '(' cond ')' ctrl_blck . ENDIF  (56)
+	s_cond : IF '(' cond ')' ctrl_blck . error ','  (60)
+
+	error  shift 190
+	ASIG  shift 2
+	IF  shift 3
+	ENDIF  shift 191
+	ELSE  shift 192
+	PRINT  shift 4
+	WHILE  shift 5
+	ID  shift 117
+	'('  shift 10
+	'{'  shift 118
+	.  error
+
+	exec  goto 119
+	asig  goto 120
+	s_cond  goto 21
+	ctrl  goto 22
+	prt  goto 23
+	inv_fun  goto 24
+	ctrl_blck  goto 193
+	while  goto 25
+
+
+state 165
+	s_cond : IF cond ')' ctrl_blck ENDIF .  (57)
+
+	.  reduce 57
+
+
+state 166
+	s_cond : IF cond ')' ctrl_blck ELSE . ctrl_blck ENDIF ','  (48)
+
+	ASIG  shift 2
+	IF  shift 3
+	PRINT  shift 4
+	WHILE  shift 5
+	ID  shift 117
+	'('  shift 10
+	'{'  shift 118
+	.  error
+
+	exec  goto 119
+	asig  goto 120
+	s_cond  goto 21
+	ctrl  goto 22
+	prt  goto 23
+	inv_fun  goto 24
+	ctrl_blck  goto 194
+	while  goto 25
+
+
+state 167
+	prt : PRINT '(' STRING ')' ',' .  (67)
+
+	.  reduce 67
+
+
+state 168
+	func_var : error ';' lst_perm .  (87)
+
+	.  reduce 87
+
+
+state 169
+	lst_perm : WRITE ';' . PASS  (104)
+	lst_perm : WRITE ';' . error ','  (105)
+
+	error  shift 195
+	PASS  shift 196
+	.  error
+
+
+state 170
+	func_var : ID ';' lst_perm .  (85)
+
+	.  reduce 85
+
+
+state 171
+	param : '(' type ID ')' .  (22)
+
+	.  reduce 22
+
+
+state 172
+	s_cond : '(' cond ')' ctrl_blck ENDIF . ','  (47)
+
+	','  shift 197
+	.  error
+
+
+state 173
+	s_cond : '(' cond ')' ctrl_blck ELSE . ctrl_blck ENDIF ','  (46)
+
+	ASIG  shift 2
+	IF  shift 3
+	PRINT  shift 4
+	WHILE  shift 5
+	ID  shift 117
+	'('  shift 10
+	'{'  shift 118
+	.  error
+
+	exec  goto 119
+	asig  goto 120
+	s_cond  goto 21
+	ctrl  goto 22
+	prt  goto 23
+	inv_fun  goto 24
+	ctrl_blck  goto 198
+	while  goto 25
+
+
+state 174
+	ret : RETURN '(' ')' . ','  (37)
+
+	','  shift 199
+	.  error
+
+
+state 175
+	ret : RETURN '(' expr . ')' ','  (34)
+	ret : RETURN '(' expr . ','  (38)
+	ret : RETURN '(' expr . ')'  (39)
+	expr : expr . '+' expr  (95)
+	expr : expr . '-' expr  (96)
+
+	'+'  shift 74
+	'-'  shift 75
+	','  shift 200
+	')'  shift 201
+	.  error
+
+
+state 176
+	ret : RETURN expr ')' . ','  (36)
+
+	','  shift 202
+	.  error
+
+
+state 177
+	ret : '(' expr ')' . ','  (35)
+
+	','  shift 203
+	.  error
+
+
+state 178
+	func_body : '{' sent ret error . ','  (31)
+
+	','  shift 204
+	.  error
+
+
+state 179
+	func_body : '{' sent ret '}' .  (28)
+
+	.  reduce 28
+
+
+state 180
+	ctrl : while '(' cond error ctrl_blck .  (64)
+
+	.  reduce 64
+
+
+state 181
+	ctrl : while '(' cond ')' error . ','  (65)
+
+	','  shift 205
+	.  error
+
+
+state 182
+	ctrl : while '(' cond ')' ctrl_blck .  (62)
+
+	.  reduce 62
+
+
+state 183
 	sent : sent . decl  (2)
 	sent : sent . exec  (3)
 	sent : sent . asig  (4)
-	ctrl_sent : asig sent .  (79)
+	ctrl_sent : exec sent .  (79)
 
-	error  shift 58
 	ASIG  shift 2
 	IF  shift 3
 	PRINT  shift 4
@@ -2608,81 +2365,362 @@ state 189
 	'('  shift 10
 	'}'  reduce 79
 
-	decl  goto 59
-	exec  goto 60
-	asig  goto 61
+	decl  goto 57
+	exec  goto 58
+	asig  goto 59
 	var  goto 16
 	func  goto 17
 	type  goto 18
 	lst_var  goto 19
-	s_cond  goto 20
-	ctrl  goto 21
-	prt  goto 22
-	inv_fun  goto 23
+	func_head  goto 20
+	s_cond  goto 21
+	ctrl  goto 22
+	prt  goto 23
+	inv_fun  goto 24
+	while  goto 25
 
 
-state 190
-	ctrl_blck : '{' ctrl_sent '}' .  (77)
+state 184
+	sent : sent . decl  (2)
+	sent : sent . exec  (3)
+	sent : sent . asig  (4)
+	ctrl_sent : asig sent .  (80)
 
-	.  reduce 77
-
-
-state 191
-	s_cond : IF '(' ')' ctrl_blck ELSE ctrl_blck . ENDIF ','  (48)
-
-	ENDIF  shift 211
-	.  error
-
-
-state 192
-	s_cond : IF '(' cond error ctrl_blck ENDIF .  (58)
-
-	.  reduce 58
-
-
-state 193
-	s_cond : IF '(' cond error ctrl_blck ELSE . ctrl_blck ENDIF ','  (49)
-
-	error  shift 58
 	ASIG  shift 2
 	IF  shift 3
 	PRINT  shift 4
 	WHILE  shift 5
-	ID  shift 119
+	USINTEGER  shift 6
+	LINTEGER  shift 7
+	ID  shift 8
+	';'  shift 9
 	'('  shift 10
-	'{'  shift 120
+	'}'  reduce 80
+
+	decl  goto 57
+	exec  goto 58
+	asig  goto 59
+	var  goto 16
+	func  goto 17
+	type  goto 18
+	lst_var  goto 19
+	func_head  goto 20
+	s_cond  goto 21
+	ctrl  goto 22
+	prt  goto 23
+	inv_fun  goto 24
+	while  goto 25
+
+
+state 185
+	ctrl_blck : '{' ctrl_sent '}' .  (78)
+
+	.  reduce 78
+
+
+state 186
+	s_cond : IF '(' ')' ctrl_blck ELSE ctrl_blck . ENDIF ','  (49)
+
+	ENDIF  shift 206
 	.  error
 
-	exec  goto 121
-	asig  goto 122
-	s_cond  goto 20
-	ctrl  goto 21
-	prt  goto 22
-	inv_fun  goto 23
+
+state 187
+	s_cond : IF '(' cond error ctrl_blck ENDIF .  (59)
+
+	.  reduce 59
+
+
+state 188
+	s_cond : IF '(' cond error ctrl_blck ELSE . ctrl_blck ENDIF ','  (50)
+
+	ASIG  shift 2
+	IF  shift 3
+	PRINT  shift 4
+	WHILE  shift 5
+	ID  shift 117
+	'('  shift 10
+	'{'  shift 118
+	.  error
+
+	exec  goto 119
+	asig  goto 120
+	s_cond  goto 21
+	ctrl  goto 22
+	prt  goto 23
+	inv_fun  goto 24
+	ctrl_blck  goto 207
+	while  goto 25
+
+
+state 189
+	s_cond : IF '(' cond ')' ELSE ctrl_blck . ENDIF ','  (51)
+
+	ENDIF  shift 208
+	.  error
+
+
+state 190
+	s_cond : IF '(' cond ')' ctrl_blck error . ','  (60)
+
+	','  shift 209
+	.  error
+
+
+state 191
+	s_cond : IF '(' cond ')' ctrl_blck ENDIF . ','  (45)
+	s_cond : IF '(' cond ')' ctrl_blck ENDIF .  (56)
+
+	','  shift 210
+	$end  reduce 56
+	error  reduce 56
+	ASIG  reduce 56
+	IF  reduce 56
+	ENDIF  reduce 56
+	ELSE  reduce 56
+	PRINT  reduce 56
+	WHILE  reduce 56
+	USINTEGER  reduce 56
+	LINTEGER  reduce 56
+	ID  reduce 56
+	RETURN  reduce 56
+	';'  reduce 56
+	'('  reduce 56
+	'{'  reduce 56
+	'}'  reduce 56
+
+
+state 192
+	s_cond : IF '(' cond ')' ctrl_blck ELSE . ctrl_blck ENDIF ','  (44)
+	s_cond : IF '(' cond ')' ctrl_blck ELSE . ENDIF ','  (53)
+	s_cond : IF '(' cond ')' ctrl_blck ELSE . ctrl_blck error ','  (54)
+	s_cond : IF '(' cond ')' ctrl_blck ELSE . ctrl_blck ENDIF  (55)
+
+	ASIG  shift 2
+	IF  shift 3
+	ENDIF  shift 211
+	PRINT  shift 4
+	WHILE  shift 5
+	ID  shift 117
+	'('  shift 10
+	'{'  shift 118
+	.  error
+
+	exec  goto 119
+	asig  goto 120
+	s_cond  goto 21
+	ctrl  goto 22
+	prt  goto 23
+	inv_fun  goto 24
 	ctrl_blck  goto 212
+	while  goto 25
 
 
-state 194
-	s_cond : IF '(' cond ')' ELSE ctrl_blck . ENDIF ','  (50)
+state 193
+	s_cond : IF '(' cond ')' ctrl_blck ctrl_blck . ENDIF ','  (52)
 
 	ENDIF  shift 213
 	.  error
 
 
-state 195
-	s_cond : IF '(' cond ')' ctrl_blck error . ','  (59)
-	ctrl : error . '(' cond ')' ctrl_blck  (62)
+state 194
+	s_cond : IF cond ')' ctrl_blck ELSE ctrl_blck . ENDIF ','  (48)
 
-	','  shift 214
-	'('  shift 25
+	ENDIF  shift 214
+	.  error
+
+
+state 195
+	lst_perm : WRITE ';' error . ','  (105)
+
+	','  shift 215
 	.  error
 
 
 state 196
-	s_cond : IF '(' cond ')' ctrl_blck ENDIF . ','  (44)
-	s_cond : IF '(' cond ')' ctrl_blck ENDIF .  (55)
+	lst_perm : WRITE ';' PASS .  (104)
 
-	','  shift 215
+	.  reduce 104
+
+
+state 197
+	s_cond : '(' cond ')' ctrl_blck ENDIF ',' .  (47)
+
+	.  reduce 47
+
+
+state 198
+	s_cond : '(' cond ')' ctrl_blck ELSE ctrl_blck . ENDIF ','  (46)
+
+	ENDIF  shift 216
+	.  error
+
+
+state 199
+	ret : RETURN '(' ')' ',' .  (37)
+
+	.  reduce 37
+
+
+state 200
+	ret : RETURN '(' expr ',' .  (38)
+
+	.  reduce 38
+
+
+state 201
+	ret : RETURN '(' expr ')' . ','  (34)
+	ret : RETURN '(' expr ')' .  (39)
+
+	','  shift 217
+	error  reduce 39
+	'}'  reduce 39
+
+
+state 202
+	ret : RETURN expr ')' ',' .  (36)
+
+	.  reduce 36
+
+
+state 203
+	ret : '(' expr ')' ',' .  (35)
+
+	.  reduce 35
+
+
+state 204
+	func_body : '{' sent ret error ',' .  (31)
+
+	.  reduce 31
+
+
+state 205
+	ctrl : while '(' cond ')' error ',' .  (65)
+
+	.  reduce 65
+
+
+state 206
+	s_cond : IF '(' ')' ctrl_blck ELSE ctrl_blck ENDIF . ','  (49)
+
+	','  shift 218
+	.  error
+
+
+state 207
+	s_cond : IF '(' cond error ctrl_blck ELSE ctrl_blck . ENDIF ','  (50)
+
+	ENDIF  shift 219
+	.  error
+
+
+state 208
+	s_cond : IF '(' cond ')' ELSE ctrl_blck ENDIF . ','  (51)
+
+	','  shift 220
+	.  error
+
+
+state 209
+	s_cond : IF '(' cond ')' ctrl_blck error ',' .  (60)
+
+	.  reduce 60
+
+
+state 210
+	s_cond : IF '(' cond ')' ctrl_blck ENDIF ',' .  (45)
+
+	.  reduce 45
+
+
+state 211
+	s_cond : IF '(' cond ')' ctrl_blck ELSE ENDIF . ','  (53)
+
+	','  shift 221
+	.  error
+
+
+state 212
+	s_cond : IF '(' cond ')' ctrl_blck ELSE ctrl_blck . ENDIF ','  (44)
+	s_cond : IF '(' cond ')' ctrl_blck ELSE ctrl_blck . error ','  (54)
+	s_cond : IF '(' cond ')' ctrl_blck ELSE ctrl_blck . ENDIF  (55)
+
+	error  shift 222
+	ENDIF  shift 223
+	.  error
+
+
+state 213
+	s_cond : IF '(' cond ')' ctrl_blck ctrl_blck ENDIF . ','  (52)
+
+	','  shift 224
+	.  error
+
+
+state 214
+	s_cond : IF cond ')' ctrl_blck ELSE ctrl_blck ENDIF . ','  (48)
+
+	','  shift 225
+	.  error
+
+
+state 215
+	lst_perm : WRITE ';' error ',' .  (105)
+
+	.  reduce 105
+
+
+state 216
+	s_cond : '(' cond ')' ctrl_blck ELSE ctrl_blck ENDIF . ','  (46)
+
+	','  shift 226
+	.  error
+
+
+state 217
+	ret : RETURN '(' expr ')' ',' .  (34)
+
+	.  reduce 34
+
+
+state 218
+	s_cond : IF '(' ')' ctrl_blck ELSE ctrl_blck ENDIF ',' .  (49)
+
+	.  reduce 49
+
+
+state 219
+	s_cond : IF '(' cond error ctrl_blck ELSE ctrl_blck ENDIF . ','  (50)
+
+	','  shift 227
+	.  error
+
+
+state 220
+	s_cond : IF '(' cond ')' ELSE ctrl_blck ENDIF ',' .  (51)
+
+	.  reduce 51
+
+
+state 221
+	s_cond : IF '(' cond ')' ctrl_blck ELSE ENDIF ',' .  (53)
+
+	.  reduce 53
+
+
+state 222
+	s_cond : IF '(' cond ')' ctrl_blck ELSE ctrl_blck error . ','  (54)
+
+	','  shift 228
+	.  error
+
+
+state 223
+	s_cond : IF '(' cond ')' ctrl_blck ELSE ctrl_blck ENDIF . ','  (44)
+	s_cond : IF '(' cond ')' ctrl_blck ELSE ctrl_blck ENDIF .  (55)
+
+	','  shift 229
 	$end  reduce 55
 	error  reduce 55
 	ASIG  reduce 55
@@ -2701,341 +2739,44 @@ state 196
 	'}'  reduce 55
 
 
-state 197
-	s_cond : IF '(' cond ')' ctrl_blck ELSE . ctrl_blck ENDIF ','  (43)
-	s_cond : IF '(' cond ')' ctrl_blck ELSE . ENDIF ','  (52)
-	s_cond : IF '(' cond ')' ctrl_blck ELSE . ctrl_blck error ','  (53)
-	s_cond : IF '(' cond ')' ctrl_blck ELSE . ctrl_blck ENDIF  (54)
-
-	error  shift 58
-	ASIG  shift 2
-	IF  shift 3
-	ENDIF  shift 216
-	PRINT  shift 4
-	WHILE  shift 5
-	ID  shift 119
-	'('  shift 10
-	'{'  shift 120
-	.  error
-
-	exec  goto 121
-	asig  goto 122
-	s_cond  goto 20
-	ctrl  goto 21
-	prt  goto 22
-	inv_fun  goto 23
-	ctrl_blck  goto 217
-
-
-state 198
-	s_cond : IF '(' cond ')' ctrl_blck ctrl_blck . ENDIF ','  (51)
-
-	ENDIF  shift 218
-	.  error
-
-
-state 199
-	s_cond : IF cond ')' ctrl_blck ELSE ctrl_blck . ENDIF ','  (47)
-
-	ENDIF  shift 219
-	.  error
-
-
-state 200
-	ctrl : WHILE '(' cond ')' error ',' .  (65)
-
-	.  reduce 65
-
-
-state 201
-	lst_perm : WRITE ';' error . ','  (104)
-
-	','  shift 220
-	.  error
-
-
-state 202
-	lst_perm : WRITE ';' PASS .  (103)
-
-	.  reduce 103
-
-
-state 203
-	ret : RETURN '(' ')' . ','  (36)
-
-	','  shift 221
-	.  error
-
-
-state 204
-	ret : RETURN '(' expr . ')' ','  (33)
-	ret : RETURN '(' expr . ','  (37)
-	ret : RETURN '(' expr . ')'  (38)
-	expr : expr . '+' expr  (94)
-	expr : expr . '-' expr  (95)
-
-	'+'  shift 73
-	'-'  shift 74
-	','  shift 222
-	')'  shift 223
-	.  error
-
-
-state 205
-	ret : RETURN expr ')' . ','  (35)
-
-	','  shift 224
-	.  error
-
-
-state 206
-	ret : '(' expr ')' . ','  (34)
-
-	','  shift 225
-	.  error
-
-
-state 207
-	func_body : '{' sent ret error . ','  (31)
-
-	','  shift 226
-	.  error
-
-
-state 208
-	func_body : '{' sent ret '}' .  (28)
-
-	.  reduce 28
-
-
-state 209
-	s_cond : '(' cond ')' ctrl_blck ENDIF ',' .  (46)
-
-	.  reduce 46
-
-
-state 210
-	s_cond : '(' cond ')' ctrl_blck ELSE ctrl_blck . ENDIF ','  (45)
-
-	ENDIF  shift 227
-	.  error
-
-
-state 211
-	s_cond : IF '(' ')' ctrl_blck ELSE ctrl_blck ENDIF . ','  (48)
-
-	','  shift 228
-	.  error
-
-
-state 212
-	s_cond : IF '(' cond error ctrl_blck ELSE ctrl_blck . ENDIF ','  (49)
-
-	ENDIF  shift 229
-	.  error
-
-
-state 213
-	s_cond : IF '(' cond ')' ELSE ctrl_blck ENDIF . ','  (50)
-
-	','  shift 230
-	.  error
-
-
-state 214
-	s_cond : IF '(' cond ')' ctrl_blck error ',' .  (59)
-
-	.  reduce 59
-
-
-state 215
-	s_cond : IF '(' cond ')' ctrl_blck ENDIF ',' .  (44)
-
-	.  reduce 44
-
-
-state 216
-	s_cond : IF '(' cond ')' ctrl_blck ELSE ENDIF . ','  (52)
-
-	','  shift 231
-	.  error
-
-
-state 217
-	s_cond : IF '(' cond ')' ctrl_blck ELSE ctrl_blck . ENDIF ','  (43)
-	s_cond : IF '(' cond ')' ctrl_blck ELSE ctrl_blck . error ','  (53)
-	s_cond : IF '(' cond ')' ctrl_blck ELSE ctrl_blck . ENDIF  (54)
-
-	error  shift 232
-	ENDIF  shift 233
-	.  error
-
-
-state 218
-	s_cond : IF '(' cond ')' ctrl_blck ctrl_blck ENDIF . ','  (51)
-
-	','  shift 234
-	.  error
-
-
-state 219
-	s_cond : IF cond ')' ctrl_blck ELSE ctrl_blck ENDIF . ','  (47)
-
-	','  shift 235
-	.  error
-
-
-state 220
-	lst_perm : WRITE ';' error ',' .  (104)
-
-	.  reduce 104
-
-
-state 221
-	ret : RETURN '(' ')' ',' .  (36)
-
-	.  reduce 36
-
-
-state 222
-	ret : RETURN '(' expr ',' .  (37)
-
-	.  reduce 37
-
-
-state 223
-	ret : RETURN '(' expr ')' . ','  (33)
-	ret : RETURN '(' expr ')' .  (38)
-
-	','  shift 236
-	error  reduce 38
-	'}'  reduce 38
-
-
 state 224
-	ret : RETURN expr ')' ',' .  (35)
-
-	.  reduce 35
-
-
-state 225
-	ret : '(' expr ')' ',' .  (34)
-
-	.  reduce 34
-
-
-state 226
-	func_body : '{' sent ret error ',' .  (31)
-
-	.  reduce 31
-
-
-state 227
-	s_cond : '(' cond ')' ctrl_blck ELSE ctrl_blck ENDIF . ','  (45)
-
-	','  shift 237
-	.  error
-
-
-state 228
-	s_cond : IF '(' ')' ctrl_blck ELSE ctrl_blck ENDIF ',' .  (48)
-
-	.  reduce 48
-
-
-state 229
-	s_cond : IF '(' cond error ctrl_blck ELSE ctrl_blck ENDIF . ','  (49)
-
-	','  shift 238
-	.  error
-
-
-state 230
-	s_cond : IF '(' cond ')' ELSE ctrl_blck ENDIF ',' .  (50)
-
-	.  reduce 50
-
-
-state 231
-	s_cond : IF '(' cond ')' ctrl_blck ELSE ENDIF ',' .  (52)
+	s_cond : IF '(' cond ')' ctrl_blck ctrl_blck ENDIF ',' .  (52)
 
 	.  reduce 52
 
 
-state 232
-	s_cond : IF '(' cond ')' ctrl_blck ELSE ctrl_blck error . ','  (53)
+state 225
+	s_cond : IF cond ')' ctrl_blck ELSE ctrl_blck ENDIF ',' .  (48)
 
-	','  shift 239
-	.  error
-
-
-state 233
-	s_cond : IF '(' cond ')' ctrl_blck ELSE ctrl_blck ENDIF . ','  (43)
-	s_cond : IF '(' cond ')' ctrl_blck ELSE ctrl_blck ENDIF .  (54)
-
-	','  shift 240
-	$end  reduce 54
-	error  reduce 54
-	ASIG  reduce 54
-	IF  reduce 54
-	ENDIF  reduce 54
-	ELSE  reduce 54
-	PRINT  reduce 54
-	WHILE  reduce 54
-	USINTEGER  reduce 54
-	LINTEGER  reduce 54
-	ID  reduce 54
-	RETURN  reduce 54
-	';'  reduce 54
-	'('  reduce 54
-	'{'  reduce 54
-	'}'  reduce 54
+	.  reduce 48
 
 
-state 234
-	s_cond : IF '(' cond ')' ctrl_blck ctrl_blck ENDIF ',' .  (51)
+state 226
+	s_cond : '(' cond ')' ctrl_blck ELSE ctrl_blck ENDIF ',' .  (46)
 
-	.  reduce 51
-
-
-state 235
-	s_cond : IF cond ')' ctrl_blck ELSE ctrl_blck ENDIF ',' .  (47)
-
-	.  reduce 47
+	.  reduce 46
 
 
-state 236
-	ret : RETURN '(' expr ')' ',' .  (33)
+state 227
+	s_cond : IF '(' cond error ctrl_blck ELSE ctrl_blck ENDIF ',' .  (50)
 
-	.  reduce 33
-
-
-state 237
-	s_cond : '(' cond ')' ctrl_blck ELSE ctrl_blck ENDIF ',' .  (45)
-
-	.  reduce 45
+	.  reduce 50
 
 
-state 238
-	s_cond : IF '(' cond error ctrl_blck ELSE ctrl_blck ENDIF ',' .  (49)
+state 228
+	s_cond : IF '(' cond ')' ctrl_blck ELSE ctrl_blck error ',' .  (54)
 
-	.  reduce 49
-
-
-state 239
-	s_cond : IF '(' cond ')' ctrl_blck ELSE ctrl_blck error ',' .  (53)
-
-	.  reduce 53
+	.  reduce 54
 
 
-state 240
-	s_cond : IF '(' cond ')' ctrl_blck ELSE ctrl_blck ENDIF ',' .  (43)
+state 229
+	s_cond : IF '(' cond ')' ctrl_blck ELSE ctrl_blck ENDIF ',' .  (44)
 
-	.  reduce 43
-
-
-State 26 contains 1 shift/reduce conflict.
+	.  reduce 44
 
 
-36 terminals, 26 nonterminals
-117 grammar rules, 241 states
+State 27 contains 1 shift/reduce conflict.
+
+
+36 terminals, 28 nonterminals
+118 grammar rules, 230 states
