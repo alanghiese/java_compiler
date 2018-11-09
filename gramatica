@@ -4,6 +4,7 @@ package java_compiler;
 import utilities.*;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import codigo_intermedio.*;
 import java.util.concurrent.atomic.AtomicReference;
@@ -43,49 +44,70 @@ lst_var :   ID';' lst_var           {varList.add(((Token) ($1.obj)).getLex());}
 	    |   ID                  {varList.add(((Token) ($1.obj)).getLex());}
 ;
 	
-func	:   type ID param func_body     {print("Sintaxis: Declaracion de funcion");
-                                        if(!la.symbolTable.isVar(((Token)$2.obj).getLex())){
-                                        	if(TypeConverter.isValid(((Token)$1.obj).getLex(),typeRet)){
-	                                            la.symbolTable.removeID(((Token)$2.obj).getLex());
-	                                            FNCInformation fnc = new FNCInformation();
-	                                            fnc.setType(((Token)$1.obj).getLex());
-	                                            fnc.setParamType(((Token)$3.obj).getLex());
-                                                fnc.setPermissions(permsList.removeLast());
-	                                            la.symbolTable.addFNC(((Token)$2.obj).getLex(), fnc);
-	                                            la.symbolTable.setType(((Token)$2.obj).getLex(),((Token)$1.obj).getLex());
+func	:   func_head func_body     {if (paramList.size()==1) {
+										 print("Sintaxis: Declaracion de funcion");
+	                                     if(TypeConverter.isValid(((Token)$1.obj).getLex(),typeRet)){
+	                                     	if(!((Token)$1.obj).getLex().equals(typeRet)){
+												Triples cnv = new TrCNV(((Triples)$2.obj).getO1());
+												cnv.setId(((Triples)$2.obj).getId());
+												triples.add(triples.size()-2,cnv);
+												((Triples)$2.obj).setId(((Triples)$2.obj).getId()+1);
+	                                            ((Triples)$2.obj).setO1(cnv);
+	                                        }
 	                                            
-                                            	if(!((Token)$1.obj).getLex().equals(typeRet)){
-                                            		Triples cnv = new TrCNV(((Triples)$4.obj).getO1());
-                                            		cnv.setId(((Triples)$4.obj).getId());
-                                            		triples.add(triples.size()-2,cnv);
-                                            		((Triples)$4.obj).setId(((Triples)$4.obj).getId()+1);
-                                            		((Triples)$4.obj).setO1(cnv);
+	                                     }else{
+	                                     	yyerror(((Token)$1.obj).getLine(), "Semantic Error: Tipo de retorno incompatible"); 
+	                                     }
+	                                     //remuevo el parametro para esta funcion en particular (considero funciones anidadas)
+	                                     paramList.removeLast();
+	                                     LexicalAnalizer.symbolTable.setPermissions(currentScope,permsList.removeLast());
+	                                     currentScope=GLOBAL_SCOPE;
+	                                  }else{
+	                                  	yyerror(((Token) $1.obj).getLine(), "Función declarada dentro de otra función");
+	                                  	paramList.removeLast();
+	                                  	permsList.removeLast();
+	                                  	}
+	                                 }
+;
 
-                                            	}
-                                            }
-                                            else
-                                            	yyerror(((Token)$1.obj).getLine(), "Semantic Error: Tipo de retorno incompatible");
-                                        }else{
-                                            yyerror(((Token)$1.obj).getLine(), "Semantic Error: El id "+ ((Token)$2.obj).getLex() +" ya fue usado como variable");
-                                        }
-                                        //remuevo el parametro para esta funcion en particular (considero funciones anidadas)
-                                        paramList.removeLast();}
-        |   ID param func_body          {yyerror(((Token) $1.obj).getLine(), "Falta el tipo de retorno de la funcion");} 
-	|   type param func_body        {yyerror(((Token) $1.obj).getLine(), "No se permiten funciones anonimas");}
-	|   ID type func_body           {yyerror(((Token) $2.obj).getLine(), "Falta el argumento de la funcion");}
-	|   ID type param               {yyerror(((Token) $3.obj).getLine(), "Falta cuerpo de la funcion");}
+func_head :	type ID param	{
+							if(!la.symbolTable.isUsed(((Token)$2.obj).getLex())){
+								la.symbolTable.removeID(((Token)$2.obj).getLex());
+								FNCInformation fnc = new FNCInformation();
+				                fnc.setType(((Token)$1.obj).getLex());
+                                fnc.setParamType(((Token)$3.obj).getLex());
+	                            
+	                            la.symbolTable.addFNC(((Token)$2.obj).getLex(), fnc);
+								la.symbolTable.setType(((Token)$2.obj).getLex(),((Token)$1.obj).getLex());
+								currentScope=((Token)$2.obj).getLex();
+								la.symbolTable.setScope(paramList.getLast(),currentScope);
+							}
+                            else
+                            	yyerror(((Token)$1.obj).getLine(), "Semantic Error: El id "+ ((Token)$2.obj).getLex() +" ya fue usado como variable");
+                            $$=$1;	
+
+							}
+	|   ID param           {yyerror(((Token) $1.obj).getLine(), "Falta el tipo de retorno de la funcion");} 
+	|   type param         {yyerror(((Token) $1.obj).getLine(), "No se permiten funciones anonimas");}       
 ;
 
 param	:   '(' type ID ')'         {   Triples t= new TrFUN();
                                         triples.add(t);
                                         permsList.addLast(new Permissions(false,false));
-                                        paramList.addLast(((Token) $3.obj).getLex());   
+                                        paramList.addLast(((Token) $3.obj).getLex());
+                                        if(!la.symbolTable.isUsed(((Token)$3.obj).getLex())){
+                                        	la.symbolTable.setType(((Token)$3.obj).getLex(),((Token)$2.obj).getLex());
+                                        	
+                                        }
+                                        else
+                                        	yyerror(((Token)$1.obj).getLine(), "Semantic Error: El id "+ ((Token)$3.obj).getLex() +" ya fue usado como variable");   
                                         $$=$2; 
                                      }
         |   type ID ')'             {yyerror(((Token) $1.obj).getLine(), "Falta '('");}
         |   '(' ID ')'              {yyerror(((Token) $1.obj).getLine(), "Falta especificar el tipo del parametro de la funcion");}
         |   '(' type ')'            {yyerror(((Token) $2.obj).getLine(), "Falta ID como parametro de la funcion");}
         |   '(' type ID             {yyerror(((Token) $3.obj).getLine(), "Falta ')'");}
+         |   '(' ')'             {yyerror(((Token) $2.obj).getLine(), "Falta el argumento de la funcion");} 
 ;
 
 func_body   :   '{' sent ret '}' {$$=$3;}
@@ -93,6 +115,7 @@ func_body   :   '{' sent ret '}' {$$=$3;}
 	    |   sent ret '}'                {yyerror(((Token) $3.obj).getLine(), "Falta '{'");}
 	    |  '{' sent ret error','        {yyerror(((Token) $1.obj).getLine(), "Falta '}'");}
 	    |  '{' sent '}'                 {yyerror(((Token) $3.obj).getLine(), "Falta sentencia de retorno");}
+	    |	'{' '}'						{yyerror(((Token) $1.obj).getLine(), "Falta sentencia de retorno");}
 	    ;
 
 ret	    :   RETURN '(' expr ')'','  {Triples t = new TrRET((Operand)$3.obj);
@@ -123,7 +146,7 @@ s_cond  :   IF '(' cond ')' ctrl_blck ELSE ctrl_blck ENDIF','   {
                                                                 print("Sintaxis: Sentencia IF");
                                                                 pendingTriples.removeLast();
                                                                 triples.getLast().decreaseId();
-                                                                triples.removeLast();}
+                                                                triples.remove(triples.size()-2);}
         |   '(' cond ')' ctrl_blck ELSE ctrl_blck ENDIF','      {yyerror(((Token) $1.obj).getLine(), "'ELSE' sin 'IF'");}
         |   '(' cond ')' ctrl_blck ENDIF','                     {yyerror(((Token) $1.obj).getLine(), "'ENDIF' sin 'IF'");}
         |   IF cond ')' ctrl_blck ELSE ctrl_blck ENDIF','       {yyerror(((Token) $1.obj).getLine(), "Falta '(' en condicion de sentencia condicional");}
@@ -143,9 +166,9 @@ s_cond  :   IF '(' cond ')' ctrl_blck ELSE ctrl_blck ENDIF','   {
         ;
 
 ctrl    :   while '(' cond ')' ctrl_blck             {print("Sintaxis: Sentencia While");
-                                                     completeLast((Triples)$3.obj);}
-        |   error '(' cond ')' ctrl_blck             {yyerror(((Token) $2.obj).getLine(), "'SENTENCIA DE CONTROL' desconocida");}
-        |   while cond ')' ctrl_blck                     {yyerror(((Token) $1.obj).getLine(), "Falta'('");}
+                                                     completeLast();}
+        |   /*error '(' cond ')' ctrl_blck             {yyerror(((Token) $2.obj).getLine(), "'SENTENCIA DE CONTROL' desconocida");}
+        | */  while cond ')' ctrl_blck                     {yyerror(((Token) $1.obj).getLine(), "Falta'('");}
         |   while '(' cond error ctrl_blck           {yyerror(((Token) $2.obj).getLine(), "Falta ')'");}
         |   while '(' cond ')' error','              {yyerror(((Token) $4.obj).getLine(), "Sentencia de control sin bloque de sentencias");}
         ;
@@ -179,19 +202,23 @@ cond    :   expr comp expr	{   if (TypeConverter.isValidBidirectional(((Operand)
 
 		                            getConversion((Operand)$1.obj,(Operand)$3.obj,o1,o2);
 
-	                                switch (((Token)$2.obj).getLex()){
-	                                    case "<": aux = new TrLT(o1.get(),o2.get());
-	                                    case ">": aux = new TrGT(o1.get(),o2.get());
-	                                    case "<=": aux = new TrLE(o1.get(),o2.get());
-	                                    case ">=": aux = new TrGE(o1.get(),o2.get());
-	                                    case "=": aux = new TrEQ(o1.get(),o2.get());
-	                                    case "!=": aux = new TrNE(o1.get(),o2.get());
-	                                }
+	                                String comparator = ((Token)val_peek(1).obj).getLex();
+		                            if (comparator.equals("<"))
+		                            	aux = new TrLT(o1.get(),o2.get());
+		                            else if(comparator.equals(">"))
+		                            	aux = new TrGT(o1.get(),o2.get());
+		                            else if(comparator.equals("<="))
+		                            	aux = new TrLE(o1.get(),o2.get());
+		                            else if(comparator.equals(">="))
+		                            	aux = new TrGE(o1.get(),o2.get());
+		                            else if(comparator.equals("="))
+		                            	aux = new TrEQ(o1.get(),o2.get());
+		                            else if(comparator.equals("!="))
+		                            	aux = new TrNE(o1.get(),o2.get());
 	                                triples.add(aux);
 	                                Triples t = new TrBF(null, aux);
 	                                triples.add(t);
 	                                pendingTriples.add(triples.getLast());
-	                                $$ = new ParserVal(aux);
 								}
 
                                 else
@@ -244,25 +271,32 @@ func_var    :   ID ';' lst_perm {$$=$1;}
 
 
  asig    :   ID ASIG expr','        {
-                                    if(TypeConverter.isValid(((Token) $1.obj).getType(),((Operand) $3.obj).getType())){
- 										Triples aux;
-										if (!((Token) $1.obj).getType().equals(((Token) $3.obj).getType()  )){
-                                            	Triples cnv = new TrCNV((Token)$1.obj);
-                                                triples.add(cnv);
-                                                aux = new TrASG((Operand)$1.obj,cnv);
-                                            }
-                                         else {  
-		                                    aux = new TrASG((Operand)$1.obj,(Operand)$3.obj);
-		                                    }
-		                             triples.add(aux);
-                                    $$ = new ParserVal(aux);
-                                     if (!paramList.isEmpty())
-                                         if (((Token) $1.obj).getLex().equals(paramList.getFirst()))
-                                             permsList.getLast().setWrite(true);
-                                     print("Sintaxis: Asignacion");
-                                     }
-                                    else
-                                       yyerror(((Token) $1.obj).getLine(),"Semantic Error: Tipo invalido en la asignacion :(");}
+ 									if (LexicalAnalizer.symbolTable.isVar(((Token) $1.obj).getLex(),currentScope)){
+	                                    if(TypeConverter.isValid(((Token) $1.obj).getType(),((Operand) $3.obj).getType())){
+	 										Triples aux;
+											if (!((Token) $1.obj).getType().equals(((Operand) $3.obj).getType()  )){
+	                                            	Triples cnv = new TrCNV((Operand)$3.obj);
+	                                                triples.add(cnv);
+	                                                aux = new TrASG((Operand)$1.obj,cnv);
+	                                            }
+	                                         else {  
+			                                    aux = new TrASG((Operand)$1.obj,(Operand)$3.obj);
+			                                    }
+			                             triples.add(aux);
+	                                     if (!paramList.isEmpty())
+	                                         if (((Token) $1.obj).getLex().equals(paramList.getFirst()))
+	                                             permsList.getLast().setWrite(true);
+	                                     print("Sintaxis: Asignacion");
+	                                     }
+	                                    else
+	                                       yyerror(((Token) $1.obj).getLine(),"Semantic Error: Tipo invalido en la asignacion :(");
+                                      }
+                                    else{
+                                    	yyerror(((Token) $1.obj).getLine(),"Semantic Error: variable no definida ");
+                               
+                                    }
+                                    	
+                                    	}
         |   ASIG expr','        {yyerror(((Token) $3.obj).getLine(), "Asignacion sin id del lado izq");}
         |   ID expr','          {yyerror(((Token) $1.obj).getLine(), "Asignacion sin :=");}
         |   ID ASIG','          {yyerror(((Token) $3.obj).getLine(), "Falta expresion del lado derecho del :=");}
@@ -315,9 +349,9 @@ term    :   term '*' fact   {if (TypeConverter.isValidBidirectional(((Operand)$1
 								yyerror(((Token)$2.obj).getLine(),"Semantic Error: Tipos incompatibles en multiplicacion");
 							}
 							}
-        |   term '/' fact   {if (TypeConverter.isValidBidirectional(((Operand)$1.obj).getType(),((Operand)$3.obj).getType())){
+        |   term '/' fact   {if (TypeConverter.isValidBidirectional(((Operand)$1.obj).getType(),((Operand)$3.obj).getType()))	{
 	                        AtomicReference<Operand> o1=new AtomicReference<>();
-	                        AtomicReference<Operand> o2=null;
+	                        AtomicReference<Operand> o2=new AtomicReference<>();
 
 	                        getConversion((Operand)$1.obj,(Operand)$3.obj,o1,o2);
 	                            
@@ -342,7 +376,10 @@ type    :   USINTEGER
         |   LINTEGER
         ;
 
-fact    :   ID {$$ = new ParserVal($1.obj);}
+fact    :   ID {	if (!LexicalAnalizer.symbolTable.isVar(((Token)$1.obj).getLex(), currentScope))
+						yyerror(((Token)$1.obj).getLine(),"Semantic Error: La variable (" + ((Token)$1.obj).getLex() + ") no existe");
+				
+					$$=$1;}
         |   CTE {//numero es positivo
 				Object obj = $1.obj;
 				if (!ifUS(((Token) obj)))
@@ -374,6 +411,8 @@ comp    :   '='
         
 %%
 
+public final static String GLOBAL_SCOPE="Global";
+
 LexicalAnalizer la;
 LinkedList<Triples> triples= new LinkedList<>();
 LinkedList<Triples> pendingTriples= new LinkedList<>();
@@ -382,6 +421,7 @@ int functionAllows=-1;
 LinkedList<String> paramList = new LinkedList<>();
 LinkedList<Permissions> permsList = new LinkedList<>();
 String typeRet = new String();
+String currentScope=GLOBAL_SCOPE;
 
 public Parser(String path) {
 		la = new LexicalAnalizer(path);
@@ -414,7 +454,7 @@ public void print(String s){
 public boolean correctCall(Boolean converted, Operand param, String functionName, String paramName, int line){
     if(la.symbolTable.isFunction(functionName)){
     	if (la.symbolTable.paramAllow(functionName,functionAllows)){
-    		if(!LexicalAnalizer.symbolTable.isVar(paramName)){
+    		if(!LexicalAnalizer.symbolTable.isVar(paramName,currentScope)){
     			yyerror(line, "Semantic Error: Parameto inexistente");
     			return false;
     		}
@@ -441,7 +481,11 @@ public boolean correctCall(Boolean converted, Operand param, String functionName
 }
 
 public void testPos(Token t) {
-		Long l = Long.parseLong(t.getLex());
+		String number = t.getLex();
+		StringBuilder withoutSuffix = new StringBuilder();
+		for (int i = 0; i < number.length() - 2; i++)
+			withoutSuffix.append(number.charAt(i));
+		Long l = Long.parseLong(withoutSuffix.toString())*-1;
 		if (l.compareTo((long)Integer.MAX_VALUE)>0) {
 			l = (long)Integer.MAX_VALUE;
 			if (((CTNInformation)LexicalAnalizer.symbolTable.getLexeme(t.getLex())).getCounter()>1) {
@@ -461,7 +505,11 @@ public void testPos(Token t) {
 	}
 	
 	public void testNeg(Token t) {
-		Long l = Long.parseLong(t.getLex())*-1;
+		String number = t.getLex();
+		StringBuilder withoutSuffix = new StringBuilder();
+		for (int i = 0; i < number.length() - 2; i++)
+			withoutSuffix.append(number.charAt(i));
+		Long l = Long.parseLong(withoutSuffix.toString())*-1;
 		CTNInformation ctni = new CTNInformation();
 		ctni.setType(Constants.L_INT);
 		if (((CTNInformation)LexicalAnalizer.symbolTable.getLexeme(t.getLex())).getCounter()>1)
@@ -479,19 +527,21 @@ public void testPos(Token t) {
             Triples label= new Label();
             triples.add(label);
             pendingTriples.removeLast().setO1(label);
-            pendingTriples.add(triples.get(pendingTriples.size()-2));
+            pendingTriples.add(triples.get(triples.size()-2));
         }
 
-        public void completeLast(Triples t){
-            pendingTriples.removeLast().setO1(t);
+        public void completeLast(){
+            Triples t = pendingTriples.removeLast();
+            t.setO1(pendingTriples.removeLast());
         }
 
         public void setTypes(String type, int lineNumber){
             for(String var: varList)
-                if(!la.symbolTable.isFunction(var)){
+                if(!la.symbolTable.isUsed(var)){
                     la.symbolTable.setType(var, type);
+                    la.symbolTable.setScope(var,currentScope);
                 }else{
-                    yyerror(lineNumber, "El id "+ var +" ya fue usado como función");
+                    yyerror(lineNumber, "El id "+ var +" ya fue usado");
                 }
             varList.clear();
         }
@@ -500,12 +550,14 @@ public void testPos(Token t) {
 
 		if (!in1.getType().equals(in2.getType())) {
 			Triples cnv;
-			if (!(in1.getType().equals("usinteger"))) {
+			if ((in1.getType().equals("usinteger"))) {
 				cnv = new TrCNV(in1);
+				triples.add(cnv);
 				out1.set(cnv);
 				out2.set(in2);
 			} else {
 				cnv = new TrCNV(in2);
+				triples.add(cnv);
 				out1.set(in1);
 				out2.set(cnv);
 			}
@@ -523,4 +575,9 @@ public void gt() {
 public void getTable(String path) {
 		LexicalAnalizer.symbolTable.genOutput(path);
 	}
+	
+	
+	public List<Triples> getTriples(){
+	return this.triples;
+}
 

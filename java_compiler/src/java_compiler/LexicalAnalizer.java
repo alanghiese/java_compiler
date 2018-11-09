@@ -69,12 +69,15 @@ public class LexicalAnalizer {
 				
 				status = transitions.getNextState(status, nextChar);
 				
+				
 				if (token.getToken()==Constants.ERR_TOKEN) {
 					
 					System.out.println("-----------------" + token.getMsg());
 					
 					token = new Token();
+					status = 0;
 					
+				
 				}
 				
 				

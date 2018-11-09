@@ -43,10 +43,10 @@ public class SA2 implements SemanticAction {
 
 		CTNInformation ctni = new CTNInformation();
 		ctni.setType(type.toString());
-		st.addCTN(withoutSuffix.toString(), ctni);
+		st.addCTN(buffer.toString(), ctni);
 		token.setMsg(Constants.CTE);
 		token.setToken(Decoder.get(Constants.CTE));
-		token.setLex(withoutSuffix.toString());
+		token.setLex(buffer.toString());
 
 		//yylval = new ParserVal();
 

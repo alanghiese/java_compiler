@@ -49,7 +49,7 @@ public class FNCInformation extends SymbolInformation {
 
 	@Override
 	public String toString() {
-		return "Function";
+		return "Function tipo: " + super.getType() + " tipo de parametro: " + this.getParamType();
 	}
 	
 	

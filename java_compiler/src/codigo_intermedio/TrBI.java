@@ -24,6 +24,6 @@ public class TrBI extends Triples {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "BI"  + "," + o1.getRef()  + "," + o2.getRef();
+		return "BI"  + "," + o1.getRef();
 	}
 }

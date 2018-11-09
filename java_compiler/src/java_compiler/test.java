@@ -1,6 +1,7 @@
 package java_compiler;
 
 import java.util.List;
+
 import java.util.Stack;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.LinkedList;
 
 import codigo_intermedio.Triples;
 import utilities.Constants;
+import utilities.Token;
 import utilities.IDInformation;
 
 public class test {
@@ -19,6 +21,7 @@ public class test {
 		for( Triples t:lt ) {
 			System.out.println(t.getId() +". "+t.toString());
 			list = cont + "." + t.toString() + '\n';
+			
 			cont++;
 			
 		}

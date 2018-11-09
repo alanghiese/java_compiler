@@ -10,6 +10,7 @@ import utilities.Constants;
 import utilities.FNCInformation;
 import utilities.FileManager;
 import utilities.IDInformation;
+import utilities.Permissions;
 import utilities.SymbolInformation;
 import utilities.Token;
 
@@ -63,7 +64,7 @@ public class SymbolTable {
 
 			String key = it.next().toString();
 			sb.append(key);
-			sb.append(" ");
+			sb.append(" es un/a ");
 			sb.append(getLexeme(key).toString());
 			outLine.add(sb.toString());
 			sb.setLength(0);
@@ -106,9 +107,24 @@ public class SymbolTable {
 		return false;
 	}
 
-	public boolean isVar(String name) {
-		if (this.symbolTable.containsKey(name))
+	public boolean isVar(String name,String scope) {
+		if (this.symbolTable.containsKey(name)) {
+			SymbolInformation info=this.symbolTable.get(name);
+			return info.isVar() && (((IDInformation)info).getScope().equals(scope) || ((IDInformation)info).getScope().equals(Parser.GLOBAL_SCOPE));
+		}
+		return false;
+	}
+	
+	private boolean isVar(String name) {
+		if (this.symbolTable.containsKey(name)) {
 			return this.symbolTable.get(name).isVar();
+		}
+		return false;
+	}
+	
+	public boolean isUsed(String name) {
+		if (this.symbolTable.containsKey(name))
+			return !this.symbolTable.get(name).getType().equals(SymbolInformation._DEFAULT_TYPE);
 		return false;
 	}
 
@@ -132,10 +148,24 @@ public class SymbolTable {
 		return false;
 	}
 
+	
+	public void setPermissions(String name, Permissions p) {
+		if (this.isFunction(name))
+			((FNCInformation)this.symbolTable.get(name)).setPermissions(p);
+	}
+	
 	public String getParamType(String name) {
 		if (this.isFunction(name))
 			return ((FNCInformation) this.symbolTable.get(name)).getParamType();
 		return "Undefined";
+	}
+	
+	public boolean setScope(String varName, String scope) {
+		if (isVar(varName)) { 
+			((IDInformation)(symbolTable.get(varName))).setScope(scope);
+			return true;
+		}else
+			return false;
 	}
 
 }
