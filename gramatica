@@ -71,16 +71,20 @@ func	:   func_head func_body     {if (paramList.size()==1) {
 ;
 
 func_head :	type ID param	{
-							if(!la.symbolTable.isUsed(((Token)$2.obj).getLex())){
-								la.symbolTable.removeID(((Token)$2.obj).getLex());
+							if(!LexicalAnalizer.symbolTable.isUsed(((Token)$2.obj).getLex())){
+								LexicalAnalizer.symbolTable.removeID(((Token)$2.obj).getLex());
 								FNCInformation fnc = new FNCInformation();
 				                fnc.setType(((Token)$1.obj).getLex());
                                 fnc.setParamType(((Token)$3.obj).getLex());
+                                fnc.setParamName(paramList.getFirst());
+
+                                Triples t= new TrFUN((Token)$2.obj);
+                                        triples.add(t);
 	                            
-	                            la.symbolTable.addFNC(((Token)$2.obj).getLex(), fnc);
-								la.symbolTable.setType(((Token)$2.obj).getLex(),((Token)$1.obj).getLex());
+	                            LexicalAnalizer.symbolTable.addFNC(((Token)$2.obj).getLex(), fnc);
+								LexicalAnalizer.symbolTable.setType(((Token)$2.obj).getLex(),((Token)$1.obj).getLex());
 								currentScope=((Token)$2.obj).getLex();
-								la.symbolTable.setScope(paramList.getLast(),currentScope);
+								LexicalAnalizer.symbolTable.setScope(paramList.getLast(),currentScope);
 							}
                             else
                             	yyerror(((Token)$1.obj).getLine(), "Semantic Error: El id "+ ((Token)$2.obj).getLex() +" ya fue usado como variable");
@@ -91,12 +95,11 @@ func_head :	type ID param	{
 	|   type param         {yyerror(((Token) $1.obj).getLine(), "No se permiten funciones anonimas");}       
 ;
 
-param	:   '(' type ID ')'         {   Triples t= new TrFUN();
-                                        triples.add(t);
+param	:   '(' type ID ')'         {   
                                         permsList.addLast(new Permissions(false,false));
                                         paramList.addLast(((Token) $3.obj).getLex());
-                                        if(!la.symbolTable.isUsed(((Token)$3.obj).getLex())){
-                                        	la.symbolTable.setType(((Token)$3.obj).getLex(),((Token)$2.obj).getLex());
+                                        if(!LexicalAnalizer.symbolTable.isUsed(((Token)$3.obj).getLex())){
+                                        	LexicalAnalizer.symbolTable.setType(((Token)$3.obj).getLex(),((Token)$2.obj).getLex());
                                         	
                                         }
                                         else
@@ -181,15 +184,13 @@ while   :   WHILE   {Triples label=new Label();
 prt     :   PRINT'(' STRING ')'','  {
                                     print("Sintaxis: Sentencia print");
                                     Triples aux = new TrPRT((Operand)$3.obj);
-                                    triples.add(aux);
-                                    $$ = new ParserVal(aux);}
+                                    triples.add(aux);}
         |   '(' STRING ')'','       {yyerror(((Token) $1.obj).getLine(), "'PRINT' faltante en la sentencia de impresion");}
         |   PRINT STRING ')'','     {yyerror(((Token) $2.obj).getLine(), "Falta '('");}
         |   PRINT '('STRING','      {yyerror(((Token) $3.obj).getLine(), "Falta ')'");}
         |   PRINT'(' ')'','         {print("Sintaxis: Sentencia print");
                                     Triples aux= new TrPRT();
                                     triples.add(aux);
-                                    $$ = new ParserVal(aux);
                                     }
         |   PRINT'(' STRING')'      {yyerror(((Token) $4.obj).getLine(), "Falta ','");}
         ;
@@ -422,13 +423,14 @@ LinkedList<String> paramList = new LinkedList<>();
 LinkedList<Permissions> permsList = new LinkedList<>();
 String typeRet = new String();
 String currentScope=GLOBAL_SCOPE;
+boolean macrigato=false;
 
 public Parser(String path) {
 		la = new LexicalAnalizer(path);
 }
 
 public void yyerror(int l, String s){
-
+	macrigato=true;
     System.out.println("Sintax Error: Line " + l + " - " + s);
 
 }
@@ -452,8 +454,8 @@ public void print(String s){
 }
 
 public boolean correctCall(Boolean converted, Operand param, String functionName, String paramName, int line){
-    if(la.symbolTable.isFunction(functionName)){
-    	if (la.symbolTable.paramAllow(functionName,functionAllows)){
+    if(LexicalAnalizer.symbolTable.isFunction(functionName)){
+    	if (LexicalAnalizer.symbolTable.paramAllow(functionName,functionAllows)){
     		if(!LexicalAnalizer.symbolTable.isVar(paramName,currentScope)){
     			yyerror(line, "Semantic Error: Parameto inexistente");
     			return false;
@@ -537,9 +539,9 @@ public void testPos(Token t) {
 
         public void setTypes(String type, int lineNumber){
             for(String var: varList)
-                if(!la.symbolTable.isUsed(var)){
-                    la.symbolTable.setType(var, type);
-                    la.symbolTable.setScope(var,currentScope);
+                if(!LexicalAnalizer.symbolTable.isUsed(var)){
+                    LexicalAnalizer.symbolTable.setType(var, type);
+                    LexicalAnalizer.symbolTable.setScope(var,currentScope);
                 }else{
                     yyerror(lineNumber, "El id "+ var +" ya fue usado");
                 }

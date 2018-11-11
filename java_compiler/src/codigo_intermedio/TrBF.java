@@ -1,5 +1,9 @@
 package codigo_intermedio;
 
+import java_compiler.LexicalAnalizer;
+import utilities.Constants;
+import utilities.SymbolInformation;
+
 public class TrBF extends Triples {
 
 	public TrBF(Operand o1, Operand o2) {
@@ -26,6 +30,13 @@ public class TrBF extends Triples {
 	public String toString() {
 		// TODO Auto-generated method stub
 		return "BF"  + "," + o1.getRef();
+	}
+	
+	@Override
+	public String generateAssembler() {
+		String code;
+		code = ((TrCND)o2).getComp() + " " + o1.getMemRef(); 
+		return code;
 	}
 
 }

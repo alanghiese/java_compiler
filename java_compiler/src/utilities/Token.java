@@ -60,4 +60,10 @@ public class Token extends Operand{
 		// TODO Auto-generated method stub
 		return this.lexeme;
 	}
+
+	@Override
+	public String getMemRef() {
+		// TODO Auto-generated method stub
+		return this.getLex();
+	}
 }

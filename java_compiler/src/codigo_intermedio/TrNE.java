@@ -1,5 +1,6 @@
 package codigo_intermedio;
 
+
 public class TrNE extends TrCND {
 
 	public TrNE(Operand o1, Operand o2) {
@@ -22,5 +23,11 @@ public class TrNE extends TrCND {
 	public String toString() {
 		// TODO Auto-generated method stub
 		return "!="  + "," + o1.getRef()  + "," + o2.getRef();
+	}
+	public String getComp() {
+		
+		return "JE";
+		
+			
 	}
 }

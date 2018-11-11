@@ -1,6 +1,8 @@
 package codigo_intermedio;
 
+import java_compiler.LexicalAnalizer;
 import utilities.Constants;
+import utilities.SymbolInformation;
 
 public class TrCNV extends Triples {
 
@@ -28,6 +30,18 @@ public class TrCNV extends Triples {
 	public String toString() {
 		// TODO Auto-generated method stub
 		return "CNV"  + "," + this.getType() + "," + o1.getRef();
+	}
+
+	@Override
+	public String generateAssembler() {
+		String code;
+		code = "MOV AX." + o1.getMemRef() + '\n' +
+				"CWDE" + '\n' +
+				"MOV " + this.destiny + ",EAX";
+		SymbolInformation symb = new SymbolInformation();
+		symb.setType(Constants.L_INT);
+		LexicalAnalizer.symbolTable.addAUX(this.destiny, symb);
+		return code;
 	}
 
 }

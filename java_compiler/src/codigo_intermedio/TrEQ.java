@@ -1,5 +1,9 @@
 package codigo_intermedio;
 
+import java_compiler.LexicalAnalizer;
+import utilities.Constants;
+import utilities.SymbolInformation;
+
 public class TrEQ extends TrCND {
 
 	public TrEQ(Operand o1, Operand o2) {
@@ -22,5 +26,10 @@ public class TrEQ extends TrCND {
 		// TODO Auto-generated method stub
 		return "="  + "," + o1.getRef()  + "," + o2.getRef();
 	}
-
+	
+	public String getComp() {
+		return "JNE";
+	}
+	
+	
 }

@@ -14,5 +14,6 @@ public abstract class Operand {
 
 	public abstract String getRef();
 	
+	public abstract String getMemRef();
 	
 }

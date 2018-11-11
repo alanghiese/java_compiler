@@ -1,5 +1,8 @@
 package codigo_intermedio;
 
+import utilities.Constants;
+import utilities.TypeConverter;
+
 public class TrLE extends TrCND {
 
 	public TrLE(Operand o1, Operand o2) {
@@ -21,6 +24,13 @@ public class TrLE extends TrCND {
 	public String toString() {
 		// TODO Auto-generated method stub
 		return "<="  + "," + o1.getRef()  + "," + o2.getRef();
+	}
+	
+	public String getComp() {
+		if (TypeConverter.getConversion(o1.getType(), o2.getType()).equals(Constants.L_INT))
+			return "JNLE";
+		
+		return "JNBE";
 	}
 
 }

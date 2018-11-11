@@ -1,5 +1,9 @@
 package codigo_intermedio;
 
+import java_compiler.LexicalAnalizer;
+import utilities.Constants;
+import utilities.SymbolInformation;
+
 public class TrASG extends Triples {
 
 	public TrASG(Operand o1, Operand o2) {
@@ -25,6 +29,21 @@ public class TrASG extends Triples {
 	public String toString() {
 		// TODO Auto-generated method stub
 		return ":="  + "," + o1.getRef()  + "," + o2.getRef();
+	}
+	
+	
+	@Override
+	public String generateAssembler() {
+		String code;
+		if (super.type.equals(Constants.US_INT)) {
+			code = "MOV AX," + o2.getMemRef() + '\n' +
+					"MOV " + o1.getMemRef() + ",AX" ;
+		}
+		else{
+			code = "MOV EAX," + o2.getMemRef() + '\n' +
+					"MOV " + o1.getMemRef() + ",EAX" ;
+			}
+		return code;
 	}
 
 }

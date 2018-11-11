@@ -1,5 +1,7 @@
 package codigo_intermedio;
 
+
+
 public class TrPRT extends Triples {
 
 	public TrPRT(Operand o1, Operand o2) {
@@ -25,4 +27,11 @@ public class TrPRT extends Triples {
 		return "Print"  + "," + o1.getRef();
 	}
 
+	
+	@Override
+	public String generateAssembler() {
+		String code;
+		code = "invoke MessageBox, NULL, addr " + o1.getMemRef() + ", addr " + o1.getMemRef() + ", MB_OK";
+		return code;
+	}
 }

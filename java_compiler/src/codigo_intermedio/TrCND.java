@@ -29,4 +29,30 @@ public class TrCND extends Triples {
 		// TODO Auto-generated method stub
 		return "CND"  + "," + o1.getRef()  + "," + o2.getRef();
 	}
+	
+	public String getComp() {
+		return "";
+	}
+
+	@Override
+	public String generateAssembler() {
+		String code;
+		if (super.type.equals(Constants.US_INT)) {
+			code = "MOV AX," + o1.getMemRef() + '\n' +
+					"CMP AX," + o2.getMemRef() ;/*+ '\n'; +
+					"MOV " + destiny + ",AX";
+			SymbolInformation symb = new SymbolInformation();
+			symb.setType(Constants.US_INT);
+			LexicalAnalizer.symbolTable.addAUX(destiny, symb);*/
+		}
+		else{
+			code = "MOV EAX," + o1.getMemRef() + '\n' +
+					"CMP EAX," + o2.getMemRef() ;/*+ '\n' +
+					"MOV " + destiny + ",EAX";
+			SymbolInformation symb = new SymbolInformation();
+			symb.setType(Constants.L_INT);
+			LexicalAnalizer.symbolTable.addAUX(destiny, symb);*/
+			}
+		return code;
+	}
 }

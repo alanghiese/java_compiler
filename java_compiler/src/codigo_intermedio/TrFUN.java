@@ -1,6 +1,13 @@
 package codigo_intermedio;
 
+import java_compiler.LexicalAnalizer;
+import utilities.Constants;
+import utilities.SymbolInformation;
+import utilities.Token;
+
 public class TrFUN extends Triples {
+	
+	private String name;
 
 	public TrFUN(Operand o1, Operand o2) {
 		super(o1, o2);
@@ -29,4 +36,10 @@ public class TrFUN extends Triples {
 		return "FNC";
 	}
 
+	@Override
+	public String generateAssembler() {
+		String code;
+		code = ((Token)o1).getLex();
+		return code;
+	}
 }

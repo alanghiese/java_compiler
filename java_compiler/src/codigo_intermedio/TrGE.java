@@ -1,5 +1,10 @@
 package codigo_intermedio;
 
+import java_compiler.LexicalAnalizer;
+import utilities.Constants;
+import utilities.SymbolInformation;
+import utilities.TypeConverter;
+
 public class TrGE extends TrCND {
 
 	public TrGE(Operand o1, Operand o2) {
@@ -22,4 +27,12 @@ public class TrGE extends TrCND {
 		// TODO Auto-generated method stub
 		return ">="  + "," + o1.getRef()  + "," + o2.getRef();
 	}
+	
+	public String getComp() {
+		if (TypeConverter.getConversion(o1.getType(), o2.getType()).equals(Constants.L_INT))
+			return "JNGE";
+		
+		return "JNAE";
+	}
+	
 }

@@ -1,5 +1,9 @@
 package codigo_intermedio;
 
+import java_compiler.LexicalAnalizer;
+import utilities.Constants;
+import utilities.SymbolInformation;
+
 public class TrRET extends Triples {
 
 	public TrRET(Operand o1, Operand o2) {
@@ -25,6 +29,24 @@ public class TrRET extends Triples {
 	@Override
 	public String toString() {
 		return "RET"  + "," + o1.getRef();
+	}
+	
+	
+	
+	@Override
+	public String generateAssembler() {
+		String code;
+		if (super.type.equals(Constants.US_INT)) {
+			code = "MOV AX, " + o1.getMemRef() + '\n' +
+					"MOVE @RET AX" + '\n' +
+					"RET";
+		}
+		else{
+			code = "MOV EAX, " + o1.getMemRef() + '\n' +
+					"MOVE @RET EAX" + '\n' +
+					"RET";
+			}
+		return code;
 	}
 
 }

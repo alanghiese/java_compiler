@@ -4,6 +4,7 @@ public class FNCInformation extends SymbolInformation {
 
 	private Permissions permissions = new Permissions(false,false);
 	private String paramType = "FNC Undefined";
+	private String paramName = "NoName";
 	
 	
 	public FNCInformation() {
@@ -16,6 +17,14 @@ public class FNCInformation extends SymbolInformation {
 	
 	public void setPass(boolean b) {
 		this.permissions.setPass(b);
+	}
+	
+	public void setParamName(String name) {
+		this.paramName = name;
+	}
+	
+	public String getParamName() {
+		return this.paramName;
 	}
 	
 	public void setPermissions(Permissions p) {

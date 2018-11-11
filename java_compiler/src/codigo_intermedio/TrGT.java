@@ -1,5 +1,8 @@
 package codigo_intermedio;
 
+import utilities.Constants;
+import utilities.TypeConverter;
+
 public class TrGT extends TrCND {
 
 	public TrGT(Operand o1, Operand o2) {
@@ -22,4 +25,10 @@ public class TrGT extends TrCND {
 		return ">"  + "," + o1.getRef()  + "," + o2.getRef();
 	}
 
+	public String getComp() {
+		if (TypeConverter.getConversion(o1.getType(), o2.getType()).equals(Constants.L_INT))
+			return "JNG";
+		
+		return "JNA";
+	}
 }

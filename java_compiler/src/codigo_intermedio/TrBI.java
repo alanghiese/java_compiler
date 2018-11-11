@@ -1,5 +1,9 @@
 package codigo_intermedio;
 
+import java_compiler.LexicalAnalizer;
+import utilities.Constants;
+import utilities.SymbolInformation;
+
 public class TrBI extends Triples {
 
 	public TrBI(Operand o1, Operand o2) {
@@ -25,5 +29,12 @@ public class TrBI extends Triples {
 	public String toString() {
 		// TODO Auto-generated method stub
 		return "BI"  + "," + o1.getRef();
+	}
+	
+	@Override
+	public String generateAssembler() {
+		String code;
+		code = "JMP " + o1.getMemRef();
+		return code;
 	}
 }

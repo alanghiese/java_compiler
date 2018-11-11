@@ -6,6 +6,7 @@ public abstract class Triples extends Operand{
 	protected String type;
 	protected Operand o1;
 	protected Operand o2;
+	protected String destiny;
 	
 	public static int static_id=0;
 	private int id=0;
@@ -15,7 +16,7 @@ public abstract class Triples extends Operand{
 	public Triples(Operand o1, Operand o2) {
 		this.id = Triples.static_id;
 		Triples.static_id++;
-		
+		this.destiny = "@AUX" + this.id; 
 		this.o1 = o1;
 		this.o2 = o2;
 	}
@@ -43,11 +44,13 @@ public abstract class Triples extends Operand{
 		this.o1 = o1;
 		this.id = Triples.static_id;
 		Triples.static_id++;
+		this.destiny = "@AUX" + this.id;
 	}
 	
 	public Triples() {
 		this.id = Triples.static_id;
 		Triples.static_id++;
+		this.destiny = "@AUX" + this.id;
 	}
 	
 	public Operand getO1() {
@@ -70,5 +73,11 @@ public abstract class Triples extends Operand{
 	
 	@Override
 	public abstract String toString();
+	
+	public String getMemRef() {
+		return this.destiny;
+	}
+
+	public abstract String generateAssembler();
 	
 }

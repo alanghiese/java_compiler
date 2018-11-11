@@ -29,4 +29,9 @@ public class Label extends Triples {
 		return "Label [" + this.getId() + "]" ;
 	}
 
+	@Override
+	public String generateAssembler() {
+		return toString();
+	}
+
 }

@@ -2,15 +2,10 @@ package java_compiler;
 
 import java.util.List;
 
-import java.util.Stack;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedList;
 
 import codigo_intermedio.Triples;
 import utilities.Constants;
-import utilities.Token;
-import utilities.IDInformation;
 
 public class test {
 	
@@ -28,6 +23,21 @@ public class test {
 		return list;
 		
 	}
+	
+	public String showAssembler(List<Triples> lt) {
+		String list =  new String();
+		int cont = 0;
+		for( Triples t:lt ) {
+			System.out.println(t.getId() +". "+'\n'+t.generateAssembler());
+			list = cont + "." + t.generateAssembler() + '\n';
+			
+			cont++;
+			
+		}
+		return list;
+		
+	}
+
 
 	public static void main(String[] args) throws IOException {
 		if(args.length>1) {
@@ -37,6 +47,7 @@ public class test {
 			p.getTable(args[1]);
 			test t = new test();
 			t.showTriples(p.getTriples());
+			t.showAssembler(p.getTriples());
 		}
 		else {
 			System.out.println(Constants.ERROR_ARG);

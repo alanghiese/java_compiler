@@ -20,6 +20,7 @@ public class SymbolTable {
 
 	public SymbolTable() {
 		this.symbolTable = new HashMap<>();
+		this.symbolTable.put("@RET", new SymbolInformation());
 	}
 
 	public void addID(String name, IDInformation idi) {
@@ -31,6 +32,11 @@ public class SymbolTable {
 		if (!this.symbolTable.containsKey(name))
 			this.symbolTable.put(name, ctni);
 		((CTNInformation) this.symbolTable.get(name)).increaseCounter();
+	}
+	
+	public void addAUX(String name, SymbolInformation aux) {
+		if (!this.symbolTable.containsKey(name))
+			this.symbolTable.put(name, aux);
 	}
 
 	public void addFNC(String name, FNCInformation fnc) {
@@ -157,6 +163,12 @@ public class SymbolTable {
 	public String getParamType(String name) {
 		if (this.isFunction(name))
 			return ((FNCInformation) this.symbolTable.get(name)).getParamType();
+		return "Undefined";
+	}
+	
+	public String getParamName(String name) {
+		if (this.isFunction(name))
+			return ((FNCInformation) this.symbolTable.get(name)).getParamName();
 		return "Undefined";
 	}
 	
