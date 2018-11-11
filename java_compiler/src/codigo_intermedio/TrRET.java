@@ -9,16 +9,25 @@ public class TrRET extends Triples {
 	public TrRET(Operand o1, Operand o2) {
 		super(o1, o2);
 		super.type = super.o1.getType();
+
+		Triples.static_isFunction = false;
+		this.isFunction = true;
 	}
 
 	public TrRET(Operand o1) {
 		super(o1);
 		super.type = super.o1.getType();
+
+		Triples.static_isFunction = false;
+		this.isFunction = true;
 	}
 
 	public TrRET() {
 		super();
 		super.type = super.o1.getType();
+
+		Triples.static_isFunction = false;
+		this.isFunction = true;
 	}
 
 	@Override
@@ -38,12 +47,12 @@ public class TrRET extends Triples {
 		String code;
 		if (super.type.equals(Constants.US_INT)) {
 			code = "MOV AX, " + o1.getMemRef() + '\n' +
-					"MOVE @RET AX" + '\n' +
+					"MOVE @RETu AX" + '\n' +
 					"RET";
 		}
 		else{
 			code = "MOV EAX, " + o1.getMemRef() + '\n' +
-					"MOVE @RET EAX" + '\n' +
+					"MOVE @RETi EAX" + '\n' +
 					"RET";
 			}
 		return code;

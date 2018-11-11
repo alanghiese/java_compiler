@@ -25,6 +25,7 @@ public class CTNInformation extends SymbolInformation {
 		return "Constante tipo: " + super.type;
 	}
         
+	
         
 
 }

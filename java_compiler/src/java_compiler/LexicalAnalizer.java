@@ -84,11 +84,10 @@ public class LexicalAnalizer {
 
 			}
 			//System.out.println(codeLine);
-			if (token.getToken() != Constants.DEFAULT_TOKEN) {
+			/*if (token.getToken() != Constants.DEFAULT_TOKEN) {
 				token.setLine(this.currentLine);
-				//System.out.println(yylval.sval);
 				System.out.println("-----------------" + token.getMsg());
-			};
+			};*/
 			
 			if (token.getToken()==Constants.ERR_TOKEN) {
 				//System.out.println("-----------------" + token.getMsg());

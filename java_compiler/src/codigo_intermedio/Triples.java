@@ -7,13 +7,16 @@ public abstract class Triples extends Operand{
 	protected Operand o1;
 	protected Operand o2;
 	protected String destiny;
+	protected static boolean static_isFunction = false;
+	public boolean isFunction = false;
 	
 	public static int static_id=0;
 	private int id=0;
 	
 	
-	
 	public Triples(Operand o1, Operand o2) {
+		if (Triples.static_isFunction)
+			this.isFunction = true;
 		this.id = Triples.static_id;
 		Triples.static_id++;
 		this.destiny = "@AUX" + this.id; 
@@ -41,6 +44,8 @@ public abstract class Triples extends Operand{
 	
 	
 	public Triples(Operand o1) {
+		if (Triples.static_isFunction)
+			this.isFunction = true;
 		this.o1 = o1;
 		this.id = Triples.static_id;
 		Triples.static_id++;
@@ -48,6 +53,8 @@ public abstract class Triples extends Operand{
 	}
 	
 	public Triples() {
+		if (Triples.static_isFunction)
+			this.isFunction = true;
 		this.id = Triples.static_id;
 		Triples.static_id++;
 		this.destiny = "@AUX" + this.id;
@@ -77,7 +84,7 @@ public abstract class Triples extends Operand{
 	public String getMemRef() {
 		return this.destiny;
 	}
-
+	
 	public abstract String generateAssembler();
 	
 }

@@ -647,7 +647,7 @@ public void yyerror(String s){
 }
 
 public void print(String s){
-    System.out.println(s);
+    //System.out.println(s);
 }
 
 public boolean correctCall(Boolean converted, Operand param, String functionName, String paramName, int line){

@@ -50,19 +50,19 @@ public class TrINV extends Triples {
 			code ="MOV " + LexicalAnalizer.symbolTable.getParamName(o1.getMemRef()) + "," + o2.getMemRef() + '\n' +
 					"CALL " + o1.getMemRef() + '\n' + 
 					"MOV " + o2.getMemRef() + "," + LexicalAnalizer.symbolTable.getParamName(o1.getMemRef()) + '\n' +
-					"MOV AX, @RET" + '\n' + 
+					"MOV AX, @RETu" + '\n' + 
 					"MOV " + this.destiny + ", AX"; 
 		}
 		else{
 			code ="MOV " + LexicalAnalizer.symbolTable.getParamName(o1.getMemRef()) + "," + o2.getMemRef() + '\n' +
 					"CALL " + o1.getMemRef() + '\n' + 
 					"MOV " + o2.getMemRef() + "," + LexicalAnalizer.symbolTable.getParamName(o1.getMemRef()) + '\n' +
-					"MOV EAX, @RET" + '\n' + 
+					"MOV EAX, @RETi" + '\n' + 
 					"MOV " + this.destiny + ", EAX"; 
 			}
 		return code;
 	}
 	
 	
-
+ 
 }

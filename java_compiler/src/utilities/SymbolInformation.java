@@ -25,4 +25,12 @@ public class SymbolInformation {
 	public boolean isVar() {
 		return false;
 	}
+	
+	public String getCode() {
+		if (this.type.equals(Constants.L_INT))
+			return " DD";
+		else if (this.type.equals(Constants.US_INT))
+			return " DW";
+		return " db";
+	}
 }

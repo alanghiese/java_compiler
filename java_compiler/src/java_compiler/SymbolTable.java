@@ -20,7 +20,12 @@ public class SymbolTable {
 
 	public SymbolTable() {
 		this.symbolTable = new HashMap<>();
-		this.symbolTable.put("@RET", new SymbolInformation());
+		SymbolInformation si = new SymbolInformation();
+		si.setType(Constants.L_INT);
+		SymbolInformation su = new SymbolInformation();
+		su.setType(Constants.US_INT);
+		this.symbolTable.put("@RETi", si);
+		this.symbolTable.put("@RETu", su);
 	}
 
 	public void addID(String name, IDInformation idi) {
