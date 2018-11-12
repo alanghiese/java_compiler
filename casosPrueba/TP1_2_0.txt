@@ -57,12 +57,12 @@ while (_valor>=_paraComparar){
 	endif,
 } 
 
-if (_valor>_paraComparar){
+if (_valor<_paraComparar){
 	print('Algo salio mal'),
 }
 else
 {
-	if(_valor< 0_l){
+	if(_valor> 0_l){
 		print('numero negativo'),
 	}
 	else{
