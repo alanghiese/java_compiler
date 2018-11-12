@@ -4,6 +4,7 @@ public class SymbolInformation {
 	public final static String _DEFAULT_TYPE = "Default type";
 
 	protected String type = _DEFAULT_TYPE;
+	protected boolean auxiliary = false;
 
 	@Override
 	public String toString() {
@@ -25,6 +26,16 @@ public class SymbolInformation {
 	public boolean isVar() {
 		return false;
 	}
+	
+	
+	public void setAuxiliary() {
+		this.auxiliary = true;
+	}
+	
+	public boolean isAuxiliary() {
+		return this.auxiliary;
+	}
+	
 	
 	public String getCode() {
 		if (this.type.equals(Constants.L_INT))

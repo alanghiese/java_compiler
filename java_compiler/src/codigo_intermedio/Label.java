@@ -15,6 +15,13 @@ public class Label extends Triples {
 
 	public Label() {
 		// TODO Auto-generated constructor stub
+		this.destiny = "Label"+this.getId();
+	}
+	
+	public void decreaseId() {
+		this.id--;
+		Triples.static_id--;
+		this.destiny = "Label"+this.getId();
 	}
 
 	@Override
@@ -31,7 +38,7 @@ public class Label extends Triples {
 
 	@Override
 	public String generateAssembler() {
-		return toString();
+		return "Label"+this.getId()+":";
 	}
 
 }

@@ -11,7 +11,7 @@ public abstract class Triples extends Operand{
 	public boolean isFunction = false;
 	
 	public static int static_id=0;
-	private int id=0;
+	protected int id=0;
 	
 	
 	public Triples(Operand o1, Operand o2) {

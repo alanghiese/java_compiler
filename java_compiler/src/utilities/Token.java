@@ -64,6 +64,12 @@ public class Token extends Operand{
 	@Override
 	public String getMemRef() {
 		// TODO Auto-generated method stub
-		return this.getLex();
+		if(!LexicalAnalizer.symbolTable.isFunction(this.getLex()) 
+			&& !LexicalAnalizer.symbolTable.isVar(this.getLex())
+			&& !LexicalAnalizer.symbolTable.isAuxiliary(this.getLex())
+			&& !LexicalAnalizer.symbolTable.getType(this.getLex()).equals(Constants.STRING))
+			return "_"+this.getLex().replace("-", "n");
+		else
+			return this.getLex();
 	}
 }

@@ -19,7 +19,9 @@ public class TrBF extends Triples {
 	public TrBF() {
 		// TODO Auto-generated constructor stub
 	}
-
+	
+	
+	
 	@Override
 	public String getType() {
 		// TODO Auto-generated method stub
@@ -36,6 +38,7 @@ public class TrBF extends Triples {
 	public String generateAssembler() {
 		String code;
 		code = ((TrCND)o2).getComp() + " " + o1.getMemRef(); 
+		
 		return code;
 	}
 

@@ -35,11 +35,12 @@ public class TrCNV extends Triples {
 	@Override
 	public String generateAssembler() {
 		String code;
-		code = "MOV AX." + o1.getMemRef() + '\n' +
-				"CWDE" + '\n' +
+		code = "MOV EAX, 0" + '\n' +
+				"ADD AX," + o1.getMemRef() + '\n' +
 				"MOV " + this.destiny + ",EAX";
 		SymbolInformation symb = new SymbolInformation();
 		symb.setType(Constants.L_INT);
+		symb.setAuxiliary();
 		LexicalAnalizer.symbolTable.addAUX(this.destiny, symb);
 		return code;
 	}

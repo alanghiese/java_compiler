@@ -24,11 +24,12 @@ public class TrDIV extends TrOperations {
 			code = "ADD " + o2.getMemRef() + ",0" + '\n' +
 					"JZ DIVZERO" + '\n' + 
 					"MOV AX," + o1.getMemRef() + '\n' +
-					"CWD" + '\n' + 
+					"MOV DX,0" + '\n' + 
 					"DIV " + o2.getMemRef() + '\n' +
 					"MOV " + destiny + ",AX";
 			SymbolInformation symb = new SymbolInformation();
 			symb.setType(Constants.US_INT);
+			symb.setAuxiliary();
 			LexicalAnalizer.symbolTable.addAUX(destiny, symb);
 		}
 		else{
@@ -40,6 +41,7 @@ public class TrDIV extends TrOperations {
 					"MOV " + destiny + ",EAX";
 			SymbolInformation symb = new SymbolInformation();
 			symb.setType(Constants.L_INT);
+			symb.setAuxiliary();
 			LexicalAnalizer.symbolTable.addAUX(destiny, symb);
 			}
 		return code;

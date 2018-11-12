@@ -40,7 +40,9 @@ public class TrFUN extends Triples {
 	public String generateAssembler() {
 		
 		String code;
-		code = ((Token)o1).getLex();
+		StringBuilder name = new StringBuilder("@");
+		name.append(o1.getMemRef());
+		code = name.toString() + ":";
 		return code;
 		
 	}

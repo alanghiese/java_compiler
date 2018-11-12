@@ -22,8 +22,10 @@ public class SymbolTable {
 		this.symbolTable = new HashMap<>();
 		SymbolInformation si = new SymbolInformation();
 		si.setType(Constants.L_INT);
+		si.setAuxiliary();
 		SymbolInformation su = new SymbolInformation();
 		su.setType(Constants.US_INT);
+		su.setAuxiliary();
 		this.symbolTable.put("@RETi", si);
 		this.symbolTable.put("@RETu", su);
 	}
@@ -126,7 +128,15 @@ public class SymbolTable {
 		return false;
 	}
 	
-	private boolean isVar(String name) {
+	public boolean isAuxiliary(String name) {
+		if (this.symbolTable.containsKey(name)) {
+			SymbolInformation info=this.symbolTable.get(name);
+			return info.isAuxiliary() ;
+		}
+		return false;
+	}
+	
+	public boolean isVar(String name) {
 		if (this.symbolTable.containsKey(name)) {
 			return this.symbolTable.get(name).isVar();
 		}

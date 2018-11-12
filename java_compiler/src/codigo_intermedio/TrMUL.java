@@ -26,15 +26,17 @@ public class TrMUL extends TrOperations {
 					"MOV " + destiny + ",AX";
 			SymbolInformation symb = new SymbolInformation();
 			symb.setType(Constants.US_INT);
+			symb.setAuxiliary();
 			LexicalAnalizer.symbolTable.addAUX(destiny, symb);
 		}
 		else{
 			code = "MOV EAX," + o1.getMemRef() + '\n' +
 					"IMUL EAX," + o2.getMemRef() + '\n' +
-					"JC MULOVFLW" + '\n' + 
+					"JO MULOVFLW" + '\n' + 
 					"MOV " + destiny + ",EAX";
 			SymbolInformation symb = new SymbolInformation();
 			symb.setType(Constants.L_INT);
+			symb.setAuxiliary();
 			LexicalAnalizer.symbolTable.addAUX(destiny, symb);
 			}
 		return code;

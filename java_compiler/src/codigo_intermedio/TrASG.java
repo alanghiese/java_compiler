@@ -36,6 +36,7 @@ public class TrASG extends Triples {
 	public String generateAssembler() {
 		String code;
 		if (super.type.equals(Constants.US_INT)) {
+			
 			code = "MOV AX," + o2.getMemRef() + '\n' +
 					"MOV " + o1.getMemRef() + ",AX" ;
 		}

@@ -691,13 +691,13 @@ public void testPos(Token t) {
 				((CTNInformation)LexicalAnalizer.symbolTable.getLexeme(t.getLex())).decreaseCounter();
 				CTNInformation ctni = new CTNInformation();
 				ctni.setType(Constants.L_INT);
-				LexicalAnalizer.symbolTable.addCTN(l.toString(), ctni);
+				LexicalAnalizer.symbolTable.addCTN(l.toString()+"_l", ctni);
 			}
 			else {
 				LexicalAnalizer.symbolTable.removeCTN(t.getLex());
 				CTNInformation ctni = new CTNInformation();
 				ctni.setType(Constants.L_INT);
-				LexicalAnalizer.symbolTable.addCTN(l.toString(), ctni);
+				LexicalAnalizer.symbolTable.addCTN(l.toString()+"_l", ctni);
 			}
 		}
 			
@@ -715,8 +715,8 @@ public void testPos(Token t) {
 			((CTNInformation)LexicalAnalizer.symbolTable.getLexeme(t.getLex())).decreaseCounter();
 		else
 			LexicalAnalizer.symbolTable.removeCTN(t.getLex());
-        t.setLex(l.toString());
-		LexicalAnalizer.symbolTable.addCTN(l.toString(), ctni);
+        t.setLex(l.toString()+"_l");
+		LexicalAnalizer.symbolTable.addCTN(l.toString()+"_l", ctni);
 		
 	}
 

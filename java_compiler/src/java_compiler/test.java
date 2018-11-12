@@ -44,7 +44,7 @@ public class test {
 	
 				p.getTable(args[1]);
 	
-	
+				gen.genTriples(p.getTriples());
 				//System.out.println('\n' + "VARIABLES" + '\n');
 				//show variables
 				//System.out.println(gen.genVariables());

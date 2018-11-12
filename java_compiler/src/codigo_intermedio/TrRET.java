@@ -47,12 +47,12 @@ public class TrRET extends Triples {
 		String code;
 		if (super.type.equals(Constants.US_INT)) {
 			code = "MOV AX, " + o1.getMemRef() + '\n' +
-					"MOVE @RETu AX" + '\n' +
+					"MOV @RETu, AX" + '\n' +
 					"RET";
 		}
 		else{
 			code = "MOV EAX, " + o1.getMemRef() + '\n' +
-					"MOVE @RETi EAX" + '\n' +
+					"MOV @RETi, EAX" + '\n' +
 					"RET";
 			}
 		return code;

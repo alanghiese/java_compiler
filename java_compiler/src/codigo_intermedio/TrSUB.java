@@ -28,6 +28,7 @@ public class TrSUB extends TrOperations{
 					"JC NEGSUB";
 			SymbolInformation symb = new SymbolInformation();
 			symb.setType(Constants.US_INT);
+			symb.setAuxiliary();
 			LexicalAnalizer.symbolTable.addAUX(destiny, symb);
 		}
 		else{
@@ -36,6 +37,7 @@ public class TrSUB extends TrOperations{
 					"MOV " + destiny + ",EAX";
 			SymbolInformation symb = new SymbolInformation();
 			symb.setType(Constants.L_INT);
+			symb.setAuxiliary();
 			LexicalAnalizer.symbolTable.addAUX(destiny, symb);
 			}
 		return code;
