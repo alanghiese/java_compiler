@@ -1,12 +1,14 @@
 package codigo_intermedio;
 
 import utilities.Constants;
+import utilities.TypeConverter;
 
 public class TrCND extends Triples {
 
 	public TrCND(Operand o1, Operand o2) {
 		super(o1, o2);
-		super.type = Constants.TYPE_BOOLEAN;
+		super.type = TypeConverter.getConversion(o1.getType(), o2.getType());
+		
 	}
 
 	public TrCND(Operand o1) {

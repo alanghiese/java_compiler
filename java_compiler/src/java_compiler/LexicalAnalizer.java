@@ -61,7 +61,7 @@ public class LexicalAnalizer {
 					e.printStackTrace();
 				}
 			}
-
+			token.setLine(currentLine);
 			while (status != TransitionTable.FINAL_ST && codeLine.length() != 0) {
 
 				nextChar = codeLine.charAt(0);

@@ -1282,8 +1282,12 @@ case 73:
 	                                pendingTriples.add(triples.getLast());
 								}
 
-                                else
+                                else {
+                                	Triples t = new TrBF(null, null);
+                                	triples.add(t);
+                                	pendingTriples.add(triples.getLast());
                                 	yyerror(((Token)val_peek(1).obj).getLine(),"Semantic Error: Tipos incompatibles en comparacion");
+                                }
                             }
 break;
 case 74:
