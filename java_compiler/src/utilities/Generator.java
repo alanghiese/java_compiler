@@ -115,6 +115,7 @@ public class Generator {
 		code.add("invoke MessageBox, NULL, addr  error_neg, addr   error_zero, MB_OK");
 		code.add("invoke ExitProcess, 1");
 		code.add("exc_end:");
+		code.add("invoke ExitProcess, 0");
 		code.add("END START");
 		
 		
