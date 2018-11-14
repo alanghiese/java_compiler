@@ -21,7 +21,7 @@ public class test {
 			List<String> functionCode = new LinkedList<>();
 			//p.yydebug = true;
 			p.yyparse();
-			if (!p.macrigato) {
+			if (!Parser.macrigato) {
 				Generator gen = new Generator();
 				
 				//show triples

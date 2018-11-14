@@ -620,7 +620,7 @@ LinkedList<String> paramList = new LinkedList<>();
 LinkedList<Permissions> permsList = new LinkedList<>();
 String typeRet = new String();
 String currentScope=GLOBAL_SCOPE;
-boolean macrigato=false;
+static boolean macrigato=false;
 
 public Parser(String path) {
 		la = new LexicalAnalizer(path);

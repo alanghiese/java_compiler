@@ -71,11 +71,12 @@ public class LexicalAnalizer {
 				
 				
 				if (token.getToken()==Constants.ERR_TOKEN) {
-					
+					token.setLine(this.currentLine);
 					System.out.println("-----------------" + token.getMsg());
 					
 					token = new Token();
 					status = 0;
+					Parser.macrigato = true;
 					
 				
 				}
@@ -84,15 +85,16 @@ public class LexicalAnalizer {
 
 			}
 			//System.out.println(codeLine);
-			/*if (token.getToken() != Constants.DEFAULT_TOKEN) {
+			if (token.getToken() != Constants.DEFAULT_TOKEN) {
 				token.setLine(this.currentLine);
-				System.out.println("-----------------" + token.getMsg());
-			};*/
+				//System.out.println("-----------------" + token.getMsg());
+			};
 			
 			if (token.getToken()==Constants.ERR_TOKEN) {
 				//System.out.println("-----------------" + token.getMsg());
 				token = new Token();
 				status = 0;
+				Parser.macrigato = true;
 				
 			}
 			
