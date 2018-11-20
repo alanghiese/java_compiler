@@ -1,0 +1,17 @@
+linteger _A;_B,
+_A:=4_l,
+_B:=6_l,
+
+linteger _C(linteger _P){
+    print('funcion'),
+    return (1_l*9_l),
+}
+
+while(_A<_B){
+    if (_A>=_C(_A;readonly))
+        print('entre if'),
+    endif, 
+    _A:=_A+1_ui,
+}
+
+

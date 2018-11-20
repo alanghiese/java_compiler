@@ -1,0 +1,7 @@
+#Variables y funciones no declaradas# 
+
+linteger _declarada,
+
+_nodeclarada := _declarada,
+
+_declarada := _funcionNoDeclarada(_declarada;write),

@@ -1,0 +1,9 @@
+#Variables y funciones redeclaradas#
+linteger _A,
+
+usinteger _A,
+
+linteger _fun(usinteger _C){
+    _C := 1_l,
+    return (_C+1_l),
+}

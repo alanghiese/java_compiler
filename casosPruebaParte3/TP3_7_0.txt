@@ -1,0 +1,12 @@
+#Sentencia de control con ELSE#
+linteger _A;_B;_C,
+_A:=4_l,
+_B:=3_l,
+_C:=1_l,
+
+
+if (_A=_B+_C)
+    print('Funciona!'),
+else
+    print('no funciona!'),
+endif,

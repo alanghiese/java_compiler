@@ -1,0 +1,16 @@
+#Sentencia de control WHILE#
+linteger _A;_B;_C,
+_A:=4_l,
+_B:=33_l,
+_C:=5_l,
+
+while(_A>=_B)
+    _A:=_A+_C,
+
+while(_A<_B){
+    print('esta mal'),
+    _A:=_A+1_ui,
+    _func(_B;readonly),
+}
+
+

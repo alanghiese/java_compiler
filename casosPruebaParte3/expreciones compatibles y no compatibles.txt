@@ -1,0 +1,9 @@
+#Expresiones con tipos compatibles y tipos no compatibles#
+#no tenemos tipos incompatibles en expresiones, solo en asignaciones#
+linteger _linteger1,
+usinteger _usinteger,
+
+_linteger1 := 1_l,
+_usinteger := 2_l,
+
+_linteger1 := _linteger1*_usinteger,

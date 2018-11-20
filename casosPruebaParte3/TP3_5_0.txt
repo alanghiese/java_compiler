@@ -1,0 +1,13 @@
+#Sentencia de control con bloque de sentencias bien definida#
+linteger _A;_B,
+_A:=4_l,
+_B:=4_l,
+
+if (_A=_B)
+{
+    print('Funciona1'),
+    print('Funciona2'),
+}
+endif,
+
+

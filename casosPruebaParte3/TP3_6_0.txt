@@ -1,0 +1,27 @@
+#Sentencia de control con ELSE#
+linteger _A;_B,
+_A:=4_l,
+_B:=33_l,
+
+if (_A=_B)
+    print('no funciona!'),
+else
+    print('Funciona!'),
+endif,
+
+if (_A>=_B){
+    print('Funciona!'),
+    _A:=_B,
+}
+else
+    print('no funciona!'),
+endif,
+
+if (_A=_B){
+    print('Funciona!'),
+}
+else{
+    print('no funciona!'),
+}
+endif,
+
