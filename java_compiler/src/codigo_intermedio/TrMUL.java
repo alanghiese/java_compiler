@@ -21,7 +21,7 @@ public class TrMUL extends TrOperations {
 		String code;
 		if (super.type.equals(Constants.US_INT)) {
 			code = "MOV AX," + o1.getMemRef() + '\n' +
-					"MUL AX," + o2.getMemRef() + '\n' +
+					"MUL " + o2.getMemRef() + '\n' +
 					"JC MULOVFLW" + '\n' + 
 					"MOV " + destiny + ",AX";
 			SymbolInformation symb = new SymbolInformation();
@@ -31,7 +31,7 @@ public class TrMUL extends TrOperations {
 		}
 		else{
 			code = "MOV EAX," + o1.getMemRef() + '\n' +
-					"IMUL EAX," + o2.getMemRef() + '\n' +
+					"IMUL " + o2.getMemRef() + '\n' +
 					"JO MULOVFLW" + '\n' + 
 					"MOV " + destiny + ",EAX";
 			SymbolInformation symb = new SymbolInformation();

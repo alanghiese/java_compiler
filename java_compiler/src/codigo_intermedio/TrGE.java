@@ -1,8 +1,6 @@
 package codigo_intermedio;
 
-import java_compiler.LexicalAnalizer;
 import utilities.Constants;
-import utilities.SymbolInformation;
 import utilities.TypeConverter;
 
 public class TrGE extends TrCND {

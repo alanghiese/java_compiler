@@ -1,9 +1,5 @@
 package codigo_intermedio;
 
-import java_compiler.LexicalAnalizer;
-import utilities.Constants;
-import utilities.SymbolInformation;
-
 public class TrBF extends Triples {
 
 	public TrBF(Operand o1, Operand o2) {

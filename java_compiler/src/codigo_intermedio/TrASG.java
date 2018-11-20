@@ -1,8 +1,7 @@
 package codigo_intermedio;
 
-import java_compiler.LexicalAnalizer;
+
 import utilities.Constants;
-import utilities.SymbolInformation;
 
 public class TrASG extends Triples {
 

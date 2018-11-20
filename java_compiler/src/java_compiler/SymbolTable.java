@@ -150,20 +150,18 @@ public class SymbolTable {
 	}
 
 	public boolean paramAllow(String functionName, int allow) {
+		boolean pass = ((FNCInformation) this.symbolTable.get(functionName)).isPass();
+		boolean write = ((FNCInformation) this.symbolTable.get(functionName)).isWrite();
+		boolean readonly =((FNCInformation) this.symbolTable.get(functionName)).isReadonly();
 		switch (allow) {
-		case Constants.FUNC_ALLOW_PASS:
-			return ((FNCInformation) this.symbolTable.get(functionName)).isPass()
-					|| ((FNCInformation) this.symbolTable.get(functionName)).isReadonly();
+		case Constants.FUNC_ALLOW_PASS: 
+			return pass;
 		case Constants.FUNC_ALLOW_WRITE:
-			return ((FNCInformation) this.symbolTable.get(functionName)).isWrite()
-					|| ((FNCInformation) this.symbolTable.get(functionName)).isReadonly();
+			return write;
 		case Constants.FUNC_ALLOW_READ:
-			return ((FNCInformation) this.symbolTable.get(functionName)).isReadonly();
+			return readonly;
 		case Constants.FUNC_ALLOW_WRITEPASS:
-			return ((FNCInformation) this.symbolTable.get(functionName)).isWritePass()
-					|| ((FNCInformation) this.symbolTable.get(functionName)).isWrite()
-					|| ((FNCInformation) this.symbolTable.get(functionName)).isPass()
-					|| ((FNCInformation) this.symbolTable.get(functionName)).isReadonly();
+			return true;
 
 		}
 		return false;

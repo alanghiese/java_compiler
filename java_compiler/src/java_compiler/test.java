@@ -6,7 +6,6 @@ import java.util.List;
 
 import java.io.IOException;
 
-import codigo_intermedio.Triples;
 import utilities.Constants;
 import utilities.Generator;
 
@@ -14,7 +13,7 @@ public class test {
 	
 
 	public static void main(String[] args) throws IOException {
-		if(args.length>1) {
+		if(args.length==4) {
 			long startTime = System.currentTimeMillis();
 			Parser p = new Parser(args[0]);
 			List<String> commonCode = new LinkedList<>();
@@ -23,31 +22,9 @@ public class test {
 			p.yyparse();
 			if (!Parser.macrigato) {
 				Generator gen = new Generator();
-				
-				//show triples
-				//System.out.println(gen.genTriples(p.getTriples()));
-				//generate assembler code and divide it in two lists
 				gen.genAssembler(p.getTriples(),commonCode,functionCode);
-				
-				
-				//show the assembler code
-				//functions
-				/*System.out.println("ZONA DE FUNCIONES" + '\n');
-				for(String s: functionCode) {
-					System.out.println(s);
-				}*/
-				//!functions
-				/*System.out.println('\n' +"LO DEMAS :)" + '\n');
-				for(String s: commonCode) {
-					System.out.println(s);
-				}*/
-	
 				p.getTable(args[1]);
-	
-				gen.genTriples(p.getTriples());
-				//System.out.println('\n' + "VARIABLES" + '\n');
-				//show variables
-				//System.out.println(gen.genVariables());
+				gen.genTriplesFile(args[3], p.getTriples());
 				List<String> vars = new ArrayList<>();
 				vars.add(gen.genVariables());
 				gen.genOutput(vars, functionCode, commonCode, args[2]);

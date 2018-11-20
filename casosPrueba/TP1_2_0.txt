@@ -1,3 +1,95 @@
+linteger _numero,
+usinteger _positivo,
+_numero := 3_l,
+
+_numero := _numero / 0_ui,
+
+_numero := 30000_ui * 5_ui,
+
+_positivo := 1_ui - 2_ui,
+
+
+
+
+
+#
+linteger _unNumero,
+
+_unNumero := 2_ui,
+
+_unNumero := _unNumero * 2_ui,
+_unNumero := _unNumero * 2_ui,
+_unNumero := _unNumero * 2_ui,
+
+
+
+linteger _mostrarValor(linteger _elNumero){
+    if (_elNumero!=2_l){
+        if (_elNumero!=4_l){
+            if (_elNumero!=8_ui){
+                if (_elNumero!=16_l){
+                    print('no es ninguno'),
+                }else{
+                    print('es 16'),
+                }
+                endif,
+            }else{
+                print('es 8'),
+            }
+            endif,
+        }else{
+            print('es 4'),
+        }
+        endif,
+    }else{
+        print('es 2'),
+    }
+    endif,
+    return (0_l),
+}
+
+_mostrarValor(_unNumero;readonly),
+
+while (_unNumero!=2_ui){
+    while (_unNumero!=4_l){
+        _unNumero:=_unNumero/2_l,
+    }
+    _unNumero:=_unNumero-1_ui,
+    _unNumero:=_unNumero-1_ui,
+}
+
+_mostrarValor(_unNumero;write;pass),
+
+
+usinteger _veinte,
+_veinte:=20_ui,
+
+usinteger _restarUno(usinteger _aRestar){
+    return(_aRestar-1_ui),
+}
+
+usinteger _restarDiez(usinteger _numero){
+    usinteger _contador,
+    _contador:=0_ui, 
+    while(_contador!=10_ui){
+        _numero:=_restarUno(_numero;readonly),
+        _contador:=_contador+1_ui,
+    }
+    return (0_ui),
+}
+
+_restarDiez(_veinte;write),
+if(_veinte=10_l){
+    print('Veinte es 10'),
+}
+endif,
+
+
+#
+
+
+
+#
 linteger _valor;_restarleEsto,
 usinteger _sumarleEsto,
 usinteger _paraComparar,
@@ -6,10 +98,6 @@ _paraComparar := 4_ui,
 _valor := 5_ui,
 _restarleEsto := -1_l,
 _sumarleEsto := 1_ui,
-
-
-asd
-
 
 
 
@@ -72,3 +160,4 @@ else
 
 }
 endif,
+#

@@ -222,8 +222,12 @@ cond    :   expr comp expr	{   if (TypeConverter.isValidBidirectional(((Operand)
 	                                pendingTriples.add(triples.getLast());
 								}
 
-                                else
+                                else{
+                                    Triples t = new TrBF(null, null);
+                                    triples.add(t);
+                                    pendingTriples.add(triples.getLast());
                                 	yyerror(((Token)$2.obj).getLine(),"Semantic Error: Tipos incompatibles en comparacion");
+                                }
                             }
         |   comp expr       {yyerror(((Token) $1.obj).getLine(), "Falta expresion del lado izquierdo del comparador");}
         |   expr comp       {yyerror(((Token) $2.obj).getLine(), "Falta expresion del lado derecho del comparador");}
@@ -253,7 +257,7 @@ inv_fun :   ID '(' func_var ')'	{	Boolean converted = false;
                                     if (!paramList.isEmpty()){
                                          if ( ((FNCInformation)LexicalAnalizer.symbolTable.getLexeme(((Token) $1.obj).getLex())).isWrite() )
                                              permsList.getLast().setWrite(true);
-                                          if (((Token) $1.obj).getLex().equals(paramList.getFirst()))
+                                          if (((Operand) $3.obj).getLex().equals(paramList.getFirst()))
                                              permsList.getLast().setPass(true);                                   
                                      }   
                                   $$=new ParserVal(t);                                   

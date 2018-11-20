@@ -33,11 +33,11 @@ public class FNCInformation extends SymbolInformation {
 	}
 	
 	public boolean isWrite() {
-		return this.permissions.isWrite();
+		return this.permissions.isWrite() && !this.permissions.isPass() ;
 	}
 
 	public boolean isPass() {
-		return this.permissions.isPass();
+		return this.permissions.isPass() && !this.permissions.isWrite();
 	}
 	
 	public boolean isWritePass() {

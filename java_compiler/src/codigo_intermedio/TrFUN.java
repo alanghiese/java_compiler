@@ -1,14 +1,7 @@
 package codigo_intermedio;
 
-import java_compiler.LexicalAnalizer;
-import utilities.Constants;
-import utilities.SymbolInformation;
-import utilities.Token;
 
 public class TrFUN extends Triples {
-	
-	private String name;
-
 	
 	public TrFUN(Operand o1) {
 		super(o1);

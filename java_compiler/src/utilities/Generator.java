@@ -27,6 +27,19 @@ public class Generator {
 		
 	}
 	
+	public void genTriplesFile(String path, List<Triples> lt) {
+		List<String> code = new ArrayList<>();
+		for (Triples t: lt)
+			code.add(t.getId() +". "+t.toString());
+		
+		Path file = Paths.get(path);
+		try {
+			Files.write(file, code, Charset.forName("UTF-8"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	public void genAssembler(List<Triples> lt, List<String> commonCode, List<String> functionCode) {
 		/*for( Triples t:lt ) {
@@ -46,7 +59,7 @@ public class Generator {
 		Set<String> vars = LexicalAnalizer.symbolTable.getAll();
 		for(String st : vars) {
 			if (LexicalAnalizer.symbolTable.getLexeme(st).getType().equals(Constants.STRING))
-				solution.append(st.replace(" ", "_") + LexicalAnalizer.symbolTable.getLexeme(st).getCode() + " \"" + st + "\"" + '\n');
+				solution.append(st.replace(" ", "_") + LexicalAnalizer.symbolTable.getLexeme(st).getCode() + " \"" + st + "\",0" + '\n');
 			else if (!LexicalAnalizer.symbolTable.isFunction(st) 
 					&& !LexicalAnalizer.symbolTable.isVar(st)
 					&& !LexicalAnalizer.symbolTable.isAuxiliary(st)) {
@@ -96,9 +109,9 @@ public class Generator {
 				"includelib C:\\masm32\\lib\\user32.lib \n" + 
 				"includelib C:\\masm32\\lib\\masm32.lib");
 		code.add(".DATA");
-		code.add("error_zero db \"division por zero\"");
-		code.add("error_neg db \"usinteger negativo\"");
-		code.add("error_ovflw db \"overflow en el producto\"");
+		code.add("error_zero db \"division por zero\",0");
+		code.add("error_neg db \"usinteger negativo\",0");
+		code.add("error_ovflw db \"overflow en el producto\",0");
 		code.addAll(vars);
 		code.add(".CODE");
 		code.addAll(funcs);
@@ -106,16 +119,16 @@ public class Generator {
 		code.addAll(lines);
 		code.add("JMP exc_end");
 		code.add("MULOVFLW:");
-		code.add("invoke MessageBox, NULL, addr  error_ovflw, addr   error_zero, MB_OK");
+		code.add("invoke MessageBox, NULL, addr  error_ovflw, addr   error_ovflw, MB_OK");
 		code.add("invoke ExitProcess, 1");
 		code.add("DIVZERO:");
 		code.add("invoke MessageBox, NULL, addr  error_zero, addr   error_zero, MB_OK");
 		code.add("invoke ExitProcess, 1");
 		code.add("NEGSUB:");
-		code.add("invoke MessageBox, NULL, addr  error_neg, addr   error_zero, MB_OK");
+		code.add("invoke MessageBox, NULL, addr  error_neg, addr   error_neg, MB_OK");
 		code.add("invoke ExitProcess, 1");
 		code.add("exc_end:");
-		code.add("invoke ExitProcess, 0");
+		code.add("invoke ExitProcess,0");
 		code.add("END START");
 		
 		Path file = Paths.get(path);

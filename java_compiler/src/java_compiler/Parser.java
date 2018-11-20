@@ -628,7 +628,7 @@ public Parser(String path) {
 
 public void yyerror(int l, String s){
 	macrigato=true;
-    System.out.println("Sintax Error: Line " + l + " - " + s);
+    System.out.println("Linea " + l + " - " + s);
 
 }
 
@@ -740,7 +740,7 @@ public void testPos(Token t) {
                     LexicalAnalizer.symbolTable.setType(var, type);
                     LexicalAnalizer.symbolTable.setScope(var,currentScope);
                 }else{
-                    yyerror(lineNumber, "El id "+ var +" ya fue usado");
+                    yyerror(lineNumber, "Sintax Error: El id "+ var +" ya fue usado");
                 }
             varList.clear();
         }
@@ -952,11 +952,11 @@ case 11:
 break;
 case 12:
 //#line 37 "gramatica"
-{yyerror(((Token) val_peek(0).obj).getLine(), "Falta especificar el tipo de la variable");}
+{yyerror(((Token) val_peek(0).obj).getLine(), "Sintax Error: Falta especificar el tipo de la variable");}
 break;
 case 13:
 //#line 38 "gramatica"
-{yyerror(((Token) val_peek(2).obj).getLine(), "Error en la declaracion de variable/s");}
+{yyerror(((Token) val_peek(2).obj).getLine(), "Sintax Error: Error en la declaracion de variable/s");}
 break;
 case 14:
 //#line 41 "gramatica"
@@ -964,11 +964,11 @@ case 14:
 break;
 case 15:
 //#line 42 "gramatica"
-{yyerror(((Token) val_peek(1).obj).getLine(), "Falta identificador antes del ';'");}
+{yyerror(((Token) val_peek(1).obj).getLine(), "Sintax Error: Falta identificador antes del ';'");}
 break;
 case 16:
 //#line 43 "gramatica"
-{yyerror(((Token) val_peek(2).obj).getLine(), "Falta ';'");}
+{yyerror(((Token) val_peek(2).obj).getLine(), "Sintax Error: Falta ';'");}
 break;
 case 17:
 //#line 44 "gramatica"
@@ -995,7 +995,7 @@ case 18:
 	                                     LexicalAnalizer.symbolTable.setPermissions(currentScope,permsList.removeLast());
 	                                     currentScope=GLOBAL_SCOPE;
 	                                  }else{
-	                                  	yyerror(((Token) val_peek(1).obj).getLine(), "Función declarada dentro de otra función");
+	                                  	yyerror(((Token) val_peek(1).obj).getLine(), "Sintax Error: Función declarada dentro de otra función");
 	                                  	paramList.removeLast();
 	                                  	permsList.removeLast();
 	                                  	}
@@ -1027,11 +1027,11 @@ case 19:
 break;
 case 20:
 //#line 94 "gramatica"
-{yyerror(((Token) val_peek(1).obj).getLine(), "Falta el tipo de retorno de la funcion");}
+{yyerror(((Token) val_peek(1).obj).getLine(), "Sintax Error: Falta el tipo de retorno de la funcion");}
 break;
 case 21:
 //#line 95 "gramatica"
-{yyerror(((Token) val_peek(1).obj).getLine(), "No se permiten funciones anonimas");}
+{yyerror(((Token) val_peek(1).obj).getLine(), "Sintax Error: No se permiten funciones anonimas");}
 break;
 case 22:
 //#line 98 "gramatica"
@@ -1049,23 +1049,23 @@ case 22:
 break;
 case 23:
 //#line 109 "gramatica"
-{yyerror(((Token) val_peek(2).obj).getLine(), "Falta '('");}
+{yyerror(((Token) val_peek(2).obj).getLine(), "Sintax Error: Falta '('");}
 break;
 case 24:
 //#line 110 "gramatica"
-{yyerror(((Token) val_peek(2).obj).getLine(), "Falta especificar el tipo del parametro de la funcion");}
+{yyerror(((Token) val_peek(2).obj).getLine(), "Sintax Error: Falta especificar el tipo del parametro de la funcion");}
 break;
 case 25:
 //#line 111 "gramatica"
-{yyerror(((Token) val_peek(1).obj).getLine(), "Falta ID como parametro de la funcion");}
+{yyerror(((Token) val_peek(1).obj).getLine(), "Sintax Error: Falta ID como parametro de la funcion");}
 break;
 case 26:
 //#line 112 "gramatica"
-{yyerror(((Token) val_peek(0).obj).getLine(), "Falta ')'");}
+{yyerror(((Token) val_peek(0).obj).getLine(), "Sintax Error: Falta ')'");}
 break;
 case 27:
 //#line 113 "gramatica"
-{yyerror(((Token) val_peek(0).obj).getLine(), "Falta el argumento de la funcion");}
+{yyerror(((Token) val_peek(0).obj).getLine(), "Sintax Error: Falta el argumento de la funcion");}
 break;
 case 28:
 //#line 116 "gramatica"
@@ -1077,19 +1077,19 @@ case 29:
 break;
 case 30:
 //#line 118 "gramatica"
-{yyerror(((Token) val_peek(0).obj).getLine(), "Falta '{'");}
+{yyerror(((Token) val_peek(0).obj).getLine(), "Sintax Error: Falta '{'");}
 break;
 case 31:
 //#line 119 "gramatica"
-{yyerror(((Token) val_peek(4).obj).getLine(), "Falta '}'");}
+{yyerror(((Token) val_peek(4).obj).getLine(), "Sintax Error: Falta '}'");}
 break;
 case 32:
 //#line 120 "gramatica"
-{yyerror(((Token) val_peek(0).obj).getLine(), "Falta sentencia de retorno");}
+{yyerror(((Token) val_peek(0).obj).getLine(), "Sintax Error: Falta sentencia de retorno");}
 break;
 case 33:
 //#line 121 "gramatica"
-{yyerror(((Token) val_peek(1).obj).getLine(), "Falta sentencia de retorno");}
+{yyerror(((Token) val_peek(1).obj).getLine(), "Sintax Error: Falta sentencia de retorno");}
 break;
 case 34:
 //#line 124 "gramatica"
@@ -1100,23 +1100,23 @@ case 34:
 break;
 case 35:
 //#line 128 "gramatica"
-{yyerror(((Token) val_peek(3).obj).getLine(), "Retorno de funcion sin 'RETURN'");}
+{yyerror(((Token) val_peek(3).obj).getLine(), "Sintax Error: Retorno de funcion sin 'RETURN'");}
 break;
 case 36:
 //#line 129 "gramatica"
-{yyerror(((Token) val_peek(3).obj).getLine(), "Falta '('");}
+{yyerror(((Token) val_peek(3).obj).getLine(), "Sintax Error: Falta '('");}
 break;
 case 37:
 //#line 130 "gramatica"
-{yyerror(((Token) val_peek(2).obj).getLine(), "Falta valor de retorno de la funcion");}
+{yyerror(((Token) val_peek(2).obj).getLine(), "Sintax Error: Falta valor de retorno de la funcion");}
 break;
 case 38:
 //#line 131 "gramatica"
-{yyerror(((Token) val_peek(2).obj).getLine(), "Falta ')'");}
+{yyerror(((Token) val_peek(2).obj).getLine(), "Sintax Error: Falta ')'");}
 break;
 case 39:
 //#line 132 "gramatica"
-{yyerror(((Token) val_peek(0).obj).getLine(), "Falta ','");}
+{yyerror(((Token) val_peek(0).obj).getLine(), "Sintax Error: Falta ','");}
 break;
 case 44:
 //#line 141 "gramatica"
@@ -1138,67 +1138,67 @@ case 45:
 break;
 case 46:
 //#line 153 "gramatica"
-{yyerror(((Token) val_peek(7).obj).getLine(), "'ELSE' sin 'IF'");}
+{yyerror(((Token) val_peek(7).obj).getLine(), "Sintax Error: 'ELSE' sin 'IF'");}
 break;
 case 47:
 //#line 154 "gramatica"
-{yyerror(((Token) val_peek(5).obj).getLine(), "'ENDIF' sin 'IF'");}
+{yyerror(((Token) val_peek(5).obj).getLine(), "Sintax Error: 'ENDIF' sin 'IF'");}
 break;
 case 48:
 //#line 155 "gramatica"
-{yyerror(((Token) val_peek(7).obj).getLine(), "Falta '(' en condicion de sentencia condicional");}
+{yyerror(((Token) val_peek(7).obj).getLine(), "Sintax Error: Falta '(' en condicion de sentencia condicional");}
 break;
 case 49:
 //#line 156 "gramatica"
-{yyerror(((Token) val_peek(6).obj).getLine(), "condicion faltante en sentencia condicional");}
+{yyerror(((Token) val_peek(6).obj).getLine(), "Sintax Error: condicion faltante en sentencia condicional");}
 break;
 case 50:
 //#line 157 "gramatica"
-{yyerror(((Token) val_peek(7).obj).getLine(), "Falta ')' en la sentencia condicional");}
+{yyerror(((Token) val_peek(7).obj).getLine(), "Sintax Error: Falta ')' en la sentencia condicional");}
 break;
 case 51:
 //#line 158 "gramatica"
-{yyerror(((Token) val_peek(4).obj).getLine(), "Sentencia/s faltante/s luego de 'IF'");}
+{yyerror(((Token) val_peek(4).obj).getLine(), "Sintax Error: Sentencia/s faltante/s luego de 'IF'");}
 break;
 case 52:
 //#line 159 "gramatica"
-{yyerror(((Token) val_peek(4).obj).getLine(), "Falta 'ELSE' o sobran llaves en la declaracion de bloque");}
+{yyerror(((Token) val_peek(4).obj).getLine(), "Sintax Error: Falta 'ELSE' o sobran llaves en la declaracion de bloque");}
 break;
 case 53:
 //#line 160 "gramatica"
-{yyerror(((Token) val_peek(5).obj).getLine(), "Bloque faltante luego de 'ELSE'");}
+{yyerror(((Token) val_peek(5).obj).getLine(), "Sintax Error: Bloque faltante luego de 'ELSE'");}
 break;
 case 54:
 //#line 161 "gramatica"
-{yyerror(((Token) val_peek(6).obj).getLine(), "Falta 'ENDIF'");}
+{yyerror(((Token) val_peek(6).obj).getLine(), "Sintax Error: Falta 'ENDIF'");}
 break;
 case 55:
 //#line 162 "gramatica"
-{yyerror(((Token) val_peek(5).obj).getLine(), "Falta ','");}
+{yyerror(((Token) val_peek(5).obj).getLine(), "Sintax Error: Falta ','");}
 break;
 case 56:
 //#line 163 "gramatica"
-{yyerror(((Token) val_peek(3).obj).getLine(), "Falta ','");}
+{yyerror(((Token) val_peek(3).obj).getLine(), "Sintax Error: Falta ','");}
 break;
 case 57:
 //#line 164 "gramatica"
-{yyerror(((Token) val_peek(3).obj).getLine(), "Falta '('");}
+{yyerror(((Token) val_peek(3).obj).getLine(), "Sintax Error: Falta '('");}
 break;
 case 58:
 //#line 165 "gramatica"
-{yyerror(((Token) val_peek(3).obj).getLine(), "Falta condicion en la sentencia condicional");}
+{yyerror(((Token) val_peek(3).obj).getLine(), "Sintax Error: Falta condicion en la sentencia condicional");}
 break;
 case 59:
 //#line 166 "gramatica"
-{yyerror(((Token) val_peek(4).obj).getLine(), "Falta ')'");}
+{yyerror(((Token) val_peek(4).obj).getLine(), "Sintax Error: Falta ')'");}
 break;
 case 60:
 //#line 167 "gramatica"
-{yyerror(((Token) val_peek(4).obj).getLine(), "Falta 'ENDIF' en sentencia condicional");}
+{yyerror(((Token) val_peek(4).obj).getLine(), "Sintax Error: Falta 'ENDIF' en sentencia condicional");}
 break;
 case 61:
 //#line 168 "gramatica"
-{yyerror(((Token) val_peek(1).obj).getLine(), "Falta bloque de sentencias en sentencia condicional");}
+{yyerror(((Token) val_peek(1).obj).getLine(), "Sintax Error: Falta bloque de sentencias en sentencia condicional");}
 break;
 case 62:
 //#line 171 "gramatica"
@@ -1207,15 +1207,15 @@ case 62:
 break;
 case 63:
 //#line 174 "gramatica"
-{yyerror(((Token) val_peek(3).obj).getLine(), "Falta'('");}
+{yyerror(((Token) val_peek(3).obj).getLine(), "Sintax Error: Falta'('");}
 break;
 case 64:
 //#line 175 "gramatica"
-{yyerror(((Token) val_peek(3).obj).getLine(), "Falta ')'");}
+{yyerror(((Token) val_peek(3).obj).getLine(), "Sintax Error: Falta ')'");}
 break;
 case 65:
 //#line 176 "gramatica"
-{yyerror(((Token) val_peek(2).obj).getLine(), "Sentencia de control sin bloque de sentencias");}
+{yyerror(((Token) val_peek(2).obj).getLine(), "Sintax Error: Sentencia de control sin bloque de sentencias");}
 break;
 case 66:
 //#line 179 "gramatica"
@@ -1232,15 +1232,15 @@ case 67:
 break;
 case 68:
 //#line 188 "gramatica"
-{yyerror(((Token) val_peek(3).obj).getLine(), "'PRINT' faltante en la sentencia de impresion");}
+{yyerror(((Token) val_peek(3).obj).getLine(), "Sintax Error: 'PRINT' faltante en la sentencia de impresion");}
 break;
 case 69:
 //#line 189 "gramatica"
-{yyerror(((Token) val_peek(2).obj).getLine(), "Falta '('");}
+{yyerror(((Token) val_peek(2).obj).getLine(), "Sintax Error: Falta '('");}
 break;
 case 70:
 //#line 190 "gramatica"
-{yyerror(((Token) val_peek(1).obj).getLine(), "Falta ')'");}
+{yyerror(((Token) val_peek(1).obj).getLine(), "Sintax Error: Falta ')'");}
 break;
 case 71:
 //#line 191 "gramatica"
@@ -1251,7 +1251,7 @@ case 71:
 break;
 case 72:
 //#line 195 "gramatica"
-{yyerror(((Token) val_peek(0).obj).getLine(), "Falta ','");}
+{yyerror(((Token) val_peek(0).obj).getLine(), "Sintax Error: Falta ','");}
 break;
 case 73:
 //#line 198 "gramatica"
@@ -1292,11 +1292,11 @@ case 73:
 break;
 case 74:
 //#line 228 "gramatica"
-{yyerror(((Token) val_peek(1).obj).getLine(), "Falta expresion del lado izquierdo del comparador");}
+{yyerror(((Token) val_peek(1).obj).getLine(), "Sintax Error: Falta expresion del lado izquierdo del comparador");}
 break;
 case 75:
 //#line 229 "gramatica"
-{yyerror(((Token) val_peek(0).obj).getLine(), "Falta expresion del lado derecho del comparador");}
+{yyerror(((Token) val_peek(0).obj).getLine(), "Sintax Error: Falta expresion del lado derecho del comparador");}
 break;
 case 76:
 //#line 232 "gramatica"
@@ -1325,16 +1325,18 @@ case 83:
                                     if (!paramList.isEmpty()){
                                          if ( ((FNCInformation)LexicalAnalizer.symbolTable.getLexeme(((Token) val_peek(3).obj).getLex())).isWrite() )
                                              permsList.getLast().setWrite(true);
-                                          if (((Token) val_peek(3).obj).getLex().equals(paramList.getFirst()))
+                                         System.out.println("cambien la la comparacion, estabamos comparando con el id de la funcion en vez de con el parametro (linea 1327)");
+                                          if (param.getRef().equals(paramList.getFirst()))
                                              permsList.getLast().setPass(true);                                   
                                      }   
+                                    
                                   yyval=new ParserVal(t);                                   
                                  }
                                 }
 break;
 case 84:
 //#line 262 "gramatica"
-{yyerror(((Token) val_peek(2).obj).getLine(), "Falta ')'");}
+{yyerror(((Token) val_peek(2).obj).getLine(), "Sintax Error: Falta ')'");}
 break;
 case 85:
 //#line 266 "gramatica"
@@ -1342,19 +1344,19 @@ case 85:
 break;
 case 86:
 //#line 267 "gramatica"
-{yyerror(((Token) val_peek(0).obj).getLine(), "Argumentos mal definidos");}
+{yyerror(((Token) val_peek(0).obj).getLine(), "Sintax Error: Argumentos mal definidos");}
 break;
 case 87:
 //#line 268 "gramatica"
-{yyerror(((Token) val_peek(1).obj).getLine(), "Llamado a funcion sin argumento");}
+{yyerror(((Token) val_peek(1).obj).getLine(), "Sintax Error: Llamado a funcion sin argumento");}
 break;
 case 88:
 //#line 269 "gramatica"
-{yyerror(((Token) val_peek(1).obj).getLine(), "Falta ';'");}
+{yyerror(((Token) val_peek(1).obj).getLine(), "Sintax Error: Falta ';'");}
 break;
 case 89:
 //#line 270 "gramatica"
-{yyerror(((Token) val_peek(0).obj).getLine(), "Especificacion de permisos faltante");}
+{yyerror(((Token) val_peek(0).obj).getLine(), "Sintax Error: Especificacion de permisos faltante");}
 break;
 case 90:
 //#line 274 "gramatica"
@@ -1388,19 +1390,19 @@ case 90:
 break;
 case 91:
 //#line 301 "gramatica"
-{yyerror(((Token) val_peek(0).obj).getLine(), "Asignacion sin id del lado izq");}
+{yyerror(((Token) val_peek(0).obj).getLine(), "Sintax Error: Asignacion sin id del lado izq");}
 break;
 case 92:
 //#line 302 "gramatica"
-{yyerror(((Token) val_peek(2).obj).getLine(), "Asignacion sin :=");}
+{yyerror(((Token) val_peek(2).obj).getLine(), "Sintax Error: Asignacion sin :=");}
 break;
 case 93:
 //#line 303 "gramatica"
-{yyerror(((Token) val_peek(0).obj).getLine(), "Falta expresion del lado derecho del :=");}
+{yyerror(((Token) val_peek(0).obj).getLine(), "Sintax Error: Falta expresion del lado derecho del :=");}
 break;
 case 94:
 //#line 304 "gramatica"
-{yyerror(((Token) val_peek(2).obj).getLine(), "Falta ','");}
+{yyerror(((Token) val_peek(2).obj).getLine(), "Sintax Error: Falta ','");}
 break;
 case 95:
 //#line 308 "gramatica"
@@ -1504,7 +1506,7 @@ case 110:
 {
                       Object obj = val_peek(0).obj;
 				if (ifUS(((Token) obj))){
-					yyerror("Constante Unsigned negativa");
+					yyerror("Sintax Error: Constante Unsigned negativa");
                     if (((CTNInformation)LexicalAnalizer.symbolTable.getLexeme(((Token)obj).getLex())).getCounter()>1) 
 						((CTNInformation)LexicalAnalizer.symbolTable.getLexeme(((Token)obj).getLex())).decreaseCounter();
 					else
