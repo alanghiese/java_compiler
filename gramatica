@@ -465,7 +465,8 @@ public boolean correctCall(Boolean converted, Operand param, String functionName
     			return false;
     		}
     		if(!LexicalAnalizer.symbolTable.getType(paramName).equals(LexicalAnalizer.symbolTable.getParamType(functionName)))
-	    		if(!TypeConverter.isValid(LexicalAnalizer.symbolTable.getType(paramName),LexicalAnalizer.symbolTable.getParamType(functionName) )){
+	    		if (!TypeConverter.isValid(LexicalAnalizer.symbolTable.getParamType(functionName),
+									LexicalAnalizer.symbolTable.getType(paramName))) {
 	    			yyerror(line, "Semantic Error: Tipo del parametro incompatible");
 	    			return false;
 	    		}
