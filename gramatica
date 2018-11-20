@@ -255,7 +255,7 @@ inv_fun :   ID '(' func_var ')'	{	Boolean converted = false;
                                     Triples t= new TrINV((Token)$1.obj,param); 
                                     triples.add(t);
                                     if (!paramList.isEmpty()){
-                                         if ( ((FNCInformation)LexicalAnalizer.symbolTable.getLexeme(((Token) $1.obj).getLex())).isWrite() )
+                                         if ( ((FNCInformation)LexicalAnalizer.symbolTable.getLexeme(((Token) $1.obj).getLex())).writes() )
                                              permsList.getLast().setWrite(true);
                                           if (((Operand) $3.obj).getLex().equals(paramList.getFirst()))
                                              permsList.getLast().setPass(true);                                   
