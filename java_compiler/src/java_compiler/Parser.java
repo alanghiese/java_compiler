@@ -1323,11 +1323,12 @@ case 83:
                                     Triples t= new TrINV((Token)val_peek(3).obj,param); 
                                     triples.add(t);
                                     if (!paramList.isEmpty()){
-                                         if ( ((FNCInformation)LexicalAnalizer.symbolTable.getLexeme(((Token) val_peek(3).obj).getLex())).isWrite() )
+
+                                         if ( ((FNCInformation)LexicalAnalizer.symbolTable.getLexeme(((Token) val_peek(3).obj).getLex())).writes() )
                                              permsList.getLast().setWrite(true);
-                                         System.out.println("cambien la la comparacion, estabamos comparando con el id de la funcion en vez de con el parametro (linea 1327)");
-                                          if (param.getRef().equals(paramList.getFirst()))
-                                             permsList.getLast().setPass(true);                                   
+                                          if (param.getRef().equals(paramList.getLast())) {
+                                             permsList.getLast().setPass(true);  
+                                          }
                                      }   
                                     
                                   yyval=new ParserVal(t);                                   

@@ -32,22 +32,14 @@ public class FNCInformation extends SymbolInformation {
 		this.permissions.setWrite(p.isWrite());
 	}
 	
-	public boolean isWrite() {
-		return this.permissions.isWrite() && !this.permissions.isPass() ;
+	public boolean writes() {
+		return this.permissions.isWrite();
 	}
 
-	public boolean isPass() {
-		return this.permissions.isPass() && !this.permissions.isWrite();
+	public boolean passes() {
+		return this.permissions.isPass();
 	}
 	
-	public boolean isWritePass() {
-		return this.permissions.isWrite() && this.permissions.isPass();
-	}
-
-	public boolean isReadonly() {
-		return !this.permissions.isPass() && !this.permissions.isWrite();
-	}
-
 	public String getParamType() {
 		return paramType;
 	}

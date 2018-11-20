@@ -1,12 +1,42 @@
-linteger _numero,
-usinteger _positivo,
-_numero := 3_l,
+usinteger _rOnly(usinteger _A){
+    usinteger _variable,
+	_variable:=_A,
+    return (_variable),
+}
 
-_numero := _numero / 0_ui,
+usinteger _write(usinteger _B){
+    _B:=5_ui,
+    return (0_ui),
+}
 
-_numero := 30000_ui * 5_ui,
+usinteger _pass(usinteger _C){
+    linteger _res,
+	_res:=_rOnly(_C;pass),
+    return (0_ui),
+}
 
-_positivo := 1_ui - 2_ui,
+usinteger _wPass(usinteger _D){
+    usinteger _var,
+    _var:=_write(_D;write;pass),
+    return (0_ui),
+}
+
+
+usinteger _var1;_var2;_var3;_var4,
+
+_var1:=1_ui,
+#Llamados válidos#
+_var2:=_rOnly(_var1;readonly),  #copia var1 en var2#
+_var2:=_rOnly(_var1;write),  #copia var1 en var2#
+_var2:=_rOnly(_var1;pass),  #copia var1 en var2#
+_var2:=_rOnly(_var1;write;pass),  #copia var1 en var2#
+
+_var2:=_write(_var3;write), #Asigna 0 en _var2 y 5 en _var3#
+
+_var2:=_pass(_var3;pass), #Asigna 0 en _var2 y solo lee _var3#
+
+_var2:=_wPass(_var3;write;pass), #Asigna 0 en _var2 y 5 en _var3#
+
 
 
 
