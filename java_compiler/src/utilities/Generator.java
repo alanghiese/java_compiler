@@ -59,7 +59,7 @@ public class Generator {
 		Set<String> vars = LexicalAnalizer.symbolTable.getAll();
 		for(String st : vars) {
 			if (LexicalAnalizer.symbolTable.getLexeme(st).getType().equals(Constants.STRING))
-				solution.append(st.replace(" ", "_") + LexicalAnalizer.symbolTable.getLexeme(st).getCode() + " \"" + st + "\",0" + '\n');
+				solution.append("@STRING" + ((CTNInformation)LexicalAnalizer.symbolTable.getLexeme(st)).getMyId() + LexicalAnalizer.symbolTable.getLexeme(st).getCode() + " \"" + st + "\",0" + '\n');
 			else if (!LexicalAnalizer.symbolTable.isFunction(st) 
 					&& !LexicalAnalizer.symbolTable.isVar(st)
 					&& !LexicalAnalizer.symbolTable.isAuxiliary(st)) {

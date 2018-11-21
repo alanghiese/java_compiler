@@ -4,10 +4,18 @@ public class CTNInformation extends SymbolInformation {
 
 	
 	private int counter = 0;
+	public static int id = 0;
+	private int myId;
 
 	public CTNInformation() {
+		this.myId = id;
+		id++;
 	}
-
+	
+	public int getMyId() {
+		return this.myId;
+	}
+	
 	public void increaseCounter() {
 		this.counter++;
 	}

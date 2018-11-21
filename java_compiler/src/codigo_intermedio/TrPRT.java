@@ -1,6 +1,8 @@
 package codigo_intermedio;
 
-
+import java_compiler.LexicalAnalizer;
+import utilities.CTNInformation;
+import utilities.Token;
 
 public class TrPRT extends Triples {
 
@@ -31,7 +33,7 @@ public class TrPRT extends Triples {
 	@Override
 	public String generateAssembler() {
 		String code;
-		code = "invoke MessageBox, NULL, addr " + o1.getMemRef().replaceAll(" ", "_") + ", addr " + o1.getMemRef().replaceAll(" ", "_") + ", MB_OK";
+		code = "invoke MessageBox, NULL, addr " + "@STRING" + ((CTNInformation)LexicalAnalizer.symbolTable.getLexeme(((Token)o1).getLex())).getMyId() + ", addr " + "@STRING" + ((CTNInformation)LexicalAnalizer.symbolTable.getLexeme(((Token)o1).getLex())).getMyId() + ", MB_OK";
 		return code;
 	}
 }

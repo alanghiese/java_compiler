@@ -48,21 +48,28 @@ public class TrINV extends Triples {
 		String code;
 		StringBuilder name = new StringBuilder("@");
 		name.append(o1.getMemRef());
+		String paramType = new String();
+		
+		if (LexicalAnalizer.symbolTable.getType(o2.getMemRef()).equals(Constants.US_INT))
+			paramType = "AX";
+		else
+			paramType = "EAX";
 		if (super.type.equals(Constants.US_INT)) {
-			code = "MOV AX, " + o2.getMemRef() + '\n' +
-					"MOV " + LexicalAnalizer.symbolTable.getParamName(o1.getMemRef()) + ", AX" + '\n' +
+			
+			code = "MOV "+paramType+", " + o2.getMemRef() + '\n' +
+					"MOV " + LexicalAnalizer.symbolTable.getParamName(o1.getMemRef()) + ", " + paramType + '\n' +
 					"CALL " + name + '\n' +
-					"MOV AX, " + LexicalAnalizer.symbolTable.getParamName(o1.getMemRef()) + '\n' +
-					"MOV " + o2.getMemRef() + ", AX" + '\n' +
+					"MOV "+paramType+", " + LexicalAnalizer.symbolTable.getParamName(o1.getMemRef()) + '\n' +
+					"MOV " + o2.getMemRef() +  ", " + paramType + '\n' +
 					"MOV AX, @RETu" + '\n' + 
 					"MOV " + this.destiny + ", AX"; 
 		}
 		else{
-			code ="MOV EAX, " + o2.getMemRef() + '\n' +
-					"MOV " + LexicalAnalizer.symbolTable.getParamName(o1.getMemRef()) + ", EAX" + '\n' +
-					"CALL " + name + '\n' + 
-					"MOV EAX, " + LexicalAnalizer.symbolTable.getParamName(o1.getMemRef()) + '\n' +
-					"MOV " + o2.getMemRef() + ", EAX" + '\n' +
+			code ="MOV "+paramType+", " + o2.getMemRef() + '\n' +
+					"MOV " + LexicalAnalizer.symbolTable.getParamName(o1.getMemRef()) + ", " + paramType + '\n' +
+					"CALL " + name + '\n' +
+					"MOV "+paramType+", " + LexicalAnalizer.symbolTable.getParamName(o1.getMemRef()) + '\n' +
+					"MOV " + o2.getMemRef() +  ", " + paramType + '\n' +
 					"MOV EAX, @RETi" + '\n' + 
 					"MOV " + this.destiny + ", EAX"; 
 			}

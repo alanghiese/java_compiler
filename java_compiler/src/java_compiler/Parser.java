@@ -393,19 +393,13 @@ public class Parser {
 			if (LexicalAnalizer.symbolTable.paramAllow(functionName, functionAllows)) {
 				if (!LexicalAnalizer.symbolTable.isVar(paramName, currentScope)) {
 					yyerror(line, "Semantic Error: Parameto inexistente");
+					Parser.macrigato = false;
 					return false;
 				}
 				if (!LexicalAnalizer.symbolTable.getType(paramName)
-						.equals(LexicalAnalizer.symbolTable.getParamType(functionName)))
-					if (!TypeConverter.isValid(LexicalAnalizer.symbolTable.getParamType(functionName),
-									LexicalAnalizer.symbolTable.getType(paramName))) {
+						.equals(LexicalAnalizer.symbolTable.getParamType(functionName))){
 						yyerror(line, "Semantic Error: Tipo del parametro incompatible");
 						return false;
-					} else {
-						converted = true;
-						Triples cnv = new TrCNV(param);
-						triples.add(cnv);
-						return true;
 					}
 				else
 					return true;
