@@ -1,9 +1,12 @@
-usinteger _usinteger,
-_usinteger:=1_ui,
+usinteger _B,
+_B:=1_ui,
 
-linteger _fun(linteger _p){
-    _p := 1_l,
-    return (1_l*1_l),
-    }
-    
-    _fun(_usinteger;write;pass),
+usinteger _A(linteger _C){
+    print('llamada correcta'),
+    return (12_ui),
+}
+
+#funciona bien#
+if(_A(_B;write;pass)=12_ui)
+    print('12 retornado'),
+endif,

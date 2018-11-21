@@ -468,6 +468,7 @@ public boolean correctCall(Boolean converted, Operand param, String functionName
 	    		if (!TypeConverter.isValid(LexicalAnalizer.symbolTable.getParamType(functionName),
 									LexicalAnalizer.symbolTable.getType(paramName))) {
 	    			yyerror(line, "Semantic Error: Tipo del parametro incompatible");
+	    			Parser.macrigato=false;
 	    			return false;
 	    		}
 	    		else{
